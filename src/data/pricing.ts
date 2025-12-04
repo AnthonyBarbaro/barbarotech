@@ -2,8 +2,8 @@ export type PricingPlan = {
     id: string;
     name: string;
     bestFor: string;
-    oneTime: string;   // main headline price text
-    monthly?: string;  // optional ongoing support range
+    oneTime: string; // main headline price text
+    monthly?: string; // optional ongoing support range
     includes: string[];
     notes?: string;
   };
@@ -39,6 +39,55 @@ export type PricingPlan = {
         ],
         notes:
           "Ideal for smoke shops, liquor stores, and gas stations that want to look premium and rank locally.",
+      },
+    ],
+  
+    // ✅ NEW: existing-site work (Shopify / WordPress / Wix / Squarespace / custom)
+    existingSites: <PricingPlan[]>[
+      {
+        id: "tune-up",
+        name: "Existing Site Tune‑Up",
+        bestFor: "You already have a site — it just needs fixes, polish, or updates.",
+        oneTime: "Starting around $500 (typical: $300 – $1,200)",
+        monthly: "$0 – $75 (optional)",
+        includes: [
+          "Fix layout issues & broken sections",
+          "Speed + SEO quick wins",
+          "Update hours, contact info, CTA buttons",
+          "Analytics / Search Console checks (if available)",
+        ],
+        notes:
+          "Best for quick improvements without rebuilding from scratch.",
+      },
+      {
+        id: "shopify",
+        name: "Shopify / Ecommerce Enhancements",
+        bestFor: "Theme edits, landing pages, conversion improvements, and integrations.",
+        oneTime: "Starting around $900 (typical: $750 – $2,500)",
+        monthly: "$75 – $250 (optional)",
+        includes: [
+          "Theme customization (sections, layout, styling)",
+          "Product / collection page improvements",
+          "App/integration setup & cleanup",
+          "Conversion upgrades (cart, trust, speed, checkout flow)",
+        ],
+        notes:
+          "Perfect if you want Shopify to look premium and convert better.",
+      },
+      {
+        id: "maintenance",
+        name: "Monthly Site Care",
+        bestFor: "You want a developer on-call for edits, fixes, and small improvements.",
+        oneTime: "No build fee (after initial setup)",
+        monthly: "$99 – $399",
+        includes: [
+          "Ongoing edits (text/photos/sections)",
+          "Bug fixes and small feature requests",
+          "Performance & SEO upkeep",
+          "Priority response window",
+        ],
+        notes:
+          "Great for owners who don’t want to deal with website issues.",
       },
     ],
   

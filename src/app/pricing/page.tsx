@@ -72,7 +72,25 @@ export default function PricingPage() {
           </div>
         </Container>
       </section>
+      <section className="border-b border-black/10 bg-white">
+        <Container className="py-14 space-y-8">
+          <div className="space-y-2">
+            <h2 className="text-2xl font-semibold text-black">
+              Existing Websites (Shopify / WordPress / Wix / Squarespace)
+            </h2>
+            <p className="text-black/70 max-w-2xl text-sm">
+              Already have a website? I can fix issues, redesign sections, improve speed/SEO,
+              and add features—without forcing a full rebuild.
+            </p>
+          </div>
 
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {PRICING.existingSites.map((plan) => (
+              <PricingCard key={plan.id} plan={plan} />
+            ))}
+          </div>
+        </Container>
+      </section>
       {/* CTA */}
       <section className="bg-white">
         <Container className="py-14">
@@ -95,7 +113,9 @@ export default function PricingPage() {
             </a>
           </div>
         </Container>
+        
       </section>
+      
     </main>
   );
 }

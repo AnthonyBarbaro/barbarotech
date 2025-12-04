@@ -1,12 +1,10 @@
-//next.config.ts
+// next.config.ts
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // SSR/hybrid is the default in Next.js App Router.
+  // Removing output: "export" allows server rendering + SEO routes (sitemap/robots) + image optimization.
   trailingSlash: true,
-  images: {
-    unoptimized: true,
-  },
 };
 
 export default nextConfig;

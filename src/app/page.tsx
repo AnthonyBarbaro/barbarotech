@@ -41,9 +41,9 @@ export default function Home() {
               <ButtonLink href="/pricing" variant="secondary">
                 Pricing
               </ButtonLink>
-              <ButtonLink href={`mailto:${SITE.contact.textEmail}`} variant="ghost">
-                Text for a quote →
-              </ButtonLink>
+              <ButtonLink href="/contact?ref=home" variant="ghost">
+              Get a quote →
+            </ButtonLink>
             </div>
 
             <div className="flex flex-wrap gap-6 pt-2 text-sm text-black/60">
@@ -102,9 +102,9 @@ export default function Home() {
             </div>
             <div className="flex gap-3 flex-wrap">
               <ButtonLink href="/pricing">View pricing</ButtonLink>
-              <ButtonLink href={`mailto:${SITE.contact.textEmail}`} variant="secondary">
-                Text now →
-              </ButtonLink>
+              <ButtonLink href="/contact?ref=home" variant="secondary">
+              Get a quote →
+            </ButtonLink>
             </div>
           </div>
         </Container>

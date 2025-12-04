@@ -1,19 +1,12 @@
 import { PricingPlan } from "@/data/pricing";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ButtonLink } from "@/components/ui/button";
-import { buildMailtoHref } from "@/lib/mailto";
-import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function PricingCard({ plan }: { plan: PricingPlan }) {
-  const href = buildMailtoHref({
-    to: SITE.contact.textEmail,
-    subject: `${SITE.brand} — pricing inquiry: ${plan.name}`,
-    body:
-      `Plan: ${plan.name}\n` +
-      `Name:\nBusiness:\nCurrent website link (if any):\nPlatform (Shopify/Wix/etc):\n` +
-      `What you want changed:\nTimeline:\nBudget:\n\nNotes:\n`,
-  });
+  const contactHref = `/contact?plan=${encodeURIComponent(plan.name)}&planId=${encodeURIComponent(
+    plan.id
+  )}`;
 
   return (
     <Card
@@ -31,10 +24,14 @@ export function PricingCard({ plan }: { plan: PricingPlan }) {
             <p className="text-xs text-black/60 mt-1">{plan.bestFor}</p>
           </div>
 
-          <span className={cn(
-            "shrink-0 inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide",
-            plan.popular ? "bg-black text-white" : "bg-black/[0.06] text-black/70 border border-black/10"
-          )}>
+          <span
+            className={cn(
+              "shrink-0 inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide",
+              plan.popular
+                ? "bg-black text-white"
+                : "bg-black/[0.06] text-black/70 border border-black/10"
+            )}
+          >
             {plan.popular ? "Most popular" : plan.monthly ? "Build + support" : "One-time"}
           </span>
         </div>
@@ -57,7 +54,8 @@ export function PricingCard({ plan }: { plan: PricingPlan }) {
 
           {plan.timeline && (
             <div className="text-xs text-black/60">
-              Typical timeline:&nbsp;<span className="font-medium text-black/80">{plan.timeline}</span>
+              Typical timeline:&nbsp;
+              <span className="font-medium text-black/80">{plan.timeline}</span>
             </div>
           )}
         </div>
@@ -89,12 +87,10 @@ export function PricingCard({ plan }: { plan: PricingPlan }) {
           </details>
         ) : null}
 
-        {plan.notes && (
-          <p className="text-[11px] text-black/50">{plan.notes}</p>
-        )}
+        {plan.notes && <p className="text-[11px] text-black/50">{plan.notes}</p>}
 
-        <ButtonLink href={href} variant="secondary" className="mt-auto w-full">
-          Text about this plan
+        <ButtonLink href={contactHref} variant="secondary" className="mt-auto w-full">
+          Request a quote →
         </ButtonLink>
       </CardContent>
     </Card>

@@ -27,3 +27,26 @@ body {
 ::selection {
   background: rgba(0, 0, 0, 0.12);
 }
+/* Sliding service ticker in top banner */
+.service-ticker {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-ticker-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  will-change: transform;
+  animation: ticker-scroll 22s linear infinite;
+}
+
+@keyframes ticker-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

@@ -1,0 +1,62 @@
+name: Deploy to S3 + CloudFront
+
+on:
+  push:
+    branches: [main]   # change if your default branch is different
+  workflow_dispatch:    # allows manual runs from the GitHub UI
+
+concurrency:
+  group: "deploy-${{ github.ref }}"
+  cancel-in-progress: true
+
+env:
+  AWS_REGION: us-west-2            # ⬅️ change to your region
+  S3_BUCKET: your-bucket-name-here # ⬅️ change to your bucket
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        run: npm run build
+        # ⚠️ Make sure your build script produces ./out
+        # For example in package.json:
+        # "build": "next build && next export"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync static files to S3
+        run: |
+          aws s3 sync ./out s3://$S3_BUCKET \
+            --delete
+
+        # If you're using private S3 + CloudFront with OAC/OAI,
+        # you normally DON'T need public-read ACLs here.
+        # Just make sure your bucket policy allows CloudFront access.
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"

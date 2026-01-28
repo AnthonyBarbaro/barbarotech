@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SITE } from "@/lib/site";
 import { buildMailtoHref } from "@/lib/mailto";
 import { Button } from "@/components/ui/button";
@@ -8,127 +8,187 @@ import { Button } from "@/components/ui/button";
 type FormState = {
   name: string;
   business: string;
+  email: string;
+  phone: string;
   website: string;
   platform: string;
-  service: string; // plan / service type
+  plan: string;
   timeline: string;
   budget: string;
   message: string;
+  // honeypot to catch bots
+  fax: string;
 };
-
-const empty: FormState = {
-  name: "",
-  business: "",
-  website: "",
-  platform: "",
-  service: "",
-  timeline: "",
-  budget: "",
-  message: "",
-};
-
-function line(label: string, value: string) {
-  return `${label}: ${value || "(blank)"}`;
-}
 
 export function ContactForm({ defaultPlan = "" }: { defaultPlan?: string }) {
-  const [form, setForm] = useState<FormState>(() => ({
-    ...empty,
-    service: defaultPlan,
-  }));
+  const [state, setState] = useState<FormState>({
+    name: "",
+    business: "",
+    email: "",
+    phone: "",
+    website: "",
+    platform: "",
+    plan: defaultPlan,
+    timeline: "",
+    budget: "",
+    message: "",
+    fax: "",
+  });
 
-  const set = (key: keyof FormState, value: string) =>
-    setForm((p) => ({ ...p, [key]: value }));
+  const [status, setStatus] = useState<"idle" | "submitting" | "submitted">(
+    "idle"
+  );
 
-  function onSubmit(e: React.FormEvent) {
+  const canSubmit = useMemo(
+    () =>
+      state.name.trim().length > 0 &&
+      state.message.trim().length > 0 &&
+      state.fax.trim().length === 0, // honeypot must be empty
+    [state.name, state.message, state.fax]
+  );
+
+  const update =
+    (key: keyof FormState) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setState((prev) => ({ ...prev, [key]: e.target.value }));
+      if (status === "submitted") setStatus("idle");
+    };
+
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!canSubmit) return;
 
-    const body = [
-      line("Name", form.name),
-      line("Business", form.business),
-      line("Website", form.website),
-      line("Platform", form.platform),
-      line("Plan/Service", form.service),
-      line("Timeline", form.timeline),
-      line("Budget", form.budget),
+    setStatus("submitting");
+
+    // Build email body
+    const lines = [
+      `Name: ${state.name}`,
+      `Business: ${state.business || "(blank)"}`,
+      `Email: ${state.email || "(blank)"}`,
+      `Phone: ${state.phone || "(blank)"}`,
+      `Website: ${state.website || "(blank)"}`,
+      `Platform: ${state.platform || "(blank)"}`,
+      `Plan/Service: ${state.plan || "(blank)"}`,
+      `Timeline: ${state.timeline || "(blank)"}`,
+      `Budget: ${state.budget || "(blank)"}`,
       "",
       "Message:",
-      form.message || "(blank)",
-    ].join("\n");
+      state.message || "(blank)",
+    ];
 
     const href = buildMailtoHref({
-      to: SITE.contact.textEmail, // vtext to phone
-      subject: `${SITE.brand} quote request`,
-      body,
+      to: SITE.contact.textEmail,
+      cc: SITE.contact.fallbackEmail,
+      subject: `${SITE.brand} — quote request`,
+      body: lines.join("\n"),
     });
 
+    // Trigger the email client (this will send to vtext)
     window.location.href = href;
+
+    setStatus("submitted");
   }
 
   return (
-    <form className="space-y-3" onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-3">
+      {/* honeypot field (hidden from users) */}
+      <input
+        className="hidden"
+        tabIndex={-1}
+        autoComplete="off"
+        value={state.fax}
+        onChange={update("fax")}
+      />
+
       <div className="grid gap-3 sm:grid-cols-2">
         <input
-          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
-          placeholder="Name"
-          value={form.name}
-          onChange={(e) => set("name", e.target.value)}
+          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-sky-200"
+          placeholder="Name *"
+          value={state.name}
+          onChange={update("name")}
         />
         <input
-          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
+          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-sky-200"
           placeholder="Business"
-          value={form.business}
-          onChange={(e) => set("business", e.target.value)}
+          value={state.business}
+          onChange={update("business")}
         />
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
         <input
-          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
-          placeholder="Current website (optional)"
-          value={form.website}
-          onChange={(e) => set("website", e.target.value)}
+          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-sky-200"
+          placeholder="Email (for reply)"
+          type="email"
+          value={state.email}
+          onChange={update("email")}
         />
         <input
-          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
+          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-sky-200"
+          placeholder="Phone (optional)"
+          value={state.phone}
+          onChange={update("phone")}
+        />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <input
+          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-sky-200"
+          placeholder="Current website (optional)"
+          value={state.website}
+          onChange={update("website")}
+        />
+        <input
+          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-sky-200"
           placeholder="Platform (Shopify/Wix/WordPress/Custom)"
-          value={form.platform}
-          onChange={(e) => set("platform", e.target.value)}
+          value={state.platform}
+          onChange={update("platform")}
         />
       </div>
 
       <input
-        className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
-        placeholder="Service / Plan (prefilled if you clicked a plan)"
-        value={form.service}
-        onChange={(e) => set("service", e.target.value)}
+        className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-sky-200"
+        placeholder="Service / Plan (prefilled from pricing)"
+        value={state.plan}
+        onChange={update("plan")}
       />
 
       <div className="grid gap-3 sm:grid-cols-2">
         <input
-          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
-          placeholder="Timeline"
-          value={form.timeline}
-          onChange={(e) => set("timeline", e.target.value)}
+          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-sky-200"
+          placeholder="Timeline (example: ASAP / 2 weeks)"
+          value={state.timeline}
+          onChange={update("timeline")}
         />
         <input
-          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
-          placeholder="Budget"
-          value={form.budget}
-          onChange={(e) => set("budget", e.target.value)}
+          className="w-full rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-sky-200"
+          placeholder="Budget (optional)"
+          value={state.budget}
+          onChange={update("budget")}
         />
       </div>
 
       <textarea
-        className="w-full min-h-[120px] rounded-xl border border-black/10 bg-white px-3 py-2 text-sm"
-        placeholder="What do you want built or changed?"
-        value={form.message}
-        onChange={(e) => set("message", e.target.value)}
+        className="w-full min-h-[140px] rounded-xl border border-black/10 bg-white px-3 py-2 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-sky-200"
+        placeholder="What do you want built or changed? *"
+        value={state.message}
+        onChange={update("message")}
       />
 
-      <Button type="submit" variant="primary" className="w-full sm:w-auto">
-        Send request →
-      </Button>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-xs text-black/50">
+          {status === "submitted"
+            ? "✅ Opened your email app. Once you send it, it will go straight to my phone."
+            : "Fields marked * are required. Submitting opens your email app to send the request."}
+        </p>
+        <Button
+          type="submit"
+          variant="primary"
+          disabled={!canSubmit || status === "submitting"}
+        >
+          {status === "submitting" ? "Preparing email…" : "Send request →"}
+        </Button>
+      </div>
     </form>
   );
 }

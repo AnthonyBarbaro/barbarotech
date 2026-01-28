@@ -7,15 +7,22 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { PROJECTS } from "@/data/projects";
 
-export default async function ProjectSlugPage({
+/**
+ * REQUIRED for `output: "export"`
+ * This tells Next.js which /projects/[slug] pages to generate
+ */
+export function generateStaticParams() {
+  return PROJECTS.map((project) => ({
+    slug: project.slug,
+  }));
+}
+
+export default function ProjectSlugPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  // 🔥 FIX: unwrap params
-  const { slug } = await params;
-
-  const project = PROJECTS.find((p) => p.slug === slug);
+  const project = PROJECTS.find((p) => p.slug === params.slug);
   if (!project) notFound();
 
   return (
@@ -23,7 +30,10 @@ export default async function ProjectSlugPage({
       {/* Header */}
       <section className="border-b border-black/10 bg-white">
         <Container className="py-10 space-y-4">
-          <Link href="/projects" className="text-sm text-black/70 hover:text-black">
+          <Link
+            href="/projects"
+            className="text-sm text-black/70 hover:text-black"
+          >
             ← Back to Projects
           </Link>
 
@@ -31,11 +41,16 @@ export default async function ProjectSlugPage({
             {project.title}
           </h1>
 
-          <p className="text-black/70 max-w-2xl">{project.summary}</p>
+          <p className="text-black/70 max-w-2xl">
+            {project.summary}
+          </p>
 
           <div className="flex flex-wrap gap-2">
             {project.tech.map((t) => (
-              <Badge key={t} className="border-black/10 bg-black/[0.04] text-black/80">
+              <Badge
+                key={t}
+                className="border-black/10 bg-black/[0.04] text-black/80"
+              >
                 {t}
               </Badge>
             ))}
@@ -46,11 +61,13 @@ export default async function ProjectSlugPage({
       {/* Image + Overview */}
       <section className="bg-zinc-50 border-b border-black/10">
         <Container className="py-12 grid gap-6 md:grid-cols-[1.2fr_.8fr]">
-          {/* Text content */}
+          {/* Text */}
           <Card className="border-black/10 bg-white">
             <CardContent className="p-6 space-y-3">
               <h2 className="text-xl font-semibold">Overview</h2>
-              <p className="text-black/70 leading-relaxed">{project.description}</p>
+              <p className="text-black/70 leading-relaxed">
+                {project.description}
+              </p>
 
               <h3 className="pt-4 text-lg font-semibold">Highlights</h3>
               <ul className="space-y-2 text-sm text-black/70">

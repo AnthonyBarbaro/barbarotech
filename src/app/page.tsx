@@ -102,7 +102,7 @@ export default function Home() {
               <ButtonLink href="/pricing" variant="secondary">
                 Pricing
               </ButtonLink>
-              <ButtonLink href="/contact?ref=home" variant="ghost">
+              <ButtonLink href="/contact" variant="ghost">
                 Get a quote →
               </ButtonLink>
             </div>
@@ -235,7 +235,7 @@ export default function Home() {
             </div>
             <div className="flex gap-3 flex-wrap">
               <ButtonLink href="/pricing">View pricing</ButtonLink>
-              <ButtonLink href="/contact?ref=home" variant="secondary">
+              <ButtonLink href="/contact" variant="secondary">
                 Get a quote →
               </ButtonLink>
             </div>

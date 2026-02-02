@@ -28,9 +28,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-grid-light`}>
+      <body className={`${inter.className} min-h-screen flex flex-col bg-white`}>
         <Navbar />
-        {children}
+
+        {/* Only the content area gets the grid background */}
+        <main className="flex-1 bg-grid-light">
+          {children}
+        </main>
+
         <Footer />
       </body>
     </html>

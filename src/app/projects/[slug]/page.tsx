@@ -179,7 +179,7 @@ export default async function ProjectSlugPage({ params }: PageProps) {
                 ) : null}
 
                 <ButtonLink
-                  href={`/contact/?ref=project&plan=${encodeURIComponent(project.title)}`}
+                  href={`/contact`}
                   variant="secondary"
                 >
                   Get a quote →
@@ -347,7 +347,7 @@ export default async function ProjectSlugPage({ params }: PageProps) {
 
                   <div className="pt-2">
                     <ButtonLink
-                      href={`/contact/?ref=project&plan=${encodeURIComponent(project.title)}`}
+                      href={`/contact`}
                       variant="secondary"
                       className="w-full"
                     >
@@ -416,7 +416,7 @@ export default async function ProjectSlugPage({ params }: PageProps) {
             <div className="flex gap-3 flex-wrap">
               <ButtonLink href="/pricing/">View pricing</ButtonLink>
               <ButtonLink
-                href={`/contact/?ref=project&plan=${encodeURIComponent(project.title)}`}
+                href={`/contact`}
                 variant="secondary"
               >
                 Get a quote →

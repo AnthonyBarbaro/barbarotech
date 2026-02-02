@@ -338,7 +338,7 @@ export default function AboutPage() {
               <ButtonLink href="/projects" variant="secondary">
                 View projects
               </ButtonLink>
-              <ButtonLink href="/contact?ref=about">
+              <ButtonLink href="/contact">
                 Talk about a project →
               </ButtonLink>
             </div>

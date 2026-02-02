@@ -7,9 +7,11 @@ import { CallBookingForm } from "@/components/call-booking-form";
 export const metadata = {
   title: `Contact | ${SITE.brand}`,
   description:
-    "Request a quote or book a call for websites, remodels, Shopify work, and full‑stack apps.",
+    "Request a quote or book a call for websites, remodels, Shopify work, and full-stack apps.",
+  alternates: {
+    canonical: `${SITE.url}/contact/`,
+  },
 };
-
 export default function ContactPage() {
   return (
     <main className="bg-white text-black">

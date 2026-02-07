@@ -230,7 +230,7 @@ export default async function ProjectSlugPage({ params }: PageProps) {
                       src={project.image}
                       alt={`${project.title} preview`}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                       priority
                     />
                   ) : (

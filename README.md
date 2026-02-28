@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BarbaroTech
 
-## Getting Started
+Marketing and portfolio website for BarbaroTech, built with Next.js App Router, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## Tech Stack
+
+- Next.js 16 (App Router, static export)
+- React 19
+- TypeScript
+- Tailwind CSS
+- ESLint
+
+## Features
+
+- Home, Projects, Pricing, About, and Contact pages
+- Dynamic project detail routes generated at build time (`/projects/[slug]`)
+- Pricing packages and project case studies driven from local data files
+- Contact and call-request forms that prefill `mailto:` requests
+- SEO metadata, Open Graph tags, and JSON-LD for project pages
+
+## Prerequisites
+
+- Node.js 20+
+- npm
+
+## Local Development
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create `.env.local`:
+
+```bash
+NEXT_PUBLIC_TEXT_EMAIL=6195362504@vtext.com
+```
+
+This value is used by quote CTA links on Pricing and Projects pages.
+
+3. Start the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` - start local development server
+- `npm run build` - production build + static export
+- `npm run start` - start production server (non-export workflow)
+- `npm run lint` - run ESLint
 
-## Learn More
+## Content Editing
 
-To learn more about Next.js, take a look at the following resources:
+- Site brand/contact/social links: `src/lib/site.ts`
+- Pricing plans: `src/data/pricing.ts`
+- Project cards and case-study data: `src/data/projects.ts`
+- Industry content: `src/data/industries.ts`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Build and Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is configured for static export:
 
-## Deploy on Vercel
+- `next.config.ts` uses `output: "export"`
+- Build output is generated in `out/`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Build with:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+```
+
+Then deploy the `out/` directory to static hosting (for example S3 + CloudFront, Netlify, or any CDN/static host).

@@ -4,7 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { SITE } from "@/lib/site";
-
+import Script from "next/script";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -30,7 +30,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col bg-white`}>
         <Navbar />
-
+        <Script
+          src="https://platform.linkedin.com/badges/js/profile.js"
+          strategy="afterInteractive"
+        />
         {/* Only the content area gets the grid background */}
         <main className="flex-1 bg-grid-light">
           {children}

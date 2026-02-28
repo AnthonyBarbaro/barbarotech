@@ -1,9 +1,9 @@
 import { Container } from "@/components/container";
 import { SITE } from "@/lib/site";
 import { ButtonLink } from "@/components/ui/button";
-import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { LinkedInBadge } from "@/components/LinkedInBadge";
 
 const SERVICES = [
   { label: "Static Websites", detail: "Ultra-fast brochure sites with clean design, SEO structure, and clear CTAs." },
@@ -124,17 +124,12 @@ export default function Home() {
           </div>
 
           <div className="motion-safe:animate-fade-in">
-            <div className="relative w-full aspect-[4/5]">
-              {/* glow behind headshot with blue tint */}
+            <div className="relative w-full max-w-sm mx-auto">
+              {/* glow */}
               <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-gradient-to-tr from-sky-200/60 via-zinc-200/80 to-transparent blur-xl" />
-              <div className="relative h-full w-full rounded-2xl overflow-hidden border border-black/10 bg-white shadow-lg transition-transform duration-200 hover:-translate-y-1">
-                <Image
-                  src={SITE.assets.headshot}
-                  alt={`${SITE.owner} headshot`}
-                  fill
-                  className="object-cover"
-                  priority
-                />
+
+              <div className="relative rounded-2xl border border-black/10 bg-black shadow-lg p-3 flex justify-center">
+                <LinkedInBadge />
               </div>
             </div>
           </div>

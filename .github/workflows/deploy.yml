@@ -35,7 +35,7 @@ jobs:
         run: npm ci
 
       - name: Build static site
-        run: npm run build
+        run: npm run build:static
         # ⚠️ Make sure your build script produces ./out
         # For example in package.json:
         # "build": "next build && next export"

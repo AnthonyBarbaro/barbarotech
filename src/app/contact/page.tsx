@@ -36,19 +36,7 @@ export const metadata: Metadata = {
   },
 };
 
-type ContactPageProps = {
-  searchParams?: Promise<Record<string, string | string[] | undefined>> | Record<string, string | string[] | undefined>;
-};
-
-function getValue(input: string | string[] | undefined) {
-  if (Array.isArray(input)) return input[0] ?? "";
-  return input ?? "";
-}
-
-export default async function ContactPage({ searchParams }: ContactPageProps) {
-  const resolved = await Promise.resolve(searchParams ?? {});
-  const defaultPlan = getValue(resolved.plan);
-  const context = getValue(resolved.context) || defaultPlan || "General inquiry";
+export default function ContactPage() {
   const contactIntakeEnabled = isContactIntakeEnabled();
 
   return (
@@ -84,7 +72,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                       </p>
                     </div>
                     {contactIntakeEnabled ? (
-                      <ContactForm defaultPlan={defaultPlan} />
+                      <ContactForm />
                     ) : (
                       <div className="rounded-2xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-900">
                         Contact forms are temporarily paused. For now, email
@@ -120,7 +108,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                       </p>
                     </div>
                     {contactIntakeEnabled ? (
-                      <CallBookingForm context={context} />
+                      <CallBookingForm />
                     ) : (
                       <div className="rounded-2xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-900">
                         Call booking is temporarily unavailable. Use direct email or phone in the contact panel

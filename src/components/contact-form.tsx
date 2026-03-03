@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { SERVICE_PLAN_OPTIONS } from "@/data/contact";
 import { formatUsPhone } from "@/lib/forms";
 import { Button } from "@/components/ui/button";
@@ -46,8 +47,10 @@ function getInitialPlan(defaultPlan: string) {
   };
 }
 
-export function ContactForm({ defaultPlan = "" }: { defaultPlan?: string }) {
-  const initialPlan = useMemo(() => getInitialPlan(defaultPlan), [defaultPlan]);
+export function ContactForm() {
+  const searchParams = useSearchParams();
+  const queryPlan = searchParams.get("plan") ?? "";
+  const initialPlan = useMemo(() => getInitialPlan(queryPlan), [queryPlan]);
 
   const [state, setState] = useState<FormState>({
     name: "",

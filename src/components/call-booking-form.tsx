@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   CALL_TIME_SLOTS,
   formatTimeZoneOptionLabel,
@@ -158,7 +159,10 @@ function getSlotDisplay(slot: CallTimeSlot, dateValue: string, timeZone: string)
   };
 }
 
-export function CallBookingForm({ context }: { context?: string }) {
+export function CallBookingForm({ context }: { context?: string } = {}) {
+  const searchParams = useSearchParams();
+  const effectiveContext =
+    context || searchParams.get("context") || searchParams.get("plan") || "General inquiry";
   const dateOptions = useMemo(() => getUpcomingCallDates(7), []);
 
   const detectedTimeZone = useMemo(() => {
@@ -299,7 +303,7 @@ export function CallBookingForm({ context }: { context?: string }) {
         body: JSON.stringify({
           ...state,
           preferredTime: resolvedPreferredTime,
-          context: context || "",
+          context: effectiveContext,
         }),
       });
 

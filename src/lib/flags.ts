@@ -11,6 +11,6 @@ function parseBooleanEnv(value: string | undefined, fallback: boolean) {
 export function isContactIntakeEnabled() {
   return parseBooleanEnv(
     process.env.CONTACT_INTAKE_ENABLED ?? process.env.NEXT_PUBLIC_CONTACT_INTAKE_ENABLED,
-    true
+    false
   );
 }

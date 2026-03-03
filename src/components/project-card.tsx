@@ -5,137 +5,97 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 export function ProjectCard({ project }: { project: Project }) {
-  // trailingSlash: true => always link with a trailing slash for best static hosting behavior
   const href = `/projects/${project.slug}/`;
-
-  // Optional fields (won’t break if you haven’t added them yet)
   const metrics = project.metrics?.slice(0, 2) ?? [];
   const topHighlights = project.highlights?.slice(0, 2) ?? [];
-  const topLinks = project.links?.slice(0, 2) ?? [];
+  const topTech = project.tech.slice(0, 4);
 
   return (
-    <Card className="group h-full overflow-hidden border-black/10 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-sky-300/70">
-      {/* Preview */}
-      <div className="relative aspect-[16/9] bg-zinc-100">
+    <Card className="group h-full overflow-hidden">
+      <div className="relative aspect-[16/9] overflow-hidden border-b border-slate-900/10 bg-slate-100">
         {project.image ? (
           <Image
             src={project.image}
             alt={`${project.title} preview`}
             fill
-            className="object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         ) : (
           <div className="absolute inset-0 grid place-items-center">
-            <div className="rounded-2xl border border-black/10 bg-white/80 px-4 py-2 text-xs text-black/60">
+            <div className="rounded-full border border-slate-900/10 bg-white px-4 py-1.5 text-xs text-slate-600">
               Preview coming soon
             </div>
           </div>
         )}
 
-        {/* Subtle overlay on hover */}
-        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-tr from-black/0 via-black/0 to-black/20" />
-
-        {/* Top-left tags */}
-        <div className="absolute left-3 top-3 flex flex-wrap gap-2">
-          {project.featured ? (
-            <span className="inline-flex items-center rounded-full bg-black px-2.5 py-1 text-[11px] font-medium text-white shadow-sm">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/45 via-slate-900/15 to-transparent opacity-75 transition-opacity duration-500 group-hover:opacity-90" />
+        <div className="absolute left-4 top-4 flex items-center gap-2">
+          <span className="shimmer-line inline-flex rounded-full border border-white/25 bg-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white backdrop-blur">
+            Case Study
+          </span>
+          {project.featured && (
+            <span className="inline-flex rounded-full bg-sky-400 px-2.5 py-1 text-[11px] font-semibold text-slate-900">
               Featured
             </span>
-          ) : null}
-
-          <span className="inline-flex items-center rounded-full border border-black/10 bg-white/90 px-2.5 py-1 text-[11px] font-medium text-black/70 shadow-sm">
-            Case study
-          </span>
-        </div>
-
-        {/* Bottom-right “View” chip */}
-        <div className="absolute bottom-3 right-3">
-          <Link
-            href={href}
-            className="inline-flex items-center gap-1 rounded-full border border-black/10 bg-white/90 px-3 py-1 text-[11px] font-medium text-black/70 shadow-sm transition hover:bg-white hover:border-sky-300/70 hover:text-black"
-          >
-            View <span aria-hidden>→</span>
-          </Link>
+          )}
         </div>
       </div>
 
-      <CardContent className="p-6 space-y-4">
-        {/* Title + summary */}
-        <div className="space-y-1">
-          <h3 className="text-lg font-semibold tracking-tight text-black leading-snug">
+      <CardContent className="space-y-5">
+        <div className="space-y-2">
+          <h3 className="text-xl font-semibold leading-tight text-slate-900">
             {project.title}
           </h3>
-          <p className="text-sm text-black/70 leading-relaxed">
+          <p className="text-sm leading-relaxed text-slate-600">
             {project.summary}
           </p>
         </div>
 
-        {/* Tech chips */}
         <div className="flex flex-wrap gap-2">
-          {project.tech.slice(0, 5).map((tech) => (
-            <Badge
-              key={tech}
-              className="border-black/10 bg-black/[0.04] text-black/80"
-            >
+          {topTech.map((tech) => (
+            <Badge key={tech}>
               {tech}
             </Badge>
           ))}
-          {project.tech.length > 5 ? (
-            <span className="text-xs text-black/50 self-center">
-              +{project.tech.length - 5} more
+          {project.tech.length > topTech.length && (
+            <span className="self-center text-xs text-slate-500">
+              +{project.tech.length - topTech.length} more
             </span>
-          ) : null}
+          )}
         </div>
 
-        {/* Metrics (optional) */}
         {metrics.length > 0 ? (
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-2.5">
             {metrics.map((m) => (
               <div
                 key={`${m.label}-${m.value}`}
-                className="rounded-xl border border-black/10 bg-zinc-50 px-3 py-2"
+                className="rounded-2xl border border-slate-900/10 bg-[rgba(255,255,255,0.92)] px-3 py-2"
               >
-                <div className="text-[11px] text-black/60">{m.label}</div>
-                <div className="text-sm font-semibold text-black">{m.value}</div>
+                <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-500">{m.label}</div>
+                <div className="text-sm font-semibold text-slate-900">{m.value}</div>
               </div>
             ))}
           </div>
         ) : null}
 
-        {/* Highlights (optional) */}
         {topHighlights.length > 0 ? (
-          <ul className="space-y-1 text-sm text-black/70">
+          <ul className="space-y-1.5 text-sm text-slate-600">
             {topHighlights.map((h) => (
               <li key={h} className="flex gap-2">
-                <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-sky-400/80" />
+                <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-sky-500/80" />
                 <span>{h}</span>
               </li>
             ))}
           </ul>
         ) : null}
 
-        {/* Footer: external links + CTA */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-          <div className="flex flex-wrap gap-4 text-sm">
-            {topLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-black/70 hover:text-black transition underline underline-offset-4 decoration-black/20 hover:decoration-sky-400/60"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
+        <div className="pt-1">
           <Link
             href={href}
-            className="inline-flex items-center justify-center rounded-xl border border-black/10 bg-zinc-50 px-3 py-2 text-sm font-medium text-black hover:bg-white hover:border-sky-300/70 transition"
+            className="button-shine inline-flex items-center gap-2 rounded-full border border-slate-900/10 bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5 hover:border-sky-500/40 hover:text-sky-700"
           >
-            View case study →
+            View Project <span aria-hidden>→</span>
           </Link>
         </div>
       </CardContent>

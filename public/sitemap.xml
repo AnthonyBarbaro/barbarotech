@@ -1,25 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset 
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://barbarotech.com/</loc>
+    <loc>https://barbaro.tech/</loc>
   </url>
-
   <url>
-    <loc>https://barbarotech.com/about</loc>
+    <loc>https://barbaro.tech/about/</loc>
   </url>
-
   <url>
-    <loc>https://barbarotech.com/projects</loc>
+    <loc>https://barbaro.tech/projects/</loc>
   </url>
-
   <url>
-    <loc>https://barbarotech.com/pricing</loc>
+    <loc>https://barbaro.tech/pricing/</loc>
   </url>
-
   <url>
-    <loc>https://barbarotech.com/contact</loc>
+    <loc>https://barbaro.tech/contact/</loc>
   </url>
-
+  <url>
+    <loc>https://barbaro.tech/services/</loc>
+  </url>
+  <url>
+    <loc>https://barbaro.tech/services/freelance-web-developer-san-diego/</loc>
+  </url>
+  <url>
+    <loc>https://barbaro.tech/services/ai-automation-freelancer/</loc>
+  </url>
+  <url>
+    <loc>https://barbaro.tech/services/shopify-freelancer/</loc>
+  </url>
+  <url>
+    <loc>https://barbaro.tech/projects/barbarotech-site/</loc>
+  </url>
+  <url>
+    <loc>https://barbaro.tech/projects/qr-badge-system/</loc>
+  </url>
+  <url>
+    <loc>https://barbaro.tech/projects/buzz-cannabis-platform/</loc>
+  </url>
+  <url>
+    <loc>https://barbaro.tech/projects/island-view-market-liquor/</loc>
+  </url>
+  <url>
+    <loc>https://barbaro.tech/projects/farida-law-san-diego/</loc>
+  </url>
+  <url>
+    <loc>https://barbaro.tech/projects/the-smoking-bee/</loc>
+  </url>
+  <url>
+    <loc>https://barbaro.tech/projects/goso-gummies/</loc>
+  </url>
 </urlset>

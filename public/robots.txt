@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
-Sitemap: https://barbarotech.com/sitemap.xml
+Sitemap: https://barbaro.tech/sitemap.xml
+Host: https://barbaro.tech

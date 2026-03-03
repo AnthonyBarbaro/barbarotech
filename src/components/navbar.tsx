@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/container";
@@ -9,91 +9,84 @@ import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/projects", label: "Projects" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/services/", label: "Services" },
+  { href: "/projects/", label: "Projects" },
+  { href: "/pricing/", label: "Pricing" },
+  { href: "/about/", label: "About" },
+  { href: "/contact/", label: "Contact" },
 ];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-  const contactHref = "/contact?ref=nav";
+  const pathname = usePathname() ?? "/";
 
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  const isActive = (href: string) => {
+    const trimmed = href.endsWith("/") ? href.slice(0, -1) : href;
+    return pathname === href || pathname === trimmed || pathname.startsWith(href);
+  };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-black/10 bg-white/90 backdrop-blur-sm">
-      <Container className="flex h-16 items-center justify-between gap-4">
-        {/* Brand */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 font-semibold tracking-tight text-black"
-        >
-          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-gradient-to-r from-sky-500 via-sky-400 to-sky-300" />
-          <span>{SITE.brand}</span>
+    <header className="sticky top-0 z-50 border-b border-slate-900/10 bg-white/72 backdrop-blur-2xl">
+      <Container className="flex h-[74px] items-center justify-between gap-3">
+        <Link href="/" className="group flex items-center gap-2.5 text-slate-900">
+          <span className="pulse-ring relative inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-cyan-500 to-blue-600" />
+          <span className="text-base font-semibold tracking-tight">{SITE.brand}</span>
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 text-sm md:flex">
-          {NAV_LINKS.map((item) => {
-            const active = pathname === item.href;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "group relative transition-colors",
-                  active ? "text-black" : "text-black/70 hover:text-black"
-                )}
-              >
-                <span>{item.label}</span>
-                {/* blue underline on hover / active */}
-                <span
+        <nav className="hidden flex-1 items-center justify-center md:flex">
+          <div className="glass-panel flex items-center gap-1 rounded-full border border-slate-900/10 px-2 py-2">
+            {NAV_LINKS.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
                   className={cn(
-                    "pointer-events-none absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-sky-500 via-sky-400 to-transparent transition-transform duration-200 origin-left",
-                    active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                    "rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] transition-all duration-300",
+                    active
+                      ? "bg-slate-950 text-white shadow-[0_10px_24px_rgba(9,18,39,0.3)]"
+                      : "text-slate-600 hover:bg-white hover:text-slate-900"
                   )}
-                />
-              </Link>
-            );
-          })}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
 
-        {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-2">
-          <ButtonLink href={contactHref} variant="primary">
-            Get a quote
+        <div className="hidden items-center gap-2 md:flex">
+          <span className="rounded-full border border-slate-900/10 bg-white/85 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
+            Open for New Builds
+          </span>
+          <ButtonLink href="/contact/" variant="primary">
+            Start a Project
           </ButtonLink>
         </div>
 
-        {/* Mobile hamburger */}
         <button
           type="button"
           onClick={() => setOpen((prev) => !prev)}
-          className="md:hidden inline-flex items-center justify-center rounded-full border border-black/10 bg-white/90 p-2 text-black/70 shadow-sm hover:text-black hover:border-black/20 transition"
+          className="inline-flex items-center justify-center rounded-full border border-slate-900/10 bg-white/90 p-2 text-slate-700 shadow-sm transition hover:text-slate-900 md:hidden"
           aria-label="Toggle navigation menu"
           aria-expanded={open}
         >
           <span className="relative flex h-3 w-4 items-center justify-center">
             <span
               className={cn(
-                "absolute h-0.5 w-4 rounded-full bg-black transition-transform duration-200",
+                "absolute h-0.5 w-4 rounded-full bg-slate-900 transition-transform duration-200",
                 open ? "translate-y-0 rotate-45" : "-translate-y-1"
               )}
             />
             <span
               className={cn(
-                "absolute h-0.5 w-4 rounded-full bg-black transition-opacity duration-150",
+                "absolute h-0.5 w-4 rounded-full bg-slate-900 transition-opacity duration-150",
                 open ? "opacity-0" : "opacity-100"
               )}
             />
             <span
               className={cn(
-                "absolute h-0.5 w-4 rounded-full bg-black transition-transform duration-200",
+                "absolute h-0.5 w-4 rounded-full bg-slate-900 transition-transform duration-200",
                 open ? "translate-y-0 -rotate-45" : "translate-y-1"
               )}
             />
@@ -101,26 +94,26 @@ export function Navbar() {
         </button>
       </Container>
 
-      {/* Mobile menu panel */}
       <div
         className={cn(
-          "md:hidden border-t border-black/10 bg-white/95 backdrop-blur-sm shadow-sm overflow-hidden transition-[max-height,opacity] duration-200",
-          open ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+          "overflow-hidden border-t border-slate-900/10 bg-white/90 backdrop-blur transition-[max-height,opacity] duration-300 md:hidden",
+          open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
         )}
       >
-        <Container className={cn("flex flex-col gap-3", open && "py-3")}>
-          <nav className="flex flex-col gap-1 text-sm">
+        <Container className={cn("space-y-3", open && "py-4")}>
+          <nav className="grid grid-cols-2 gap-2 text-sm">
             {NAV_LINKS.map((item) => {
-              const active = pathname === item.href;
+              const active = isActive(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={() => setOpen(false)}
                   className={cn(
-                    "rounded-lg px-2 py-1.5 transition-colors",
+                    "rounded-2xl border px-3 py-2 text-center text-xs font-semibold uppercase tracking-[0.08em] transition",
                     active
-                      ? "bg-sky-50 text-black font-medium"
-                      : "text-black/70 hover:text-black hover:bg-zinc-50"
+                      ? "border-slate-900/20 bg-slate-900 text-white"
+                      : "border-slate-900/10 bg-white text-slate-600 hover:border-slate-900/20 hover:text-slate-900"
                   )}
                 >
                   {item.label}
@@ -129,9 +122,14 @@ export function Navbar() {
             })}
           </nav>
 
-          <ButtonLink href={contactHref} className="w-full">
-            Get a quote
-          </ButtonLink>
+          <div className="flex items-center gap-2">
+            <span className="rounded-full border border-slate-900/10 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
+              Open for New Builds
+            </span>
+            <ButtonLink href="/contact/" onClick={() => setOpen(false)} className="flex-1">
+              Start a Project
+            </ButtonLink>
+          </div>
         </Container>
       </div>
     </header>

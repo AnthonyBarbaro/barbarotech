@@ -21,7 +21,7 @@ export const SITE = {
     ],
   
     assets: {
-      headshot: "/headshot.jpeg", // put file in /public
+      headshot: "/headshot.png", // put file in /public
       resumePdf: "/resume.pdf",  // put file in /public
     },
   } as const;

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Container } from "@/components/container";
 import { ContactForm } from "@/components/contact-form";
 import { CallBookingForm } from "@/components/call-booking-form";
@@ -38,6 +39,11 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   const contactIntakeEnabled = isContactIntakeEnabled();
+  const formFallback = (
+    <div className="rounded-2xl border border-slate-900/10 bg-white/80 px-4 py-3 text-sm text-slate-500">
+      Loading form…
+    </div>
+  );
 
   return (
     <main className="text-slate-900">
@@ -72,7 +78,9 @@ export default function ContactPage() {
                       </p>
                     </div>
                     {contactIntakeEnabled ? (
-                      <ContactForm />
+                      <Suspense fallback={formFallback}>
+                        <ContactForm />
+                      </Suspense>
                     ) : (
                       <div className="rounded-2xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-900">
                         Contact forms are temporarily paused. For now, email
@@ -108,7 +116,9 @@ export default function ContactPage() {
                       </p>
                     </div>
                     {contactIntakeEnabled ? (
-                      <CallBookingForm />
+                      <Suspense fallback={formFallback}>
+                        <CallBookingForm />
+                      </Suspense>
                     ) : (
                       <div className="rounded-2xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-900">
                         Call booking is temporarily unavailable. Use direct email or phone in the contact panel

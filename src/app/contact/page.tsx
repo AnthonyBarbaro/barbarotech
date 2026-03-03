@@ -6,6 +6,7 @@ import { Reveal } from "@/components/reveal";
 import { Card, CardContent } from "@/components/ui/card";
 import { SITE } from "@/lib/site";
 import { canonicalUrl, withBaseKeywords } from "@/lib/seo";
+import { isContactIntakeEnabled } from "@/lib/flags";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -48,6 +49,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
   const resolved = await Promise.resolve(searchParams ?? {});
   const defaultPlan = getValue(resolved.plan);
   const context = getValue(resolved.context) || defaultPlan || "General inquiry";
+  const contactIntakeEnabled = isContactIntakeEnabled();
 
   return (
     <main className="text-slate-900">
@@ -81,7 +83,24 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                         Fill this out and I&apos;ll reply directly. If you came from a package page, it is already prefilled.
                       </p>
                     </div>
-                    <ContactForm defaultPlan={defaultPlan} />
+                    {contactIntakeEnabled ? (
+                      <ContactForm defaultPlan={defaultPlan} />
+                    ) : (
+                      <div className="rounded-2xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                        Contact forms are temporarily paused. For now, email
+                        {" "}
+                        <a className="font-semibold underline" href={`mailto:${SITE.contact.fallbackEmail}`}>
+                          {SITE.contact.fallbackEmail}
+                        </a>
+                        {" "}
+                        or call
+                        {" "}
+                        <a className="font-semibold underline" href={`tel:${SITE.contact.displayPhone.replace(/[^0-9+]/g, "")}`}>
+                          {SITE.contact.displayPhone}
+                        </a>
+                        .
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </Reveal>
@@ -100,7 +119,14 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                         Choose date + time
                       </p>
                     </div>
-                    <CallBookingForm context={context} />
+                    {contactIntakeEnabled ? (
+                      <CallBookingForm context={context} />
+                    ) : (
+                      <div className="rounded-2xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                        Call booking is temporarily unavailable. Use direct email or phone in the contact panel
+                        and we can schedule manually.
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </Reveal>
@@ -118,7 +144,9 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                       <span className="font-semibold text-slate-900">Email:</span> {SITE.contact.fallbackEmail}
                     </p>
                     <p className="pt-1 text-xs text-slate-500">
-                      Form submissions are delivered by email immediately and include all details you provide.
+                      {contactIntakeEnabled
+                        ? "Form submissions are delivered by email immediately and include all details you provide."
+                        : "Forms are currently paused. Use phone or direct email and I will reply manually."}
                     </p>
                   </CardContent>
                 </Card>

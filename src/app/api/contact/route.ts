@@ -1,4 +1,5 @@
 import { buildBrandedEmail, sendEmail } from "@/lib/email";
+import { isContactIntakeEnabled } from "@/lib/flags";
 
 export const runtime = "nodejs";
 
@@ -17,6 +18,10 @@ type ContactBody = {
 };
 
 export async function POST(request: Request) {
+  if (!isContactIntakeEnabled()) {
+    return new Response("Contact forms are temporarily unavailable.", { status: 503 });
+  }
+
   try {
     const body = (await request.json()) as ContactBody;
     const name = String(body.name || "").trim();

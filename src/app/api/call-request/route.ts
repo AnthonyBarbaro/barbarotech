@@ -1,4 +1,5 @@
 import { buildBrandedEmail, sendEmail } from "@/lib/email";
+import { isContactIntakeEnabled } from "@/lib/flags";
 
 export const runtime = "nodejs";
 
@@ -17,6 +18,10 @@ type CallRequestBody = {
 };
 
 export async function POST(request: Request) {
+  if (!isContactIntakeEnabled()) {
+    return new Response("Call booking is temporarily unavailable.", { status: 503 });
+  }
+
   try {
     const body = (await request.json()) as CallRequestBody;
     const name = String(body.name || "").trim();

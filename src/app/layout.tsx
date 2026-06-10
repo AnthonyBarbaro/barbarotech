@@ -2,10 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { SiteEffects } from "@/components/site-effects";
-import { QuickCommandDock } from "@/components/quick-command-dock";
+import { SiteChrome } from "@/components/site-chrome";
 import { SITE } from "@/lib/site";
 import { BASE_KEYWORDS, SITE_LOCALE, canonicalUrl } from "@/lib/seo";
 
@@ -105,15 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <SiteEffects />
-        <div className="app-shell flex min-h-screen flex-col">
-          <Navbar />
-          <main className="flex-1 bg-grid-light pb-24 md:pb-28">
-            {children}
-          </main>
-          <Footer />
-        </div>
-        <QuickCommandDock />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { SERVICE_PLAN_OPTIONS } from "@/data/contact";
 import { formatUsPhone } from "@/lib/forms";
+import { getPublicApiEndpoint } from "@/lib/public-api";
 import { Button } from "@/components/ui/button";
 
 type FormState = {
@@ -117,7 +118,7 @@ export function ContactForm() {
     setFeedback("");
 
     try {
-      const response = await fetch("/api/contact/", {
+      const response = await fetch(getPublicApiEndpoint("/contact", "/api/contact/"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

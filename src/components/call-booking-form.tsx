@@ -11,6 +11,7 @@ import {
   type CallTimeSlot,
 } from "@/data/contact";
 import { formatUsPhone, isValidUsPhone } from "@/lib/forms";
+import { getPublicApiEndpoint } from "@/lib/public-api";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -297,7 +298,7 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
       : state.preferredTime;
 
     try {
-      const response = await fetch("/api/call-request/", {
+      const response = await fetch(getPublicApiEndpoint("/call-request", "/api/call-request/"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

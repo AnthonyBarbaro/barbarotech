@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AppShell } from "@/components/portal/app-shell";
-import { ClientBillingLive } from "@/components/portal/live/client-live";
+import { ClientBillingMock } from "@/components/portal/mock/client-portal";
 import { clientNavItems } from "@/lib/portal/nav";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function PortalBillingPage() {
       description="Review your current care plan and open the Stripe Billing Portal for invoices, payment methods, and billing details."
       navItems={clientNavItems}
     >
-      <ClientBillingLive />
+      <ClientBillingMock />
     </AppShell>
   );
 }

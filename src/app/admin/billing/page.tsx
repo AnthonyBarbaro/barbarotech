@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AppShell } from "@/components/portal/app-shell";
-import { AdminBillingLive } from "@/components/portal/live/admin-live";
+import { AdminBillingMock } from "@/components/portal/mock/admin-portal";
 import { adminNavItems } from "@/lib/portal/nav";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function AdminBillingPage() {
       description="Create custom quotes, send Stripe Checkout links, and monitor retainer billing status."
       navItems={adminNavItems}
     >
-      <AdminBillingLive />
+      <AdminBillingMock />
     </AppShell>
   );
 }

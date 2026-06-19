@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AppShell } from "@/components/portal/app-shell";
-import { AdminClientsLive } from "@/components/portal/live/admin-live";
+import { AdminClientsMock } from "@/components/portal/mock/admin-portal";
 import { adminNavItems } from "@/lib/portal/nav";
 
 export const metadata: Metadata = {
@@ -17,9 +17,8 @@ export default function AdminClientsPage() {
       pageTitle="Client CRM"
       description="Create clients, invite portal access, review care plans, and open custom retainer billing."
       navItems={adminNavItems}
-      loginReturnTo="/admin/clients/"
     >
-      <AdminClientsLive />
+      <AdminClientsMock />
     </AppShell>
   );
 }

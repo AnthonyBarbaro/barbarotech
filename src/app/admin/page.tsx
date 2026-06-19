@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AppShell } from "@/components/portal/app-shell";
-import { AdminOverviewLive } from "@/components/portal/live/admin-live";
+import { AdminOverviewMock } from "@/components/portal/mock/admin-portal";
 import { adminNavItems } from "@/lib/portal/nav";
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default function AdminPage() {
       actionHref="/admin/clients/"
       actionLabel="Manage Clients"
     >
-      <AdminOverviewLive />
+      <AdminOverviewMock />
     </AppShell>
   );
 }

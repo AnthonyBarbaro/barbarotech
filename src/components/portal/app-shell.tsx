@@ -12,7 +12,6 @@ export function AppShell({
   navItems,
   actionHref,
   actionLabel,
-  loginReturnTo,
   children,
 }: {
   title: string;
@@ -23,7 +22,6 @@ export function AppShell({
   navItems: DashboardNavItem[];
   actionHref?: string;
   actionLabel?: string;
-  loginReturnTo?: string;
   children: ReactNode;
 }) {
   return (
@@ -37,7 +35,6 @@ export function AppShell({
             description={description}
             actionHref={actionHref}
             actionLabel={actionLabel}
-            loginReturnTo={loginReturnTo || (subtitle === "Admin" ? "/admin/" : "/portal/")}
           />
           <div className="px-5 py-6">{children}</div>
         </section>

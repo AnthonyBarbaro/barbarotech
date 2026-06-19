@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AppShell } from "@/components/portal/app-shell";
-import { ClientRequestsLive } from "@/components/portal/live/client-live";
+import { ClientRequestsMock } from "@/components/portal/mock/client-portal";
 import { clientNavItems } from "@/lib/portal/nav";
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default function PortalRequestsPage() {
       actionHref="/portal/requests/new/"
       actionLabel="New Request"
     >
-      <ClientRequestsLive />
+      <ClientRequestsMock />
     </AppShell>
   );
 }

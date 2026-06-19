@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { getDatabase } from "@/server/db/client";
 import { clients } from "@/server/db/schema";
-import { notFound } from "./http";
+import { forbidden, notFound } from "./http";
 
 export async function getClientForCognitoSub(cognitoSub: string) {
   const db = await getDatabase();
@@ -13,6 +13,10 @@ export async function getClientForCognitoSub(cognitoSub: string) {
 
   if (!client) {
     throw notFound("No client profile is linked to this portal user.");
+  }
+
+  if (client.accessStatus === "disabled") {
+    throw forbidden("Client portal access is disabled.");
   }
 
   return client;

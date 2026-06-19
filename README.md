@@ -18,7 +18,7 @@ Built with Next.js App Router, TypeScript, and Tailwind CSS, with AWS-backed for
 
 - Marketing pages: Home, Projects, Pricing, About, Contact
 - Dynamic project case studies: `/projects/[slug]` (generated at build time)
-- Live Client Portal and Admin dashboard routes: `/portal` and `/admin`
+- Static Client Portal and Admin dashboard preview routes: `/portal` and `/admin`
 - Data-driven content from local TypeScript files
 - Animated, simplified UI across all pages
 - Static contact and call-request forms that submit to API Gateway/Lambda + SES
@@ -191,20 +191,22 @@ public/                # static assets and project images
 
 ## Local Portal Testing
 
-The portal/admin screens are live API clients now. They do not render local mock
-clients, retainers, requests, or billing data.
+The Phase 1 portal/admin screens render local mock clients, retainers, requests,
+and billing data. They do not require Cognito, API Gateway, Stripe, AWS, or
+Railway configuration.
 
-- Set `NEXT_PUBLIC_API_BASE_URL` to the API Gateway endpoint.
-- Set Cognito Managed Login public env vars.
-- Set `NEXT_PUBLIC_ADMIN_EMAIL=anthony@barbaro.tech`.
-- Sign in through Cognito Managed Login.
-- Admin pages require the signed-in user to be in the Cognito `admin` group and to
-  have the email `anthony@barbaro.tech`.
-- Client pages require the signed-in user to be in the Cognito `client` group and
-  map tenant access through `clients.cognito_user_id`.
+- `/portal` - client-facing care plan, billing, and request preview.
+- `/portal/requests` - client request board.
+- `/portal/requests/new` - static request submission preview.
+- `/portal/billing` - hosted billing handoff preview.
+- `/admin` - operations overview.
+- `/admin/clients` - local client and retainer management preview.
+- `/admin/requests` - local request status and next step preview.
+- `/admin/billing` - local retainer and checkout handoff preview.
 
-The frontend only receives `NEXT_PUBLIC_*` values and the Cognito tokens. Railway
-Postgres credentials, Stripe secrets, and AWS secrets remain server-side in Lambda.
+The frontend only receives `NEXT_PUBLIC_*` values. Railway Postgres credentials,
+Stripe secrets, and AWS secrets must remain server-side when live APIs are added
+in a later phase.
 
 ## Local Managed Login
 

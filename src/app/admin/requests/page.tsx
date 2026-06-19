@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AppShell } from "@/components/portal/app-shell";
-import { AdminRequestsLive } from "@/components/portal/live/admin-live";
+import { AdminRequestsMock } from "@/components/portal/mock/admin-portal";
 import { adminNavItems } from "@/lib/portal/nav";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function AdminRequestsPage() {
       description="Review client requests, scope type, internal notes, and the next step before work begins."
       navItems={adminNavItems}
     >
-      <AdminRequestsLive />
+      <AdminRequestsMock />
     </AppShell>
   );
 }

@@ -1,5 +1,4 @@
 import { ButtonLink } from "@/components/ui/button";
-import { ManagedLoginButton } from "./managed-login-button";
 
 export function TopBar({
   eyebrow,
@@ -7,14 +6,12 @@ export function TopBar({
   description,
   actionHref,
   actionLabel,
-  loginReturnTo,
 }: {
   eyebrow: string;
   title: string;
   description: string;
   actionHref?: string;
   actionLabel?: string;
-  loginReturnTo?: string;
 }) {
   return (
     <div className="border-b border-slate-200 bg-white px-5 py-5">
@@ -25,7 +22,6 @@ export function TopBar({
           <p className="mt-1 max-w-2xl text-sm leading-relaxed text-slate-600">{description}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <ManagedLoginButton returnTo={loginReturnTo} />
           {actionHref && actionLabel ? (
             <ButtonLink href={actionHref} variant="primary">
               {actionLabel}

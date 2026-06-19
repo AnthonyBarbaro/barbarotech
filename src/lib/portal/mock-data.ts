@@ -1,12 +1,12 @@
 import type { PortalClient, PortalRequest, PortalRetainer, RequestStatus } from "./types";
 
 export const portalClient: PortalClient = {
-  id: "client-island-view",
-  businessName: "Island View Market",
-  contactName: "Anthony Demo",
-  email: "client@example.com",
+  id: "client-demo-market",
+  businessName: "Demo Market",
+  contactName: "Client Preview",
+  email: "client-preview@example.com",
   phone: "(619) 555-0148",
-  accessStatus: "invited",
+  accessStatus: "active",
 };
 
 export const portalRetainers: PortalRetainer[] = [
@@ -14,12 +14,12 @@ export const portalRetainers: PortalRetainer[] = [
     id: "retainer-growth-care",
     clientId: portalClient.id,
     packageCategory: "Website Care",
-    quoteStatus: "sent",
-    billingStatus: "pending_payment",
+    quoteStatus: "accepted",
+    billingStatus: "active",
     monthlyAmountCents: 24900,
     setupFeeCents: 50000,
     terms: "Monthly care plan for site updates, request review, and billing visibility.",
-    nextBillingDate: "Pending checkout",
+    nextBillingDate: "2026-07-01",
   },
 ];
 
@@ -36,9 +36,9 @@ export const portalRequests: PortalRequest[] = [
     nextStep: "BarbaroTech is reviewing scope.",
     clientVisibleNote: "This request is included in your current care plan.",
     lastUpdatedBy: "BarbaroTech",
-    targetResponseAt: "Today by 4:00 PM",
-    updatedAt: "2026-06-09",
-    createdAt: "2026-06-08",
+    targetResponseAt: "2026-06-19T16:00:00-07:00",
+    updatedAt: "2026-06-18",
+    createdAt: "2026-06-17",
   },
   {
     id: "request-promo-banner",
@@ -52,9 +52,9 @@ export const portalRequests: PortalRequest[] = [
     nextStep: "This may need separate approval before work begins.",
     clientVisibleNote: "BarbaroTech will confirm scope before starting.",
     lastUpdatedBy: "Client",
-    targetResponseAt: "Tomorrow by 12:00 PM",
-    updatedAt: "2026-06-09",
-    createdAt: "2026-06-09",
+    targetResponseAt: "2026-06-20T12:00:00-07:00",
+    updatedAt: "2026-06-19",
+    createdAt: "2026-06-19",
   },
   {
     id: "request-footer-polish",
@@ -68,26 +68,26 @@ export const portalRequests: PortalRequest[] = [
     nextStep: "No client action needed.",
     clientVisibleNote: "Completed and ready for review.",
     lastUpdatedBy: "BarbaroTech",
-    updatedAt: "2026-06-07",
-    createdAt: "2026-06-06",
+    updatedAt: "2026-06-15",
+    createdAt: "2026-06-14",
   },
 ];
 
 export const adminClients: PortalClient[] = [
   portalClient,
   {
-    id: "client-farida-law",
-    businessName: "Farida Law",
-    contactName: "Farida Demo",
-    email: "farida@example.com",
+    id: "client-demo-law",
+    businessName: "Demo Law Office",
+    contactName: "Admin Preview",
+    email: "law-preview@example.com",
     phone: "(619) 555-0199",
     accessStatus: "active",
   },
   {
-    id: "client-smoking-bee",
-    businessName: "The Smoking Bee",
-    contactName: "Shopify Demo",
-    email: "bee@example.com",
+    id: "client-demo-studio",
+    businessName: "Demo Studio",
+    contactName: "Billing Preview",
+    email: "studio-preview@example.com",
     phone: "(858) 555-0162",
     accessStatus: "disabled",
   },
@@ -97,7 +97,7 @@ export const adminRetainers: PortalRetainer[] = [
   ...portalRetainers,
   {
     id: "retainer-law-care",
-    clientId: "client-farida-law",
+    clientId: "client-demo-law",
     packageCategory: "Hosting / Monitoring",
     quoteStatus: "accepted",
     billingStatus: "active",
@@ -107,15 +107,53 @@ export const adminRetainers: PortalRetainer[] = [
     nextBillingDate: "Jul 1, 2026",
   },
   {
-    id: "retainer-shopify-support",
-    clientId: "client-smoking-bee",
-    packageCategory: "Shopify Support",
-    quoteStatus: "accepted",
-    billingStatus: "past_due",
+    id: "retainer-studio-support",
+    clientId: "client-demo-studio",
+    packageCategory: "Content Support",
+    quoteStatus: "sent",
+    billingStatus: "pending_payment",
     monthlyAmountCents: 59900,
     setupFeeCents: 0,
-    terms: "Shopify support retainer for theme improvements and conversion updates.",
-    nextBillingDate: "Past due",
+    terms: "Content support retainer for page updates, launch support, and request review.",
+    nextBillingDate: "Pending checkout",
+  },
+];
+
+export const adminRequests: PortalRequest[] = [
+  ...portalRequests,
+  {
+    id: "request-law-services",
+    clientId: "client-demo-law",
+    retainerId: "retainer-law-care",
+    title: "Refresh service page copy",
+    description: "Update the service page intro and add a short section for consultation requests.",
+    status: "Approved",
+    priority: "Normal",
+    scopeType: "Included in retainer",
+    nextStep: "Ready for the next content update window.",
+    clientVisibleNote: "Approved for the current care plan.",
+    internalAdminNote: "Use the compact content layout.",
+    lastUpdatedBy: "BarbaroTech",
+    targetResponseAt: "2026-06-21T10:00:00-07:00",
+    updatedAt: "2026-06-18",
+    createdAt: "2026-06-16",
+  },
+  {
+    id: "request-studio-gallery",
+    clientId: "client-demo-studio",
+    retainerId: "retainer-studio-support",
+    title: "Add gallery images",
+    description: "Prepare a new gallery section after the next batch of images is approved.",
+    status: "Waiting",
+    priority: "High",
+    scopeType: "Needs approval",
+    nextStep: "Waiting for final image selections.",
+    clientVisibleNote: "Send final image choices before the next step.",
+    internalAdminNote: "Confirm file sizes before implementation.",
+    lastUpdatedBy: "Client",
+    targetResponseAt: "2026-06-22T13:00:00-07:00",
+    updatedAt: "2026-06-19",
+    createdAt: "2026-06-18",
   },
 ];
 
@@ -145,5 +183,5 @@ export function getRetainersForClient(clientId: string) {
 }
 
 export function getRequestsForClient(clientId: string) {
-  return portalRequests.filter((request) => request.clientId === clientId);
+  return adminRequests.filter((request) => request.clientId === clientId);
 }

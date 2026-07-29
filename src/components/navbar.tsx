@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Container } from "@/components/container";
 import { ButtonLink } from "@/components/ui/button";
+import { getDiscountedSetupPrice, setupFeePromotion } from "@/data/pricing";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +16,11 @@ const NAV_LINKS = [
   { href: "/about/", label: "About" },
   { href: "/contact/", label: "Contact" },
 ];
+
+const NAV_STARTING_PRICE = getDiscountedSetupPrice("$1,500") ?? "$1,500";
+const NAV_PRICE_LABEL = setupFeePromotion.enabled
+  ? `Sale From ${NAV_STARTING_PRICE}`
+  : `Sites From ${NAV_STARTING_PRICE}`;
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -57,10 +63,10 @@ export function Navbar() {
 
         <div className="hidden items-center gap-2 md:flex">
           <span className="rounded-full border border-slate-900/10 bg-white/85 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
-            Open for New Builds
+            {NAV_PRICE_LABEL}
           </span>
-          <ButtonLink href="/contact/" variant="primary">
-            Start a Project
+          <ButtonLink href="/contact/?intent=quote" variant="primary">
+            Get Quote
           </ButtonLink>
         </div>
 
@@ -124,10 +130,10 @@ export function Navbar() {
 
           <div className="flex items-center gap-2">
             <span className="rounded-full border border-slate-900/10 bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-600">
-              Open for New Builds
+              {NAV_PRICE_LABEL}
             </span>
-            <ButtonLink href="/contact/" onClick={() => setOpen(false)} className="flex-1">
-              Start a Project
+            <ButtonLink href="/contact/?intent=quote" onClick={() => setOpen(false)} className="flex-1">
+              Get Quote
             </ButtonLink>
           </div>
         </Container>

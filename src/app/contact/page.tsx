@@ -5,6 +5,13 @@ import { ContactForm } from "@/components/contact-form";
 import { CallBookingForm } from "@/components/call-booking-form";
 import { Reveal } from "@/components/reveal";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  getDiscountedSetupPrice,
+  getSetupFeePromotionBadgeText,
+  getSetupFeePromotionText,
+  pricingPackageGroups,
+  setupFeePromotion,
+} from "@/data/pricing";
 import { SITE } from "@/lib/site";
 import { canonicalUrl, withBaseKeywords } from "@/lib/seo";
 import { isContactIntakeEnabled } from "@/lib/flags";
@@ -23,7 +30,7 @@ export const metadata: Metadata = {
   ]),
   openGraph: {
     title: `Contact | ${SITE.brand}`,
-    description: "Request a quote or book a call for websites, remodels, and full-stack project work.",
+    description: "Request a quote or book a call for websites, custom software, remodels, and full-stack project work.",
     url: canonicalUrl("/contact/"),
     siteName: SITE.brand,
     images: [{ url: "/og.png" }],
@@ -32,10 +39,33 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `Contact | ${SITE.brand}`,
-    description: "Request a quote or book a call for websites, remodels, and full-stack project work.",
+    description: "Request a quote or book a call for websites, custom software, remodels, and full-stack project work.",
     images: ["/og.png"],
   },
 };
+
+function getStartingPointPrice(setupPrice: string, monthlyPrice: string) {
+  if (setupPrice.toLowerCase().includes("request")) return setupPrice;
+
+  return `${getDiscountedSetupPrice(setupPrice) ?? setupPrice} + ${monthlyPrice}`;
+}
+
+const POPULAR_STARTING_POINTS = pricingPackageGroups.flatMap((group) => {
+  const starterPackage = group.packages[0];
+  if (!starterPackage) return [];
+
+  return [
+    {
+      title: group.title,
+      setupPrice: starterPackage.setupPrice,
+      monthlyPrice: starterPackage.monthlyPrice,
+      discountedSetupPrice: getDiscountedSetupPrice(starterPackage.setupPrice),
+      price: getStartingPointPrice(starterPackage.setupPrice, starterPackage.monthlyPrice),
+      pricingHref: `/pricing/#${group.id}`,
+      quoteHref: starterPackage.ctaHref,
+    },
+  ];
+});
 
 export default function ContactPage() {
   const contactIntakeEnabled = isContactIntakeEnabled();
@@ -108,7 +138,7 @@ export default function ContactPage() {
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <h3 className="text-lg font-semibold md:text-xl">Book a Call</h3>
                         <span className="rounded-full border border-white/25 bg-white/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-cyan-100">
-                          Built-in Scheduler
+                          Call Request
                         </span>
                       </div>
                       <p className="mt-1.5 text-sm text-slate-200">
@@ -131,6 +161,71 @@ export default function ContactPage() {
             </div>
 
             <div className="space-y-5">
+              <Reveal delay={100}>
+                <Card>
+                  <CardContent className="space-y-3 text-sm text-slate-600">
+                    <div className="space-y-1">
+                      <h3 className="text-base font-semibold text-slate-900">Popular Starting Points</h3>
+                      <p>
+                        Choose a package path or mention it in your request. Final quotes still depend on
+                        content, timeline, and integrations.
+                      </p>
+                      {setupFeePromotion.enabled ? (
+                        <p className="rounded-2xl border border-cyan-300/30 bg-cyan-50 px-3 py-2 text-xs font-semibold text-slate-700">
+                          {setupFeePromotion.label}: {getSetupFeePromotionText()}. Monthly care is unchanged.
+                        </p>
+                      ) : null}
+                    </div>
+                    <div className="space-y-2">
+                      {POPULAR_STARTING_POINTS.map((item) => (
+                        <div
+                          key={item.title}
+                          className="rounded-2xl border border-slate-900/10 bg-white px-3 py-3"
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div>
+                              <p className="font-semibold text-slate-900">{item.title}</p>
+                              {item.discountedSetupPrice ? (
+                                <div className="mt-1 space-y-1">
+                                  <div className="flex flex-wrap items-baseline gap-1.5">
+                                    <span className="text-[11px] font-semibold text-slate-500 line-through">
+                                      {item.setupPrice}
+                                    </span>
+                                    <span className="text-xs font-semibold text-sky-700">
+                                      {item.discountedSetupPrice}
+                                    </span>
+                                    <span className="rounded-full bg-cyan-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-cyan-700">
+                                      {getSetupFeePromotionBadgeText()}
+                                    </span>
+                                  </div>
+                                  <p className="text-[11px] text-slate-500">+ {item.monthlyPrice} monthly care</p>
+                                </div>
+                              ) : (
+                                <p className="text-xs text-slate-500">
+                                  {item.price.toLowerCase().includes("request") ? item.price : `Starting at ${item.price}`}
+                                </p>
+                              )}
+                            </div>
+                            <a
+                              href={item.quoteHref}
+                              className="shrink-0 rounded-full bg-slate-900 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-white transition hover:bg-slate-800"
+                            >
+                              Select
+                            </a>
+                          </div>
+                          <a
+                            href={item.pricingHref}
+                            className="mt-2 inline-flex text-xs font-semibold text-sky-700 transition hover:text-sky-800"
+                          >
+                            View pricing details →
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </Reveal>
+
               <Reveal delay={120}>
                 <Card>
                   <CardContent className="space-y-2 text-sm text-slate-600">

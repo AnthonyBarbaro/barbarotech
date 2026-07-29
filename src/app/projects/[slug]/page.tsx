@@ -69,7 +69,7 @@ function pickRelatedProjects(currentSlug: string) {
 }
 
 function getPrimaryLink(links: { label: string; href: string }[]) {
-  const priority = ["Live", "Website", "Demo", "GitHub"];
+  const priority = ["Live", "Website", "Demo"];
   for (const key of priority) {
     const found = links.find((link) => link.label.toLowerCase().includes(key.toLowerCase()));
     if (found) return found;

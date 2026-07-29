@@ -16,7 +16,6 @@ export const SITE = {
     },
   
     socials: [
-      { label: "GitHub", href: "https://github.com/AnthonyBarbaro" },
       { label: "LinkedIn", href: "https://www.linkedin.com/in/anthony-barbaro-a3b542296/" },
     ],
   
@@ -25,4 +24,3 @@ export const SITE = {
       resumePdf: "/resume.pdf",  // put file in /public
     },
   } as const;
-  

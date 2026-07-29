@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { ButtonLink } from "@/components/ui/button";
+import { getSetupFeePromotionText, setupFeePromotion } from "@/data/pricing";
 import { SITE } from "@/lib/site";
 
 const FOOTER_LINKS = [
@@ -25,14 +26,19 @@ export function Footer() {
                 <span className="text-base font-semibold tracking-tight">{SITE.brand}</span>
               </div>
               <p className="max-w-md text-sm text-slate-600">
-                Structured websites and full-stack systems with speed, clarity, and long-term maintainability.
+                High-converting website packages with clear pricing, monthly care, and direct next steps.
               </p>
+              {setupFeePromotion.enabled ? (
+                <p className="max-w-md rounded-2xl border border-cyan-300/30 bg-cyan-50 px-4 py-3 text-xs font-semibold text-slate-700">
+                  {setupFeePromotion.label}: {getSetupFeePromotionText()}. Monthly care is unchanged.
+                </p>
+              ) : null}
               <div className="flex flex-wrap gap-2">
-                <ButtonLink href="/contact/" variant="primary">
-                  Start a Project
+                <ButtonLink href="/contact/?intent=quote" variant="primary">
+                  Request Quote
                 </ButtonLink>
-                <ButtonLink href="/projects/" variant="secondary">
-                  Browse Work
+                <ButtonLink href="/pricing/" variant="secondary">
+                  View Pricing
                 </ButtonLink>
               </div>
               <p className="text-xs text-slate-500">

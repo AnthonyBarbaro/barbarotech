@@ -142,7 +142,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       {
         question: "Can you support ongoing Shopify updates?",
         answer:
-          "Yes. Ongoing support is available for theme updates, conversion testing, new sections, and issue resolution.",
+          "Yes. Ongoing support is available for theme updates, conversion testing, new sections, and fixes.",
       },
     ],
     keywords: [

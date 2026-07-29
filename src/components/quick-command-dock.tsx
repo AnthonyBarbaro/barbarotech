@@ -2,21 +2,53 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import {
+  getDiscountedSetupPrice,
+  getSetupFeePromotionBadgeText,
+  getSetupFeePromotionText,
+  setupFeePromotion,
+} from "@/data/pricing";
 
 type Promo = {
   badge: string;
   title: string;
   description: string;
   quoteContext: string;
+  salePricing?: {
+    originalSetup: string;
+    saleSetup: string;
+    monthlyCare: string;
+    savings: string | null;
+  };
 };
+
+const STARTER_ORIGINAL_SETUP = "$1,500";
+const STARTER_SALE_SETUP = getDiscountedSetupPrice(STARTER_ORIGINAL_SETUP) ?? STARTER_ORIGINAL_SETUP;
+const STARTER_MONTHLY_CARE = "$149/mo";
+const STARTER_SAVINGS = `$${(
+  Number(STARTER_ORIGINAL_SETUP.replace(/[^0-9]/g, "")) -
+  Number(STARTER_SALE_SETUP.replace(/[^0-9]/g, ""))
+).toLocaleString("en-US")}`;
 
 const PROMOS: Promo[] = [
   {
-    badge: "Featured Offer",
-    title: "Free 20-minute project strategy call for new clients this week.",
+    badge: setupFeePromotion.enabled ? setupFeePromotion.label : "Website Packages",
+    title: setupFeePromotion.enabled
+      ? "Website package flash sale."
+      : "Website packages from $1,500 plus monthly care.",
     description:
-      "Get scope direction, timeline guidance, and a clear next step for your website or AI automation project.",
-    quoteContext: "Project strategy call",
+      setupFeePromotion.enabled
+        ? `${getSetupFeePromotionText()}. Monthly care is unchanged.`
+        : "Choose a launch path for a business site, restaurant, booking site, ecommerce store, or premium brand.",
+    quoteContext: "Website package consultation",
+    salePricing: setupFeePromotion.enabled
+      ? {
+          originalSetup: STARTER_ORIGINAL_SETUP,
+          saleSetup: STARTER_SALE_SETUP,
+          monthlyCare: STARTER_MONTHLY_CARE,
+          savings: STARTER_SAVINGS,
+        }
+      : undefined,
   },
   {
     badge: "Website Sprint",
@@ -80,6 +112,23 @@ export function QuickCommandDock() {
           <p className="text-sm font-semibold text-slate-900">
             {promo.title}
           </p>
+          {promo.salePricing ? (
+            <div className="mt-1 flex flex-wrap items-center gap-2">
+              <span className="text-xs font-semibold text-slate-500 line-through">
+                {promo.salePricing.originalSetup}
+              </span>
+              <span className="text-sm font-semibold text-sky-700">{promo.salePricing.saleSetup}</span>
+              <span className="rounded-full bg-cyan-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-cyan-700">
+                {getSetupFeePromotionBadgeText()}
+              </span>
+              {promo.salePricing.savings ? (
+                <span className="rounded-full border border-slate-900/10 bg-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-slate-600">
+                  Save {promo.salePricing.savings}
+                </span>
+              ) : null}
+              <span className="text-xs text-slate-500">+ {promo.salePricing.monthlyCare} monthly care</span>
+            </div>
+          ) : null}
           <p className="text-xs text-slate-600">
             {promo.description}
           </p>

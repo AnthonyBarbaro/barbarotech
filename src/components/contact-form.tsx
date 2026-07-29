@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { SERVICE_PLAN_OPTIONS } from "@/data/contact";
+import { resolveContactPlanLabel, SERVICE_PLAN_OPTIONS } from "@/data/contact";
 import { formatUsPhone } from "@/lib/forms";
 import { Button } from "@/components/ui/button";
 
@@ -26,7 +26,7 @@ const INPUT_CLASS =
   "placeholder:text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] focus:outline-none focus:ring-4 focus:ring-sky-300/30";
 
 function getInitialPlan(defaultPlan: string) {
-  const trimmed = defaultPlan.trim();
+  const trimmed = resolveContactPlanLabel(defaultPlan);
   if (!trimmed) {
     return {
       selectedPlan: "Not sure yet",
@@ -34,7 +34,7 @@ function getInitialPlan(defaultPlan: string) {
     };
   }
 
-  if (SERVICE_PLAN_OPTIONS.includes(trimmed as (typeof SERVICE_PLAN_OPTIONS)[number])) {
+  if (SERVICE_PLAN_OPTIONS.includes(trimmed)) {
     return {
       selectedPlan: trimmed,
       customPlan: "",
@@ -71,6 +71,14 @@ export function ContactForm() {
   const [feedback, setFeedback] = useState("");
 
   const finalPlan = state.selectedPlan === "Other" ? state.customPlan.trim() : state.selectedPlan;
+
+  useEffect(() => {
+    setState((prev) => ({
+      ...prev,
+      selectedPlan: initialPlan.selectedPlan,
+      customPlan: initialPlan.customPlan,
+    }));
+  }, [initialPlan]);
 
   const canSubmit = useMemo(() => {
     return (

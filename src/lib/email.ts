@@ -42,7 +42,7 @@ function parsePort(value: string | undefined, fallback: number) {
 
 function requireEnv(name: string, value: string | undefined) {
   if (!value) {
-    throw new Error(`Missing environment variable: ${name}`);
+    throw new Error(`Missing server configuration: ${name}`);
   }
   return value;
 }
@@ -65,7 +65,7 @@ function getTransporter() {
 export async function sendEmail({ to, subject, html, replyTo, headers }: SendEmailOptions) {
   const from = process.env.CONTACT_FROM || process.env.SMTP_FROM || process.env.SMTP_USER;
   if (!from) {
-    throw new Error("Missing CONTACT_FROM (or SMTP_FROM / SMTP_USER) environment variable.");
+    throw new Error("Missing sender configuration for outgoing form email.");
   }
 
   const transporter = getTransporter();

@@ -6,6 +6,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { SiteEffects } from "@/components/site-effects";
 import { QuickCommandDock } from "@/components/quick-command-dock";
+import { SaleHeroBanner } from "@/components/sale-hero-banner";
 import { SITE } from "@/lib/site";
 import { BASE_KEYWORDS, SITE_LOCALE, canonicalUrl } from "@/lib/seo";
 
@@ -108,6 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteEffects />
         <div className="app-shell flex min-h-screen flex-col">
           <Navbar />
+          <SaleHeroBanner />
           <main className="flex-1 bg-grid-light pb-24 md:pb-28">
             {children}
           </main>

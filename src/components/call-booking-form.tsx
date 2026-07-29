@@ -7,6 +7,7 @@ import {
   formatTimeZoneOptionLabel,
   getUpcomingCallDates,
   normalizeTimeZone,
+  resolveContactPlanLabel,
   TIMEZONE_OPTIONS,
   type CallTimeSlot,
 } from "@/data/contact";
@@ -161,8 +162,9 @@ function getSlotDisplay(slot: CallTimeSlot, dateValue: string, timeZone: string)
 
 export function CallBookingForm({ context }: { context?: string } = {}) {
   const searchParams = useSearchParams();
+  const planContext = resolveContactPlanLabel(searchParams.get("plan") || "");
   const effectiveContext =
-    context || searchParams.get("context") || searchParams.get("plan") || "General inquiry";
+    context || searchParams.get("context") || planContext || "General inquiry";
   const dateOptions = useMemo(() => getUpcomingCallDates(7), []);
 
   const detectedTimeZone = useMemo(() => {

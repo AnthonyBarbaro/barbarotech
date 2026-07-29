@@ -1,4 +1,4 @@
-import { PRICING } from "@/data/pricing";
+import { getPlanLabelFromParam, pricingPackageOptions } from "@/data/pricing";
 
 export type CallTimeSlot = {
   id: string;
@@ -38,19 +38,24 @@ function buildCallTimeSlots() {
   return slots;
 }
 
-const pricingPlanNames = [
-  ...PRICING.staticWebsites,
-  ...PRICING.existingSites,
-  ...PRICING.backendWebsites,
-].map((plan) => plan.name);
-
-export const SERVICE_PLAN_OPTIONS = [
-  "Not sure yet",
-  ...pricingPlanNames,
+const legacyContactOptions = [
+  "Existing Site Tune-Up",
+  "Website Remodel",
+  "Monthly Care Plan",
   "Custom Web App",
-  "Ongoing Maintenance",
+  "Ongoing Retainer",
+];
+
+export const SERVICE_PLAN_OPTIONS: string[] = Array.from(new Set([
+  "Not sure yet",
+  ...pricingPackageOptions,
+  ...legacyContactOptions,
   "Other",
-] as const;
+]));
+
+export function resolveContactPlanLabel(value: string) {
+  return getPlanLabelFromParam(value);
+}
 
 export const CALL_TIME_SLOTS = buildCallTimeSlots();
 

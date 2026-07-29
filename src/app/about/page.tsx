@@ -12,7 +12,7 @@ import { canonicalUrl, estimateWordCount, withBaseKeywords } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "About Anthony Barbaro",
   description:
-    "About Anthony Barbaro, software engineer focused on AI-powered automation, modern websites, and full-stack business systems.",
+    "About Anthony Barbaro, a software engineer and founder building conversion-focused websites, AI automation, and practical business systems.",
   alternates: {
     canonical: canonicalUrl("/about/"),
   },
@@ -21,11 +21,13 @@ export const metadata: Metadata = {
     "AI automation engineer",
     "software engineer profile",
     "San Diego developer",
+    "technical founder",
+    "conversion-focused web engineer",
   ]),
   openGraph: {
     title: `About ${SITE.owner} | ${SITE.brand}`,
     description:
-      "Learn about Anthony Barbaro's AI automation, full-stack engineering, and modern web delivery experience.",
+      "Learn about Anthony Barbaro's work across AI automation, full-stack engineering, conversion strategy, and practical business systems.",
     url: canonicalUrl("/about/"),
     siteName: SITE.brand,
     images: [{ url: "/og.png" }],
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `About ${SITE.owner} | ${SITE.brand}`,
     description:
-      "Learn about Anthony Barbaro's AI automation, full-stack engineering, and modern web delivery experience.",
+      "Learn about Anthony Barbaro's work across AI automation, full-stack engineering, conversion strategy, and practical business systems.",
     images: ["/og.png"],
   },
 };
@@ -47,50 +49,65 @@ const linkedinHref =
 const HIGHLIGHTS = [
   {
     label: "Primary Focus",
-    value: "AI automation + high-converting web systems",
+    value: "AI automation, conversion systems, and full-stack delivery",
   },
   {
     label: "Based In",
     value: "San Diego, California",
   },
   {
-    label: "Delivery Style",
-    value: "Fast execution with production-quality standards",
+    label: "Strategic Strength",
+    value: "Turning messy business workflows into clean software decisions",
   },
   {
     label: "Best Known For",
-    value: "Turning manual workflows into AI-assisted systems",
+    value: "Connecting websites, process, data, and revenue",
   },
 ];
 
 const AI_EXPERTISE = [
   {
-    title: "AI Workflow Automation",
+    title: "AI Workflow Architecture",
     detail:
-      "Designing workflows where AI reduces repetitive operations, improves data handling, and shortens response loops.",
+      "Designing AI-assisted workflows that reduce repetitive work, improve information quality, and shorten the path from request to action.",
   },
   {
-    title: "AI-Enhanced Internal Tools",
+    title: "Conversion-Focused Web Systems",
     detail:
-      "Building internal dashboards and tooling that combine clean UX with practical AI assistance for teams.",
+      "Building sites around buyer intent, package clarity, service positioning, persuasive structure, and measurable next steps.",
   },
   {
     title: "Data + API Integrations",
     detail:
-      "Connecting AI workflows to CRM, inventory, Google, and backend systems so outputs are actually usable in operations.",
+      "Connecting AI workflows to CRM, inventory, Google, and backend systems so outputs are useful inside real operations.",
   },
   {
-    title: "Practical AI Delivery",
+    title: "Practical Technical Judgment",
     detail:
-      "Shipping AI features in a focused way: stable, measurable, and tied to business outcomes instead of hype.",
+      "Choosing the simplest architecture that can still scale, stay maintainable, and support the business outcome behind the build.",
+  },
+];
+
+const THINKING_SYSTEMS = [
+  {
+    label: "Business Logic",
+    detail: "I start by understanding how the company makes money, where friction exists, and what the website or system needs to make easier.",
+  },
+  {
+    label: "Technical Design",
+    detail: "I map the right data, components, integrations, and automation points before building so the final product feels intentional.",
+  },
+  {
+    label: "Execution",
+    detail: "I ship with clean implementation, responsive UI, practical QA, and a bias toward features that create a next step for the client.",
   },
 ];
 
 const STACK = {
-  aiAndAutomation: ["Python", "Workflow automation", "API orchestration", "Prompt-driven process tooling"],
+  strategy: ["Conversion strategy", "Offer structure", "Information architecture", "Operational mapping"],
+  aiAndAutomation: ["Python", "AI workflow design", "API orchestration", "Prompt-driven process tooling"],
   frontend: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
   backend: ["Node.js", "REST APIs", "Authentication", "SQL / PostgreSQL"],
-  deployment: ["Vercel", "AWS", "GitHub Actions", "Monitoring and QA"],
 };
 
 const EXPERIENCE = [
@@ -99,9 +116,9 @@ const EXPERIENCE = [
     company: "Hilife Group",
     period: "June 2024 - Present",
     bullets: [
-      "Built and maintained internal systems tied to POS and inventory operations.",
-      "Automated recurring reporting and reduced manual coordination overhead.",
-      "Owned issue triage, reliability fixes, and feature delivery across business workflows.",
+      "Built and maintained operational systems tied to POS, inventory, reporting, and team workflows.",
+      "Automated recurring reporting and reduced manual coordination across day-to-day operations.",
+      "Owned request intake, reliability improvements, and feature delivery across business-critical workflows.",
     ],
   },
   {
@@ -110,7 +127,7 @@ const EXPERIENCE = [
     period: "Oct 2022 - May 2023",
     bullets: [
       "Shipped CRM and data workflow automation using Python and APIs.",
-      "Improved data consistency and removed repetitive manual process steps.",
+      "Improved data consistency and removed repetitive manual process steps from internal operations.",
       "Delivered production-facing internal tools with practical team adoption.",
     ],
   },
@@ -119,6 +136,7 @@ const EXPERIENCE = [
 const ABOUT_WORD_COUNT = estimateWordCount([
   ...HIGHLIGHTS.map((item) => `${item.label} ${item.value}`),
   ...AI_EXPERTISE.map((item) => `${item.title} ${item.detail}`),
+  ...THINKING_SYSTEMS.map((item) => `${item.label} ${item.detail}`),
   ...EXPERIENCE.flatMap((item) => [item.title, item.company, ...item.bullets]),
   ...Object.values(STACK).flat(),
 ]);
@@ -146,6 +164,8 @@ export default function AboutPage() {
         "full-stack web development",
         "software engineering",
         "workflow optimization",
+        "conversion-focused website strategy",
+        "technical business systems",
       ],
     },
   };
@@ -159,26 +179,26 @@ export default function AboutPage() {
       />
 
       <section className="section-shell border-b border-slate-900/10">
-        <div className="ambient-orb left-[-4rem] top-14 h-48 w-48 bg-sky-300/75" />
         <Container className="relative z-10 py-16 md:py-20">
           <div className="grid items-center gap-8 lg:grid-cols-[1.08fr_0.92fr]">
             <Reveal className="space-y-5">
               <div className="flex flex-wrap gap-2">
                 <Badge>Software Engineer</Badge>
-                <Badge>AI + Automation Focus</Badge>
-                <Badge>Full-Stack Delivery</Badge>
+                <Badge>AI Systems Thinker</Badge>
+                <Badge>Conversion-Focused Builder</Badge>
               </div>
 
               <div className="space-y-3">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">About</p>
                 <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
-                  I design and ship systems
+                  I build the technical strategy
                   <br />
-                  <span className="text-gradient">where AI and engineering drive real outcomes.</span>
+                  <span className="text-gradient">behind websites that sell and systems that scale.</span>
                 </h1>
                 <p className="max-w-2xl text-slate-600">
-                  I&apos;m {SITE.owner}. I build modern websites, automation pipelines, and internal tools with
-                  a strong emphasis on clarity, speed, and maintainable architecture.
+                  I&apos;m {SITE.owner}, the engineer behind BarbaroTech. I combine software engineering,
+                  AI automation, conversion strategy, and operational thinking to build websites and systems
+                  that are clear, useful, and tied to business outcomes.
                 </p>
               </div>
 
@@ -207,7 +227,7 @@ export default function AboutPage() {
                 <div className="mt-3 rounded-2xl border border-slate-900/10 bg-white/90 px-4 py-3">
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Professional Profile</p>
                   <p className="mt-1 text-sm text-slate-600">
-                    View experience, endorsements, and background details directly on LinkedIn.
+                    View experience, technical background, and professional history directly on LinkedIn.
                   </p>
                   <ButtonLink href={linkedinHref} variant="secondary" className="mt-3 w-full">
                     Open LinkedIn
@@ -233,10 +253,11 @@ export default function AboutPage() {
       <section className="border-b border-slate-900/10">
         <Container className="py-14 md:py-16">
           <Reveal className="mb-7 space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">AI Expertise</p>
-            <h2 className="text-3xl font-semibold md:text-4xl">Where I apply AI in real projects</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Technical Edge</p>
+            <h2 className="text-3xl font-semibold md:text-4xl">Smart systems, not surface-level websites.</h2>
             <p className="max-w-2xl text-slate-600">
-              I focus on practical AI implementation for business operations, not abstract demos.
+              I think through the offer, the client journey, the operational workflow, and the technical architecture
+              behind the screen. That is what makes the work more valuable than a basic web build.
             </p>
           </Reveal>
 
@@ -255,11 +276,40 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      <section className="border-b border-slate-900/10 bg-white">
+        <Container className="py-14 md:py-16">
+          <Reveal className="mb-8 max-w-3xl space-y-2">
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">How I Think</p>
+            <h2 className="text-3xl font-semibold md:text-4xl">I translate business complexity into clean execution.</h2>
+            <p className="text-slate-600">
+              The best websites are not just designed well. They explain the offer, create trust, guide the next step,
+              and connect to the systems that keep the business moving after the request comes in.
+            </p>
+          </Reveal>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {THINKING_SYSTEMS.map((item, idx) => (
+              <Reveal key={item.label} delay={idx * 70}>
+                <Card className="h-full">
+                  <CardContent className="space-y-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-900/10 bg-slate-950 text-sm font-semibold text-white">
+                      {idx + 1}
+                    </div>
+                    <h3 className="text-xl font-semibold text-slate-900">{item.label}</h3>
+                    <p className="text-sm leading-relaxed text-slate-600">{item.detail}</p>
+                  </CardContent>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       <section className="border-b border-slate-900/10">
         <Container className="py-14 md:py-16">
           <Reveal className="mb-8 space-y-2">
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Experience</p>
-            <h2 className="text-3xl font-semibold md:text-4xl">Recent delivery experience</h2>
+            <h2 className="text-3xl font-semibold md:text-4xl">Recent technical delivery.</h2>
           </Reveal>
 
           <div className="space-y-5">
@@ -296,7 +346,7 @@ export default function AboutPage() {
         <Container className="py-14 md:py-16">
           <Reveal className="mb-8 space-y-2">
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Core Stack</p>
-            <h2 className="text-3xl font-semibold md:text-4xl">Tools I use to ship quickly</h2>
+            <h2 className="text-3xl font-semibold md:text-4xl">Tools I use to move from strategy to shipped product.</h2>
           </Reveal>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -304,7 +354,7 @@ export default function AboutPage() {
               <Reveal key={category} delay={idx * 70}>
                 <Card className="h-full">
                   <CardContent className="space-y-3">
-                    <h3 className="text-base font-semibold capitalize text-slate-900">
+                  <h3 className="text-base font-semibold capitalize text-slate-900">
                       {category.replace(/([A-Z])/g, " $1")}
                     </h3>
                     <ul className="space-y-1.5 text-sm text-slate-600">
@@ -331,10 +381,11 @@ export default function AboutPage() {
                 <div className="space-y-2">
                   <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Let&apos;s Build</p>
                   <h3 className="text-2xl font-semibold md:text-3xl">
-                    Need a developer with AI + full-stack execution skills?
+                    Need a technical partner who can think and ship?
                   </h3>
                   <p className="max-w-2xl text-slate-600">
-                    I can help with websites, automations, internal tools, and scalable product systems.
+                    I can help turn the offer, website, automation, and operational workflow into one coherent system
+                    that makes the next step clear for clients.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-3">

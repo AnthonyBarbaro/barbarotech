@@ -25,18 +25,17 @@ export type Project = {
 {
   slug: "barbarotech-site",
   title: "BarbaroTech Website",
-  summary: "Static Next.js portfolio + services site with pricing and SMS inquiries.",
+  summary: "Portfolio and services site with pricing, project pages, and quick inquiry paths.",
   description:
     "A complete personal portfolio and client services website built for fast page loads, SEO, clean design, and easy maintenance.",
-  tech: ["Next.js", "TypeScript", "Tailwind CSS", "Static Export"],
+  tech: ["Next.js", "TypeScript", "Tailwind CSS", "SEO"],
   highlights: [
-    "Static HTML export for S3 + CloudFront",
-    "Dynamic project pages with clean routing",
+    "Fast, low-maintenance website structure",
+    "Project pages with clean routing",
     "SMS-to-phone inquiry system",
   ],
   links: [
     { label: "Live site", href: "https://barbaro.tech" },
-    { label: "GitHub", href: "https://github.com/AnthonyBarbaro/barbarotech" },
   ],
   image: "/projects/barbarotech.png",
   featured: true,
@@ -45,10 +44,10 @@ export type Project = {
   metrics: [
     { label: "Performance", value: "95+ Lighthouse" },
     { label: "Build time", value: "1 week" },
-    { label: "Hosting", value: "AWS + CloudFront" },
+    { label: "Focus", value: "Fast launch" },
   ],
   problem: "Needed a premium, fast-loading site to showcase skills and attract clients.",
-  solution: "Built a static Next.js site with SEO structure and clean UI.",
+  solution: "Built a performance-focused site with SEO structure and clean UI.",
   results: ["Fast load times", "Clean UX", "Easy maintenance"],
 },
 {
@@ -85,7 +84,7 @@ export type Project = {
   problem:
     "Needed a reliable way to generate and track employee QR badges while integrating with thermal printer hardware and avoiding brittle PDF-based workflows.",
   solution:
-    "Built a serverless AWS system with native ZPL output to bypass PDF scaling issues and ensure consistent printing across Zebra devices.",
+    "Built a cloud-based system with native ZPL output to bypass PDF scaling limitations and ensure consistent printing across Zebra devices.",
   results: [
     "Reliable QR scanning across devices",
     "Accurate scan metrics per employee",
@@ -97,20 +96,19 @@ export type Project = {
   title: "Multi-Location Retail Web Platform",
   summary: "Production Next.js website with CMS-driven content and SEO-first architecture.",
   description:
-    "A fully custom, production web platform built with Next.js and TinaCMS to support a multi-location retail business. The site features store-specific routing, dynamic SEO pages, and a CMS-backed content workflow, and is actively used by real customers.",
+    "A fully custom, production web platform built to support a multi-location retail business. The site features store-specific routing, dynamic SEO pages, and a structured content workflow, and is actively used by real visitors.",
   tech: [
     "Next.js",
     "React",
     "TypeScript",
     "TinaCMS",
-    "Vercel",
-    "REST APIs",
+    "Local SEO",
   ],
   highlights: [
     "Multi-location routing and store-specific pages",
-    "Headless CMS using TinaCMS (Git-backed)",
+    "Structured content management workflow",
     "SEO-first architecture with dynamic metadata",
-    "Custom API routes and backend utilities",
+    "Custom backend utilities",
   ],
   links: [
     { label: "Live site", href: "https://buzzcannabis.com" },
@@ -120,13 +118,13 @@ export type Project = {
 
   metrics: [
     { label: "Locations supported", value: "Multiple" },
-    { label: "Deploys", value: "Ongoing production" },
-    { label: "Platform", value: "Vercel" },
+    { label: "Status", value: "Ongoing production" },
+    { label: "Focus", value: "Local SEO" },
   ],
   problem:
     "Needed a fast, maintainable, SEO-optimized website capable of supporting multiple physical locations with independent content and routing.",
   solution:
-    "Designed a custom Next.js platform with TinaCMS to enable structured content management and scalable routing without relying on templates or page builders.",
+    "Designed a custom content workflow with scalable routing and local SEO structure without relying on page builders.",
   results: [
     "Improved SEO structure for local search",
     "Clean, mobile-first user experience",
@@ -136,18 +134,15 @@ export type Project = {
 
 {
   slug: "island-view-market-liquor",
-  title: "Island View Market & Liquor — Static Next.js Website (AWS S3)",
+  title: "Island View Market & Liquor — Mobile-First Marketing Website",
   summary:
-    "Mobile-first static marketing website with SEO + JSON-LD, deployed to AWS S3 with CI/CD.",
+    "Mobile-first marketing website with local SEO, structured business content, and fast browsing.",
   description:
-    "Designed and developed a fully static, mobile-first marketing website for a long-established neighborhood market in San Diego. Built with Next.js static export and deployed to AWS S3 for high performance, low cost, and SEO optimization.",
+    "Designed and developed a mobile-first marketing website for a long-established neighborhood market in San Diego. The site highlights hours, services, location details, and local search readiness.",
   tech: [
     "Next.js",
     "TypeScript",
     "Tailwind CSS",
-    "Static Export",
-    "AWS S3",
-    "GitHub Actions",
     "SEO",
     "JSON-LD",
   ],
@@ -155,76 +150,67 @@ export type Project = {
     "Custom mobile-first UI/UX with responsive navigation and branded design system",
     "Hand-built touch-optimized carousels/sliders (no external UI libraries)",
     "SEO implementation: metadata, OpenGraph, Twitter cards, and JSON-LD structured data",
-    "Static customer review section without API dependencies",
-    "CI/CD deployment: builds Next.js export and syncs output to S3 via GitHub Actions",
+    "Review section without third-party dependencies",
+    "Low-maintenance structure for store content",
   ],
   links: [
     { label: "Live site", href: "https://www.islandviewmarketsd.com/" },
-    // Update this if your repo URL differs (or remove it if private)
-    { label: "GitHub", href: "https://github.com/AnthonyBarbaro/islandviewmarket" },
   ],
   image: "/projects/islandviewmarket.png",
   featured: true,
 
   metrics: [
-    { label: "Deployment", value: "Static export → S3" },
+    { label: "Delivery", value: "Fast website" },
     { label: "SEO", value: "OpenGraph + JSON-LD" },
-    { label: "Build", value: "CI/CD via GitHub Actions" },
+    { label: "Focus", value: "Local visibility" },
   ],
   problem:
     "Needed a fast, modern, SEO-optimized website that reflects branding, highlights services/hours, and performs well for mobile users.",
   solution:
-    "Built a static Next.js site with custom components and full SEO/structured-data setup, deployed to AWS S3 with automated CI/CD.",
+    "Built a fast site with custom components and full SEO/structured-data setup for local search readiness.",
   results: [
-    "Fast, lightweight static site with low hosting costs",
+    "Fast, lightweight site with low operating overhead",
     "Improved local SEO readiness via JSON-LD + metadata",
-    "Reusable component/template structure for future sites",
+    "Reusable component structure for future sections",
   ],
 },
 
 {
   slug: "farida-law-san-diego",
-  title: "Farida Law San Diego — Production Static Website (CloudFront + Serverless Forms)",
+  title: "Farida Law San Diego — Production Law Firm Website",
   summary:
-    "Static site optimized for performance with CloudFront CDN and serverless contact/intake forms.",
+    "Performance-focused law firm website with contact and intake flows.",
   description:
-    "Built a production-grade, mobile-first static website for a law firm. Optimized for speed and conversions, deployed behind AWS CloudFront with a custom domain + SSL, and implemented serverless contact/intake flows.",
+    "Built a production-grade, mobile-first website for a law firm. Optimized for speed, trust, and lead capture with clear contact and intake flows.",
   tech: [
     "Next.js",
     "TypeScript",
     "Tailwind CSS",
-    "Static Site Generation",
-    "AWS S3",
-    "AWS CloudFront",
-    "AWS Lambda",
-    "AWS SES",
     "SEO",
+    "Lead Capture",
   ],
   highlights: [
-    "Static Site Generation for performance and reliability",
-    "CloudFront CDN with custom domain + SSL",
-    "Serverless contact & intake forms (Lambda + SES email delivery)",
+    "Performance-focused structure for reliability",
+    "Clear contact and intake paths",
     "Mobile-first, conversion-focused design",
   ],
   links: [
     { label: "Live site", href: "https://faridalawsd.com/" },
-    // Add repo link if public; otherwise remove
-    { label: "GitHub", href: "https://github.com/AnthonyBarbaro/faridalawsd" },
   ],
   image: "/projects/faridalawsd.png",
   featured: true,
 
   metrics: [
-    { label: "CDN", value: "CloudFront" },
-    { label: "Forms", value: "Serverless (Lambda + SES)" },
+    { label: "Delivery", value: "Fast website" },
+    { label: "Forms", value: "Contact intake" },
     { label: "Focus", value: "Mobile-first conversions" },
   ],
   problem:
     "Needed a fast, trustworthy marketing site with reliable contact/intake functionality without heavy CMS overhead.",
   solution:
-    "Implemented a static Next.js site for speed + SEO, delivered globally via CloudFront, and added serverless email-based form handling.",
+    "Implemented a fast site for speed, SEO, and reliable email-based intake.",
   results: [
-    "High-performance static delivery via CDN",
+    "High-performance website delivery",
     "Reliable form submissions without third-party form tools",
     "Mobile-optimized UX designed for lead capture",
   ],
@@ -243,26 +229,23 @@ export type Project = {
     "Tailwind CSS",
     "Shopify Storefront API",
     "GraphQL",
-    "Vercel",
     "SEO",
   ],
   highlights: [
     "Headless Shopify storefront using Storefront API (GraphQL)",
     "Mobile-first UI focused on browsing and product discovery",
     "SEO setup: metadata + structured sharing (OpenGraph/Twitter)",
-    "Deployed on Vercel for fast iteration and production hosting",
+    "Fast iteration workflow for storefront improvements",
   ],
   links: [
     { label: "Live site", href: "https://thesmokingbee.com/" },
-    // Add GitHub if public; otherwise remove
-    { label: "GitHub", href: "https://github.com/AnthonyBarbaro/thesmokingbee" },
   ],
   image: "/projects/thesmokingbee.png",
   featured: true,
 
   metrics: [
     { label: "Platform", value: "Headless Shopify" },
-    { label: "Hosting", value: "Vercel" },
+    { label: "Focus", value: "Product discovery" },
     { label: "API", value: "GraphQL Storefront" },
   ],
   problem:
@@ -272,7 +255,7 @@ export type Project = {
   results: [
     "Modern mobile-friendly shopping experience",
     "Improved control over SEO + site structure",
-    "Faster iteration and deployment workflow",
+    "Faster iteration workflow",
   ],
 },
 
@@ -312,7 +295,4 @@ export type Project = {
     "Clean, maintainable theme customization",
   ],
 },
-
-
   ];
-  

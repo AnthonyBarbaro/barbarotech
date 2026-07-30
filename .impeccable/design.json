@@ -1,0 +1,338 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-29T20:53:04Z",
+  "title": "Design System: BarbaroTech Signal Field",
+  "extensions": {
+    "colorMeta": {
+      "signal-black": {
+        "role": "neutral",
+        "displayName": "Signal Black",
+        "canonical": "#02060b",
+        "tonalRamp": ["#02060b", "#07111d", "#0a1725", "#172334", "#334155", "#64748b", "#cbd5e1", "#f8fafc"]
+      },
+      "signal-black-soft": {
+        "role": "neutral",
+        "displayName": "Soft Signal Black",
+        "canonical": "#040a12",
+        "tonalRamp": ["#02060b", "#040a12", "#0b1521", "#172334", "#334155", "#64748b", "#cbd5e1", "#f8fafc"]
+      },
+      "deep-panel": {
+        "role": "neutral",
+        "displayName": "Deep Panel",
+        "canonical": "#07111d",
+        "tonalRamp": ["#02060b", "#07111d", "#0a1725", "#102235", "#24364a", "#5b7083", "#b8c8d4", "#effbff"]
+      },
+      "strong-panel": {
+        "role": "neutral",
+        "displayName": "Strong Panel",
+        "canonical": "#0a1725",
+        "tonalRamp": ["#02060b", "#07111d", "#0a1725", "#13283d", "#2b4056", "#64798d", "#c0cfda", "#effbff"]
+      },
+      "cool-white": {
+        "role": "neutral",
+        "displayName": "Cool White",
+        "canonical": "#effbff",
+        "tonalRamp": ["#0b1b24", "#173341", "#285165", "#47788c", "#76a4b7", "#a9ccd9", "#d8eff5", "#effbff"]
+      },
+      "pure-white": {
+        "role": "neutral",
+        "displayName": "Pure White",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#171717", "#404040", "#737373", "#a3a3a3", "#d4d4d4", "#e5e5e5", "#f5f5f5", "#ffffff"]
+      },
+      "mask-black": {
+        "role": "neutral",
+        "displayName": "Mask Black",
+        "canonical": "#000000",
+        "tonalRamp": ["#000000", "#171717", "#404040", "#737373", "#a3a3a3", "#d4d4d4", "#f5f5f5", "#ffffff"]
+      },
+      "mist-text": {
+        "role": "neutral",
+        "displayName": "Mist Text",
+        "canonical": "#9bb2c3",
+        "tonalRamp": ["#101c25", "#20323f", "#344b5c", "#526b7d", "#758e9f", "#9bb2c3", "#c8d8e2", "#eff7fb"]
+      },
+      "strong-mist": {
+        "role": "neutral",
+        "displayName": "Strong Mist",
+        "canonical": "#bfd0dc",
+        "tonalRamp": ["#101c25", "#223640", "#3b5665", "#5f7d8d", "#89a5b4", "#bfd0dc", "#dbe7ee", "#f4fbff"]
+      },
+      "live-cyan": {
+        "role": "primary",
+        "displayName": "Live Cyan",
+        "canonical": "#22d3ee",
+        "tonalRamp": ["#083344", "#164e63", "#155e75", "#0e7490", "#0891b2", "#06b6d4", "#22d3ee", "#cffafe"]
+      },
+      "barbaro-sky": {
+        "role": "secondary",
+        "displayName": "Barbaro Sky",
+        "canonical": "#0ea5e9",
+        "tonalRamp": ["#082f49", "#0c4a6e", "#075985", "#0369a1", "#0284c7", "#0ea5e9", "#38bdf8", "#e0f2fe"]
+      },
+      "depth-cobalt": {
+        "role": "secondary",
+        "displayName": "Depth Cobalt",
+        "canonical": "#2563eb",
+        "tonalRamp": ["#172554", "#1e3a8a", "#1e40af", "#1d4ed8", "#2563eb", "#3b82f6", "#93c5fd", "#eff6ff"]
+      },
+      "electric-ice": {
+        "role": "primary",
+        "displayName": "Electric Ice",
+        "canonical": "#a5f3fc",
+        "tonalRamp": ["#083344", "#155e75", "#0e7490", "#06b6d4", "#22d3ee", "#67e8f9", "#a5f3fc", "#ecfeff"]
+      },
+      "trace-line": {
+        "role": "neutral",
+        "displayName": "Trace Line",
+        "canonical": "rgba(125, 211, 252, 0.18)",
+        "tonalRamp": ["#102a38", "#16465b", "#1f607a", "#2d7f9e", "#52a4c4", "#7dd3fc", "#bae6fd", "#f0f9ff"]
+      },
+      "trace-line-strong": {
+        "role": "neutral",
+        "displayName": "Strong Trace Line",
+        "canonical": "rgba(125, 211, 252, 0.34)",
+        "tonalRamp": ["#102a38", "#16465b", "#1f607a", "#2d7f9e", "#52a4c4", "#7dd3fc", "#bae6fd", "#f0f9ff"]
+      },
+      "error-rose": {
+        "role": "error",
+        "displayName": "Error Rose",
+        "canonical": "#fb7185",
+        "tonalRamp": ["#4c0519", "#881337", "#9f1239", "#be123c", "#e11d48", "#fb7185", "#fecdd3", "#fff1f2"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Signal Display",
+        "purpose": "One decisive conversion idea in the opening viewport."
+      },
+      "headline": {
+        "displayName": "Section Headline",
+        "purpose": "Section claims and package-group introductions."
+      },
+      "title": {
+        "displayName": "Proof Title",
+        "purpose": "Packages, projects, services, and evidence."
+      },
+      "body": {
+        "displayName": "Sales Body",
+        "purpose": "Readable explanations and decision support."
+      },
+      "label": {
+        "displayName": "Signal Data",
+        "purpose": "Prices, states, indexes, filters, and process metadata."
+      },
+      "data-xs": {
+        "displayName": "Micro Data",
+        "purpose": "Compact diagram and sale annotations."
+      },
+      "data-sm": {
+        "displayName": "Small Data",
+        "purpose": "Ticker, process, and pricing metadata."
+      },
+      "data-md": {
+        "displayName": "Dense Data",
+        "purpose": "Compact form and pricing states."
+      },
+      "control": {
+        "displayName": "Control Label",
+        "purpose": "Primary and secondary button text."
+      },
+      "chip": {
+        "displayName": "Chip Label",
+        "purpose": "Capability, scope, status, and filter pills."
+      },
+      "display-mobile": {
+        "displayName": "Mobile Signal Display",
+        "purpose": "Opening statements below the 768px breakpoint."
+      },
+      "headline-mobile": {
+        "displayName": "Mobile Section Headline",
+        "purpose": "Section claims below the 768px breakpoint."
+      }
+    },
+    "shadows": [
+      {
+        "name": "action-signal",
+        "value": "0 10px 30px rgba(34, 211, 238, 0.16)",
+        "purpose": "Primary cyan actions."
+      },
+      {
+        "name": "orbit-depth",
+        "value": "0 14px 44px rgba(0, 0, 0, 0.36)",
+        "purpose": "The central Anthony node."
+      },
+      {
+        "name": "dock-depth",
+        "value": "0 18px 46px rgba(0, 0, 0, 0.38)",
+        "purpose": "The scroll-triggered desktop conversion dock."
+      },
+      {
+        "name": "trace-glow",
+        "value": "0 0 28px rgba(14, 165, 233, 0.22)",
+        "purpose": "Singular routed lines and active field moments."
+      },
+      {
+        "name": "project-frame",
+        "value": "0 24px 64px rgba(0, 0, 0, 0.3)",
+        "purpose": "Real project imagery with a subtle routed cyan trace."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-signal",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Reveal transitions, controlled lift, and ambient scale changes."
+      },
+      {
+        "name": "reveal",
+        "value": "760ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Blur-to-sharp entrance for meaningful content blocks."
+      },
+      {
+        "name": "state",
+        "value": "180ms ease",
+        "purpose": "Hover, focus, border, and color changes."
+      },
+      {
+        "name": "field-breathe",
+        "value": "14s cubic-bezier(0.16, 1, 0.3, 1) infinite alternate",
+        "purpose": "Slow atmospheric aura motion."
+      },
+      {
+        "name": "ticker",
+        "value": "34s linear infinite",
+        "purpose": "Continuous pricing and capability signal rail."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The singular high-priority quote, booking, or package action.",
+      "html": "<button class=\"ds-btn-primary\">Request a quote</button>",
+      "css": ".ds-btn-primary { min-height: 44px; border: 1px solid #a5f3fc; border-radius: 12px; padding: 10px 20px; background: #22d3ee; color: #02060b; font: 700 0.875rem/1.2 Archivo, Arial, sans-serif; letter-spacing: .01em; box-shadow: 0 10px 30px rgba(34,211,238,.16); transition: background-color 180ms ease, border-color 180ms ease, transform 180ms cubic-bezier(.16,1,.3,1); } .ds-btn-primary:hover { border-color: #fff; background: #fff; transform: translateY(-1px); } .ds-btn-primary:focus-visible { outline: 2px solid #a5f3fc; outline-offset: 3px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "A visible but quieter route to proof, pricing, or a secondary next step.",
+      "html": "<button class=\"ds-btn-secondary\">See real work</button>",
+      "css": ".ds-btn-secondary { min-height: 44px; border: 1px solid rgba(125,211,252,.34); border-radius: 12px; padding: 10px 20px; background: #07111d; color: #a5f3fc; font: 700 0.875rem/1.2 Archivo, Arial, sans-serif; letter-spacing: .01em; transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease; } .ds-btn-secondary:hover { border-color: #a5f3fc; background: #0a1725; color: #fff; } .ds-btn-secondary:focus-visible { outline: 2px solid #a5f3fc; outline-offset: 3px; }"
+    },
+    {
+      "name": "Signal Chip",
+      "kind": "chip",
+      "refersTo": "signal-chip",
+      "description": "Compact scope, capability, status, and filter metadata.",
+      "html": "<span class=\"ds-chip\">Transparent setup pricing</span>",
+      "css": ".ds-chip { display: inline-flex; min-height: 32px; align-items: center; border: 1px solid rgba(125,211,252,.18); border-radius: 999px; padding: .35rem .72rem; background: rgba(7,17,29,.74); color: #bfd0dc; font: 600 .75rem/1.2 Archivo, Arial, sans-serif; }"
+    },
+    {
+      "name": "Signal Panel",
+      "kind": "card",
+      "refersTo": "signal-panel",
+      "description": "A stable reading plane for pricing, proof, forms, and decision support.",
+      "html": "<article class=\"ds-panel\"><span class=\"ds-panel-label\">Direct build</span><h3>One accountable path.</h3><p>Strategy, design, code, and care stay connected.</p></article>",
+      "css": ".ds-panel { position: relative; max-width: 360px; border: 1px solid rgba(125,211,252,.18); border-radius: 16px; padding: 24px; background: #07111d; color: #effbff; font-family: Archivo, Arial, sans-serif; } .ds-panel::before { content: ''; position: absolute; left: 16px; top: -1px; width: 36px; height: 1px; background: #22d3ee; } .ds-panel-label { color: #22d3ee; font: 400 .68rem/1.3 'Fragment Mono', monospace; letter-spacing: .08em; } .ds-panel h3 { margin: 16px 0 8px; font-size: 1.25rem; line-height: 1.1; } .ds-panel p { margin: 0; color: #9bb2c3; font-size: .875rem; line-height: 1.65; }"
+    },
+    {
+      "name": "Form Field",
+      "kind": "input",
+      "refersTo": "form-field",
+      "description": "A high-contrast dark field for quote and booking workflows.",
+      "html": "<label class=\"ds-field-label\">Project goal<input class=\"ds-field\" placeholder=\"What should change?\" /></label>",
+      "css": ".ds-field-label { display: grid; gap: 8px; color: #bfd0dc; font: 600 .75rem/1.2 Archivo, Arial, sans-serif; } .ds-field { min-height: 48px; border: 1px solid rgba(125,211,252,.18); border-radius: 14px; padding: 12px 16px; background: #07111d; color: #effbff; font: 400 .875rem/1.4 Archivo, Arial, sans-serif; } .ds-field::placeholder { color: #64748b; } .ds-field:focus-visible { border-color: #22d3ee; outline: 2px solid rgba(165,243,252,.8); outline-offset: 2px; }"
+    },
+    {
+      "name": "Site Navigation",
+      "kind": "nav",
+      "description": "The direct, compact studio navigation with active-route signal.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-brand\" href=\"#\"><span class=\"ds-node\"></span>Barbaro<span>Tech</span></a><div class=\"ds-links\"><a href=\"#\">Services</a><a class=\"is-active\" href=\"#\">Projects</a><a href=\"#\">Pricing</a></div><button>Request a quote</button></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 1px solid rgba(125,211,252,.18); padding: 14px 20px; background: #02060b; color: #effbff; font-family: Archivo, Arial, sans-serif; } .ds-brand { display: inline-flex; align-items: center; color: #effbff; font-weight: 800; text-decoration: none; } .ds-brand > span:last-child { color: #22d3ee; } .ds-node { width: 10px; height: 10px; margin-right: 12px; border: 1px solid #a5f3fc; border-radius: 999px; background: #22d3ee; box-shadow: 0 0 0 6px rgba(34,211,238,.12); } .ds-links { display: flex; gap: 20px; } .ds-links a { color: #9bb2c3; font-size: .8rem; text-decoration: none; } .ds-links a.is-active { color: #fff; text-decoration: underline; text-decoration-color: #22d3ee; text-underline-offset: 8px; } .ds-nav button { min-height: 40px; border: 1px solid #a5f3fc; border-radius: 12px; padding: 0 16px; background: #22d3ee; color: #02060b; font-weight: 700; } .ds-nav a:focus-visible, .ds-nav button:focus-visible { outline: 2px solid #a5f3fc; outline-offset: 3px; }"
+    },
+    {
+      "name": "Solo Builder Orbit",
+      "kind": "custom",
+      "description": "The signature map showing Websites, Stores, and Software returning to Anthony.",
+      "html": "<div class=\"ds-orbit\"><span class=\"ds-path ds-path-one\">Websites</span><span class=\"ds-path ds-path-two\">Stores</span><span class=\"ds-path ds-path-three\">Software</span><div class=\"ds-orbit-ring\"><span class=\"ds-node\"></span><strong>Anthony</strong><small>One builder</small></div></div>",
+      "css": ".ds-orbit { position: relative; width: 420px; max-width: 100%; aspect-ratio: 1.2/1; overflow: hidden; border: 1px solid rgba(125,211,252,.34); border-radius: 16px; background: radial-gradient(circle at center, rgba(14,165,233,.09), transparent 38%), #07111d; color: #effbff; font-family: Archivo, Arial, sans-serif; } .ds-orbit::before { content: ''; position: absolute; inset: 26% 18%; border: 1px dashed rgba(34,211,238,.38); border-radius: 50%; transform: rotate(-12deg); } .ds-orbit-ring { position: absolute; left: 50%; top: 52%; display: grid; width: 112px; height: 112px; place-content: center; justify-items: center; border: 1px solid rgba(165,243,252,.3); border-radius: 50%; background: #07111d; transform: translate(-50%,-50%); box-shadow: 0 14px 44px rgba(0,0,0,.36); } .ds-orbit-ring strong { margin-top: 10px; } .ds-orbit-ring small { margin-top: 4px; color: #22d3ee; font: 400 .58rem/1.2 'Fragment Mono', monospace; } .ds-node { width: 10px; height: 10px; border: 1px solid #a5f3fc; border-radius: 50%; background: #22d3ee; } .ds-path { position: absolute; border: 1px solid rgba(125,211,252,.18); border-radius: 12px; padding: 10px 14px; background: #07111d; font-size: .75rem; font-weight: 800; } .ds-path-one { left: 8%; top: 14%; } .ds-path-two { right: 7%; top: 20%; } .ds-path-three { left: 28%; bottom: 9%; }"
+    },
+    {
+      "name": "Conversion Dock",
+      "kind": "custom",
+      "description": "A desktop follow-up surface that appears only after meaningful scroll progress.",
+      "html": "<aside class=\"ds-dock\"><div><small>FLASH SALE</small><strong>Website package flash sale.</strong><span>25% off setup fees. Monthly care is unchanged.</span></div><button class=\"ds-dock-secondary\">Request quote</button><button class=\"ds-dock-primary\">Book call</button></aside>",
+      "css": ".ds-dock { display: flex; max-width: 760px; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid rgba(125,211,252,.25); border-radius: 16px; padding: 12px 16px; background: rgba(7,17,29,.96); color: #effbff; box-shadow: 0 18px 46px rgba(0,0,0,.38); font-family: Archivo, Arial, sans-serif; } .ds-dock div { display: grid; gap: 3px; } .ds-dock small { color: #22d3ee; font: 400 .6rem/1.2 'Fragment Mono', monospace; letter-spacing: .07em; } .ds-dock strong { font-size: .875rem; } .ds-dock span { color: #9bb2c3; font-size: .7rem; } .ds-dock button { min-height: 40px; border-radius: 12px; padding: 0 14px; font-weight: 700; } .ds-dock-secondary { border: 1px solid rgba(125,211,252,.34); background: #0a1725; color: #a5f3fc; } .ds-dock-primary { border: 1px solid #a5f3fc; background: #22d3ee; color: #02060b; } .ds-dock button:focus-visible { outline: 2px solid #a5f3fc; outline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Solo Signal Field",
+    "overview": "BarbaroTech lives inside a deep digital field of moving points, routed lines, and soft cyan light. Many possible business needs converge on one accountable builder: Anthony. The experience is technically advanced and cinematic, but the offer, prices, work, and next action stay practical and immediately legible.\n\nThe system borrows the spatial confidence, oversized type, and ambient motion of the supplied reference, then makes them personal through real project proof, transparent prices, first-person language, and a cyan-to-cobalt signal instead of the reference's green product world. Motion is a reusable material: slow current drift at rest, directional response around meaningful content, and crisp state changes on interaction.",
+    "keyCharacteristics": [
+      "Near-black space with cyan, sky, and cobalt signal light",
+      "One dominant conversion message per viewport",
+      "Forceful Archivo headlines with compact Fragment Mono data labels",
+      "Real project imagery, prices, and direct access to Anthony used as proof",
+      "Ambient motion that becomes quieter on mobile and static for reduced motion",
+      "Dark, stable reading planes with bright cyan reserved for action"
+    ],
+    "rules": [
+      {
+        "name": "The Signal Economy Rule",
+        "body": "Bright cyan marks action, selection, or a meaningful proof point. It does not outline every object.",
+        "section": "colors"
+      },
+      {
+        "name": "The Blue Continuity Rule",
+        "body": "New hues may vary in lightness and chroma, but the durable identity stays inside the cyan-to-blue family.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Loud Line Rule",
+        "body": "Each viewport earns one oversized typographic statement. Supporting copy stays visibly subordinate.",
+        "section": "typography"
+      },
+      {
+        "name": "The Content Plane Rule",
+        "body": "Motion may pass behind content, never through the reading plane. Every paragraph and control keeps stable contrast.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the cyan-to-blue BarbaroTech identity unmistakable against the near-black canvas.",
+      "Do use one orchestrated ambient field across the site and vary its density by viewport capability.",
+      "Do turn real pricing, projects, and direct access to Anthony into the visual proof.",
+      "Do pair spectacle with early actions and plain-language explanations.",
+      "Do provide static, reduced-motion, low-power, and mobile-safe fallbacks."
+    ],
+    "donts": [
+      "Don't copy the reference's green palette, product claims, navigation, or exact compositions.",
+      "Don't imply BarbaroTech is an LLC, a staffed agency, or a software platform.",
+      "Don't place every section inside the same glowing glass card.",
+      "Don't scatter unrelated animations, bounce easing, or cursor effects across controls.",
+      "Don't hide pricing, contact actions, or essential content behind motion or hover-only interactions."
+    ]
+  }
+}

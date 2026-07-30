@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/container";
+import { ProjectMedia } from "@/components/project-media";
 import { Reveal } from "@/components/reveal";
-import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { PROJECTS } from "@/data/projects";
 import { SITE } from "@/lib/site";
 import { canonicalUrl, estimateWordCount, withBaseKeywords } from "@/lib/seo";
@@ -69,12 +67,17 @@ function pickRelatedProjects(currentSlug: string) {
 }
 
 function getPrimaryLink(links: { label: string; href: string }[]) {
+  const usableLinks = links.filter((link) => link.href && link.href !== "#");
   const priority = ["Live", "Website", "Demo"];
+
   for (const key of priority) {
-    const found = links.find((link) => link.label.toLowerCase().includes(key.toLowerCase()));
+    const found = usableLinks.find((link) =>
+      link.label.toLowerCase().includes(key.toLowerCase())
+    );
     if (found) return found;
   }
-  return links[0];
+
+  return usableLinks[0];
 }
 
 export default async function ProjectSlugPage({ params }: PageProps) {
@@ -84,9 +87,11 @@ export default async function ProjectSlugPage({ params }: PageProps) {
 
   const related = pickRelatedProjects(project.slug);
   const canonical = canonicalUrl(`/projects/${project.slug}/`);
-  const primaryLink = project.links.length ? getPrimaryLink(project.links) : null;
+  const projectLinks = project.links.filter((link) => link.href && link.href !== "#");
+  const primaryLink = getPrimaryLink(projectLinks);
   const metrics = project.metrics?.slice(0, 3) ?? [];
-  const resultItems = project.results?.slice(0, 4) ?? ["Fast loading", "Stronger UX", "Clearer conversion flow"];
+  const resultItems = project.results?.slice(0, 4) ?? [];
+  const projectNumber = PROJECTS.indexOf(project) + 1;
   const wordCount = estimateWordCount([
     project.summary,
     project.description,
@@ -105,227 +110,296 @@ export default async function ProjectSlugPage({ params }: PageProps) {
     wordCount,
     author: {
       "@type": "Person",
+      "@id": `${SITE.url}/about/#person`,
       name: SITE.owner,
     },
     publisher: {
-      "@type": "Organization",
-      name: SITE.brand,
-      url: SITE.url,
+      "@type": "Person",
+      "@id": `${SITE.url}/about/#person`,
+      name: SITE.owner,
+      alternateName: SITE.brand,
+      url: canonicalUrl("/about/"),
     },
   };
 
   return (
-    <main className="text-slate-900">
+    <main className="signal-page">
       <Script
         id="project-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <section className="section-shell border-b border-slate-900/10">
-        <div className="ambient-orb left-[-5rem] top-12 h-56 w-56 bg-sky-300/70" />
-        <Container className="relative z-10 py-12 md:py-16">
-          <Reveal className="space-y-4">
-            <Link href="/projects/" className="inline-flex text-sm font-semibold text-slate-600 transition hover:text-slate-900">
-              ← Back to Projects
+      <section className="signal-hero">
+        <Container className="relative z-10 py-10 sm:py-14 lg:py-20">
+          <Reveal>
+            <Link
+              href="/projects/"
+              className="signal-link inline-flex min-h-11 items-center gap-2 py-2 text-sm font-semibold"
+            >
+              <span aria-hidden="true">←</span> Project library
             </Link>
-            <h1 className="text-4xl font-semibold leading-tight md:text-5xl">{project.title}</h1>
-            <p className="max-w-3xl text-slate-600">{project.summary}</p>
           </Reveal>
 
-          <Reveal delay={100} className="mt-6 flex flex-wrap gap-2">
-            {project.tech.map((tech) => (
-              <Badge key={tech}>{tech}</Badge>
-            ))}
+          <div className="mt-6 grid gap-8 lg:grid-cols-12 lg:items-end">
+            <Reveal className="lg:col-span-8">
+              <div className="flex flex-wrap items-center gap-3">
+                <p className="signal-kicker">Case study</p>
+                <span className="font-mono text-[10px] text-slate-500">
+                  {String(projectNumber).padStart(2, "0")} /{" "}
+                  {String(PROJECTS.length).padStart(2, "0")}
+                </span>
+              </div>
+              <h1 className="display-title mt-5 max-w-[13ch]">{project.title}</h1>
+            </Reveal>
+
+            <Reveal delay={80} className="lg:col-span-4 lg:pb-1">
+              <p className="signal-copy">{project.summary}</p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {primaryLink ? (
+                  <ButtonLink href={primaryLink.href}>
+                    View {primaryLink.label} <span aria-hidden="true">↗</span>
+                  </ButtonLink>
+                ) : null}
+                <ButtonLink href="/contact/?intent=quote" variant="secondary">
+                  Build something similar
+                </ButtonLink>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal delay={130} className="mt-10 sm:mt-12">
+            <div
+              className={`signal-panel-strong project-frame overflow-hidden p-2 sm:p-3 ${
+                project.video ? "project-frame--player" : ""
+              }`}
+            >
+              <ProjectMedia
+                project={project}
+                mode="player"
+                priority
+                sizes="(max-width: 1280px) 100vw, 1200px"
+              />
+            </div>
           </Reveal>
 
-          <Reveal delay={160} className="mt-6 flex flex-wrap gap-3">
-            {primaryLink && (
-              <a
-                href={primaryLink.href}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-blue-500 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_26px_rgba(14,165,233,0.4)] transition hover:scale-[1.02]"
-              >
-                View {primaryLink.label} →
-              </a>
-            )}
-            <ButtonLink href="/contact/" variant="secondary">
-              Build Something Similar
-            </ButtonLink>
-            <ButtonLink href="/pricing/" variant="ghost">
-              Pricing
-            </ButtonLink>
+          <Reveal delay={170} className="mt-4 border-y border-cyan-200/15">
+            <div className="grid gap-5 py-5 lg:grid-cols-12 lg:items-center">
+              <div className="flex flex-wrap gap-2 lg:col-span-7">
+                {project.tech.map((tech) => (
+                  <span key={tech} className="signal-chip">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              {metrics.length > 0 ? (
+                <dl className="grid gap-4 sm:grid-cols-3 lg:col-span-5">
+                  {metrics.map((metric) => (
+                    <div key={`${metric.label}-${metric.value}`}>
+                      <dt className="font-mono text-[9px] text-slate-500">
+                        {metric.label}
+                      </dt>
+                      <dd className="mt-1 text-sm font-semibold text-cyan-100">
+                        {metric.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : null}
+            </div>
           </Reveal>
         </Container>
       </section>
 
-      <section className="border-b border-slate-900/10">
-        <Container className="py-12 md:py-14">
-          <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-            <Reveal>
-              <Card>
-                <CardContent className="space-y-6">
-                  <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-slate-900/10 bg-slate-100">
-                    {project.image ? (
-                      <Image
-                        src={project.image}
-                        alt={`${project.title} preview`}
-                        fill
-                        className="object-cover"
-                        priority
+      <section className="signal-section signal-section--quiet">
+        <Container className="py-16 sm:py-20 lg:py-24">
+          <Reveal className="grid gap-8 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <p className="signal-kicker">Inside the build</p>
+              <h2 className="section-title mt-5 max-w-[11ch]">
+                Need, decision, shipped result.
+              </h2>
+            </div>
+            <div className="lg:col-span-7 lg:col-start-6">
+              <p className="signal-copy text-lg">{project.description}</p>
+            </div>
+          </Reveal>
+
+          <div className="mt-12 grid gap-10 border-t border-cyan-200/15 pt-10 sm:mt-16 sm:pt-14 lg:grid-cols-12">
+            {project.problem ? (
+              <Reveal className="lg:col-span-5">
+                <p className="font-mono text-[10px] tracking-[0.08em] text-cyan-300">
+                  The need
+                </p>
+                <h3 className="mt-4 text-2xl font-extrabold text-white">
+                  What had to change
+                </h3>
+                <p className="signal-copy mt-4">{project.problem}</p>
+              </Reveal>
+            ) : null}
+
+            {project.solution ? (
+              <Reveal delay={90} className="lg:col-span-6 lg:col-start-7">
+                <p className="font-mono text-[10px] tracking-[0.08em] text-cyan-300">
+                  The build
+                </p>
+                <h3 className="mt-4 text-2xl font-extrabold text-white">
+                  What I made
+                </h3>
+                <p className="signal-copy mt-4">{project.solution}</p>
+              </Reveal>
+            ) : null}
+          </div>
+
+          {resultItems.length > 0 ? (
+            <Reveal className="mt-12 sm:mt-16">
+              <div className="grid gap-6 border-y border-cyan-200/15 py-8 lg:grid-cols-12 lg:items-start">
+                <div className="lg:col-span-4">
+                  <p className="signal-kicker">Shipped result</p>
+                  <h3 className="mt-4 text-2xl font-extrabold text-white">
+                    What came out of the work
+                  </h3>
+                </div>
+                <ul className="grid gap-x-8 lg:col-span-7 lg:col-start-6 lg:grid-cols-2">
+                  {resultItems.map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-3 border-b border-cyan-200/10 py-4 text-sm leading-6 text-slate-200"
+                    >
+                      <span
+                        className="mt-2 h-2 w-2 shrink-0 rounded-full bg-cyan-300"
+                        aria-hidden="true"
                       />
-                    ) : (
-                      <div className="absolute inset-0 grid place-items-center text-sm text-slate-500">
-                        Preview coming soon
-                      </div>
-                    )}
-                  </div>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ) : null}
+        </Container>
+      </section>
 
-                  <div className="space-y-2">
-                    <h2 className="text-2xl font-semibold text-slate-900">Overview</h2>
-                    <p className="leading-relaxed text-slate-600">{project.description}</p>
-                  </div>
-
-                  <div className="grid gap-4 md:grid-cols-3">
-                    <div className="rounded-2xl border border-slate-900/10 bg-white px-4 py-3">
-                      <div className="text-xs uppercase tracking-wide text-slate-500">Problem</div>
-                      <p className="mt-2 text-sm text-slate-600">
-                        {project.problem ?? "The business needed a faster, cleaner, and more effective digital experience."}
-                      </p>
-                    </div>
-                    <div className="rounded-2xl border border-slate-900/10 bg-white px-4 py-3">
-                      <div className="text-xs uppercase tracking-wide text-slate-500">Solution</div>
-                      <p className="mt-2 text-sm text-slate-600">
-                        {project.solution ?? "Designed and shipped a focused architecture with strong UI and clear business logic."}
-                      </p>
-                    </div>
-                    <div className="rounded-2xl border border-slate-900/10 bg-white px-4 py-3">
-                      <div className="text-xs uppercase tracking-wide text-slate-500">Results</div>
-                      <ul className="mt-2 space-y-1.5 text-sm text-slate-600">
-                        {resultItems.slice(0, 3).map((item) => (
-                          <li key={item} className="flex gap-2">
-                            <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-sky-500/80" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-semibold text-slate-900">Highlights</h3>
-                    <ul className="space-y-2 text-sm text-slate-600">
-                      {project.highlights.map((highlight) => (
-                        <li key={highlight} className="flex gap-2">
-                          <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-sky-500/80" />
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
+      <section className="signal-section">
+        <Container className="py-16 sm:py-20 lg:py-24">
+          <div className="grid gap-12 lg:grid-cols-12">
+            <Reveal className="lg:col-span-7">
+              <p className="signal-kicker">Build ledger</p>
+              <h2 className="section-title mt-5 max-w-[12ch]">
+                The details behind the surface.
+              </h2>
+              <ul className="mt-8 divide-y divide-cyan-200/10 border-t border-cyan-200/10">
+                {project.highlights.map((highlight) => (
+                  <li
+                    key={highlight}
+                    className="flex gap-4 py-5 text-base leading-7 text-slate-200"
+                  >
+                    <span
+                      className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-cyan-300"
+                      aria-hidden="true"
+                    />
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
             </Reveal>
 
-            <div className="space-y-5">
-              <Reveal delay={90}>
-                <Card>
-                  <CardContent className="space-y-3">
-                    <h3 className="text-lg font-semibold text-slate-900">Project Metrics</h3>
-                    {metrics.length > 0 ? (
-                      <div className="space-y-2">
-                        {metrics.map((metric) => (
-                          <div
-                            key={metric.label}
-                            className="rounded-2xl border border-slate-900/10 bg-white px-4 py-3"
-                          >
-                            <div className="text-xs uppercase tracking-wide text-slate-500">{metric.label}</div>
-                            <div className="text-lg font-semibold text-slate-900">{metric.value}</div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-sm text-slate-600">Metrics will be added for this project soon.</p>
-                    )}
-                  </CardContent>
-                </Card>
-              </Reveal>
-
-              <Reveal delay={140}>
-                <Card>
-                  <CardContent className="space-y-3">
-                    <h3 className="text-lg font-semibold text-slate-900">Links</h3>
-                    {project.links.length > 0 ? (
-                      <div className="space-y-2">
-                        {project.links.map((link) => (
-                          <a
-                            key={link.href}
-                            href={link.href}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="block rounded-2xl border border-slate-900/10 bg-white px-4 py-3 text-sm text-slate-600 transition hover:border-sky-500/40 hover:text-slate-900"
-                          >
-                            <span className="font-semibold text-slate-900">{link.label}</span>
-                            <span className="ml-1">→</span>
-                          </a>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-sm text-slate-600">No external links available.</p>
-                    )}
-                  </CardContent>
-                </Card>
-              </Reveal>
-
-              <Reveal delay={180}>
-                <Card>
-                  <CardContent className="space-y-3">
-                    <h3 className="text-lg font-semibold text-slate-900">Need this quality for your team?</h3>
-                    <p className="text-sm text-slate-600">
-                      Share your requirements and I will map out scope, timing, and launch strategy.
-                    </p>
-                    <ButtonLink href="/contact/" className="w-full">
-                      Start a Project
-                    </ButtonLink>
-                  </CardContent>
-                </Card>
-              </Reveal>
-            </div>
+            <Reveal delay={100} className="lg:col-span-4 lg:col-start-9 lg:pt-20">
+              <div className="border-y border-cyan-200/15 py-6">
+                <h3 className="text-xl font-extrabold text-white">Project access</h3>
+                {projectLinks.length > 0 ? (
+                  <div className="mt-4 divide-y divide-cyan-200/10">
+                    {projectLinks.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="signal-link flex min-h-12 w-full items-center justify-between gap-4 py-3"
+                      >
+                        <span>{link.label}</span>
+                        <span aria-hidden="true">↗</span>
+                      </a>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="mt-4 text-sm leading-6 text-slate-400">
+                    This build does not have a public external link.
+                  </p>
+                )}
+              </div>
+            </Reveal>
           </div>
         </Container>
       </section>
 
-      {related.length > 0 && (
-        <section className="border-b border-slate-900/10">
-          <Container className="py-12 md:py-14">
-            <Reveal className="mb-6 flex flex-wrap items-end justify-between gap-3">
-              <div className="space-y-1">
-                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">More Work</p>
-                <h2 className="text-2xl font-semibold md:text-3xl">Related projects</h2>
+      {related.length > 0 ? (
+        <section className="signal-section signal-section--quiet">
+          <Container className="py-16 sm:py-20 lg:py-24">
+            <Reveal className="flex flex-wrap items-end justify-between gap-5">
+              <div>
+                <p className="signal-kicker">More work</p>
+                <h2 className="section-title mt-5 max-w-[11ch]">
+                  Keep browsing the builds.
+                </h2>
               </div>
-              <Link href="/projects/" className="text-sm font-semibold text-slate-600 hover:text-slate-900">
-                View all →
+              <Link
+                href="/projects/"
+                className="signal-link inline-flex min-h-11 items-center gap-2 py-2 text-sm font-semibold"
+              >
+                Full project library <span aria-hidden="true">→</span>
               </Link>
             </Reveal>
 
-            <div className="grid gap-4 md:grid-cols-3">
-              {related.map((item, idx) => (
-                <Reveal key={item.slug} delay={idx * 80}>
-                  <Link
-                    href={`/projects/${item.slug}/`}
-                    className="glass-panel block rounded-3xl p-5 transition hover:-translate-y-1"
-                  >
-                    <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
-                    <p className="mt-2 text-sm text-slate-600">{item.summary}</p>
-                    <span className="mt-3 inline-flex text-sm font-semibold text-sky-700">Open case study →</span>
-                  </Link>
+            <div className="mt-10 grid gap-8 md:grid-cols-3">
+              {related.map((item, index) => (
+                <Reveal key={item.slug} delay={index * 70}>
+                  <article>
+                    <ProjectMedia
+                      project={item}
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="project-frame"
+                    />
+                    <h3 className="mt-4 text-lg font-extrabold leading-tight text-white">
+                      <Link
+                        href={`/projects/${item.slug}/`}
+                        className="transition-colors hover:text-cyan-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                      >
+                        {item.title}
+                      </Link>
+                    </h3>
+                    <Link
+                      href={`/projects/${item.slug}/`}
+                      className="signal-link mt-2 inline-flex min-h-11 items-center gap-2 py-2 text-sm font-semibold"
+                    >
+                      Open case study <span aria-hidden="true">→</span>
+                    </Link>
+                  </article>
                 </Reveal>
               ))}
             </div>
           </Container>
         </section>
-      )}
+      ) : null}
+
+      <section className="signal-section">
+        <Container className="py-16 sm:py-20 lg:py-24">
+          <Reveal className="grid gap-8 border-y border-cyan-200/15 py-10 sm:py-12 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-8">
+              <p className="signal-kicker">A similar problem?</p>
+              <h2 className="section-title mt-5 max-w-[14ch]">
+                Bring the goal. I&apos;ll map the right build.
+              </h2>
+            </div>
+            <div className="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
+              <ButtonLink href="/contact/?intent=quote">Request a quote</ButtonLink>
+              <ButtonLink href="/pricing/" variant="secondary">
+                View pricing
+              </ButtonLink>
+            </div>
+          </Reveal>
+        </Container>
+      </section>
     </main>
   );
 }

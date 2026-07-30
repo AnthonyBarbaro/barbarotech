@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import { Archivo, Fragment_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
@@ -10,11 +10,15 @@ import { SaleHeroBanner } from "@/components/sale-hero-banner";
 import { SITE } from "@/lib/site";
 import { BASE_KEYWORDS, SITE_LOCALE, canonicalUrl } from "@/lib/seo";
 
-const space = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
-const mono = IBM_Plex_Mono({
+const archivo = Archivo({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: "variable",
+});
+const fragmentMono = Fragment_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
-  weight: ["400", "500", "600"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -66,16 +70,14 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const organizationJsonLd = {
+  const personJsonLd = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": `${SITE.url}/#organization`,
-    name: SITE.brand,
-    url: SITE.url,
-    founder: {
-      "@type": "Person",
-      name: SITE.owner,
-    },
+    "@type": "Person",
+    "@id": `${SITE.url}/about/#person`,
+    name: SITE.owner,
+    alternateName: SITE.brand,
+    url: `${SITE.url}/about/`,
+    jobTitle: "Independent web developer",
     email: `mailto:${SITE.contact.fallbackEmail}`,
     telephone: SITE.contact.displayPhone,
     sameAs: SITE.socials.map((social) => social.href),
@@ -89,17 +91,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     url: SITE.url,
     inLanguage: "en",
     publisher: {
-      "@id": `${SITE.url}/#organization`,
+      "@id": `${SITE.url}/about/#person`,
     },
   };
 
   return (
     <html lang="en">
-      <body className={`${space.className} ${space.variable} ${mono.variable} min-h-screen`}>
+      <body className={`${archivo.className} ${archivo.variable} ${fragmentMono.variable} min-h-screen`}>
         <Script
-          id="organization-jsonld"
+          id="person-jsonld"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <Script
           id="website-jsonld"
@@ -110,9 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="app-shell flex min-h-screen flex-col">
           <Navbar />
           <SaleHeroBanner />
-          <main className="flex-1 bg-grid-light pb-24 md:pb-28">
-            {children}
-          </main>
+          <main className="flex-1 bg-grid-light">{children}</main>
           <Footer />
         </div>
         <QuickCommandDock />

@@ -3,6 +3,14 @@ export type ProjectMetric = {
   value: string;
 };
 
+export type ProjectVideo = {
+  src: string;
+  poster?: string;
+  captions?: string;
+  type?: string;
+  label?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -12,6 +20,10 @@ export type Project = {
   highlights: string[];
   links: { label: string; href: string }[];
   image?: string;
+  imageAlt?: string;
+  imageFit?: "cover" | "contain";
+  imagePosition?: string;
+  video?: ProjectVideo;
   featured?: boolean;
 
   // ✅ Optional, case-study fields
@@ -37,7 +49,9 @@ export type Project = {
   links: [
     { label: "Live site", href: "https://barbaro.tech" },
   ],
-  image: "/projects/barbarotech.png",
+  image: "/projects/barbarotech.webp",
+  imageAlt: "BarbaroTech website homepage on desktop",
+  imagePosition: "center top",
   featured: true,
 
   // ✅ new, optional
@@ -73,7 +87,9 @@ export type Project = {
   links: [
     { label: "Architecture notes", href: "#" },
   ],
-  image: "/projects/qr-code-1.png",
+  image: "/projects/qr-code-1.webp",
+  imageAlt: "Employee QR badge tracking system interface",
+  imagePosition: "center top",
   featured: true,
 
   metrics: [
@@ -113,7 +129,9 @@ export type Project = {
   links: [
     { label: "Live site", href: "https://buzzcannabis.com" },
   ],
-  image: "/projects/buzz-cannabis.png",
+  image: "/projects/buzz-cannabis.webp",
+  imageAlt: "Buzz Cannabis multi-location retail website",
+  imagePosition: "center top",
   featured: true,
 
   metrics: [
@@ -156,7 +174,9 @@ export type Project = {
   links: [
     { label: "Live site", href: "https://www.islandviewmarketsd.com/" },
   ],
-  image: "/projects/islandviewmarket.png",
+  image: "/projects/islandviewmarket.webp",
+  imageAlt: "Island View Market mobile-first website",
+  imagePosition: "center top",
   featured: true,
 
   metrics: [
@@ -197,7 +217,9 @@ export type Project = {
   links: [
     { label: "Live site", href: "https://faridalawsd.com/" },
   ],
-  image: "/projects/faridalawsd.png",
+  image: "/projects/faridalawsd.webp",
+  imageAlt: "Farida Law San Diego website",
+  imagePosition: "center top",
   featured: true,
 
   metrics: [
@@ -240,7 +262,9 @@ export type Project = {
   links: [
     { label: "Live site", href: "https://thesmokingbee.com/" },
   ],
-  image: "/projects/thesmokingbee.png",
+  image: "/projects/thesmokingbee.webp",
+  imageAlt: "The Smoking Bee headless Shopify storefront",
+  imagePosition: "center top",
   featured: true,
 
   metrics: [
@@ -277,7 +301,9 @@ export type Project = {
     // Update if you have a different canonical URL
     { label: "Live site", href: "https://gosogummies.com/" },
   ],
-  image: "/projects/gosogummies.png",
+  image: "/projects/gosogummies.webp",
+  imageAlt: "GosoGummies mobile Shopify homepage",
+  imagePosition: "center top",
   featured: false,
 
   metrics: [

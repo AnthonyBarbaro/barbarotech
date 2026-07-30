@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   getDiscountedSetupPrice,
   getSetupFeePromotionBadgeText,
   getSetupFeePromotionText,
+  pricingPackageGroups,
   setupFeePromotion,
 } from "@/data/pricing";
 
@@ -22,9 +24,10 @@ type Promo = {
   };
 };
 
-const STARTER_ORIGINAL_SETUP = "$1,500";
+const STARTER_PACKAGE = pricingPackageGroups[0]?.packages[0];
+const STARTER_ORIGINAL_SETUP = STARTER_PACKAGE?.setupPrice ?? "$1,250";
 const STARTER_SALE_SETUP = getDiscountedSetupPrice(STARTER_ORIGINAL_SETUP) ?? STARTER_ORIGINAL_SETUP;
-const STARTER_MONTHLY_CARE = "$149/mo";
+const STARTER_MONTHLY_CARE = STARTER_PACKAGE?.monthlyPrice ?? "$99/mo";
 const STARTER_SAVINGS = `$${(
   Number(STARTER_ORIGINAL_SETUP.replace(/[^0-9]/g, "")) -
   Number(STARTER_SALE_SETUP.replace(/[^0-9]/g, ""))
@@ -35,11 +38,11 @@ const PROMOS: Promo[] = [
     badge: setupFeePromotion.enabled ? setupFeePromotion.label : "Website Packages",
     title: setupFeePromotion.enabled
       ? "Website package flash sale."
-      : "Website packages from $1,500 plus monthly care.",
+      : `Website projects from ${STARTER_ORIGINAL_SETUP}.`,
     description:
       setupFeePromotion.enabled
         ? `${getSetupFeePromotionText()}. Monthly care is unchanged.`
-        : "Choose a launch path for a business site, restaurant, booking site, ecommerce store, or premium brand.",
+        : `Start with 40%. Monthly care begins at launch from ${STARTER_MONTHLY_CARE}.`,
     quoteContext: "Website package consultation",
     salePricing: setupFeePromotion.enabled
       ? {
@@ -82,11 +85,29 @@ const PROMOS: Promo[] = [
 
 export function QuickCommandDock() {
   const [hidden, setHidden] = useState(false);
+  const [entered, setEntered] = useState(false);
   const [promoIndex, setPromoIndex] = useState(0);
+  const pathname = usePathname() ?? "/";
+  const hasContextualActions =
+    pathname.startsWith("/pricing") ||
+    pathname.startsWith("/contact") ||
+    pathname.startsWith("/projects");
   const promo = PROMOS[promoIndex] ?? PROMOS[0];
 
   useEffect(() => {
+    const updateEntry = () => {
+      const entryPoint = Math.min(520, window.innerHeight * 0.65);
+      setEntered(window.scrollY > entryPoint);
+    };
+
+    updateEntry();
+    window.addEventListener("scroll", updateEntry, { passive: true });
+    return () => window.removeEventListener("scroll", updateEntry);
+  }, []);
+
+  useEffect(() => {
     if (hidden || PROMOS.length <= 1) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const rotationId = window.setInterval(() => {
       setPromoIndex((prev) => (prev + 1) % PROMOS.length);
@@ -99,17 +120,17 @@ export function QuickCommandDock() {
     setHidden(true);
   };
 
-  if (hidden) return null;
+  if (hidden || !entered || hasContextualActions) return null;
 
   return (
-    <aside className="pointer-events-none fixed inset-x-0 bottom-5 z-40 hidden justify-center px-6 lg:flex">
+    <aside className="pointer-events-none fixed inset-x-0 bottom-5 z-40 hidden justify-end px-6 lg:flex">
       <div
         aria-label="Promotion"
-        className="pointer-events-auto glass-panel flex w-full max-w-4xl items-center justify-between gap-4 rounded-2xl border border-slate-900/15 px-4 py-3 shadow-[0_16px_40px_rgba(6,20,46,0.15)]"
+        className="pointer-events-auto flex w-full max-w-3xl items-center justify-between gap-4 rounded-2xl border border-cyan-200/25 bg-[#07111d]/95 px-4 py-3 shadow-[0_18px_46px_rgba(0,0,0,0.38)] backdrop-blur-xl"
       >
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-sky-700">{promo.badge}</p>
-          <p className="text-sm font-semibold text-slate-900">
+          <p className="font-mono text-[11px] tracking-[0.07em] text-cyan-300">{promo.badge}</p>
+          <p className="text-sm font-bold text-white">
             {promo.title}
           </p>
           {promo.salePricing ? (
@@ -117,19 +138,19 @@ export function QuickCommandDock() {
               <span className="text-xs font-semibold text-slate-500 line-through">
                 {promo.salePricing.originalSetup}
               </span>
-              <span className="text-sm font-semibold text-sky-700">{promo.salePricing.saleSetup}</span>
-              <span className="rounded-full bg-cyan-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-cyan-700">
+              <span className="font-mono text-sm text-cyan-200">{promo.salePricing.saleSetup}</span>
+              <span className="font-mono text-xs text-cyan-300">
                 {getSetupFeePromotionBadgeText()}
               </span>
               {promo.salePricing.savings ? (
-                <span className="rounded-full border border-slate-900/10 bg-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-slate-600">
+                <span className="font-mono text-xs text-slate-400">
                   Save {promo.salePricing.savings}
                 </span>
               ) : null}
-              <span className="text-xs text-slate-500">+ {promo.salePricing.monthlyCare} monthly care</span>
+              <span className="text-xs text-slate-400">+ {promo.salePricing.monthlyCare} care</span>
             </div>
           ) : null}
-          <p className="text-xs text-slate-600">
+          <p className="max-w-xl text-xs leading-5 text-slate-400">
             {promo.description}
           </p>
         </div>
@@ -138,30 +159,30 @@ export function QuickCommandDock() {
           <button
             type="button"
             onClick={() => setPromoIndex((prev) => (prev + 1) % PROMOS.length)}
-            className="inline-flex h-8 items-center justify-center rounded-lg border border-slate-900/12 bg-white/85 px-2.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-600 transition hover:text-slate-900"
+            className="inline-flex h-11 items-center justify-center rounded-xl border border-cyan-200/20 bg-transparent px-3 text-xs font-semibold text-slate-300 transition-colors hover:border-cyan-200/50 hover:text-white"
             aria-label="Show next promotion"
           >
             Next
           </button>
           <Link
             href={`/contact/?context=${encodeURIComponent(promo.quoteContext)}`}
-            className="button-shine inline-flex items-center rounded-xl border border-slate-900/14 bg-white/90 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-800 transition-all duration-300 hover:border-slate-900/22 hover:bg-white"
+            className="button-shine inline-flex h-11 items-center rounded-xl border border-cyan-200/30 bg-[#0a1725] px-3.5 text-xs font-bold text-cyan-100 transition-colors hover:border-cyan-200/70"
           >
-            Request Quote
+            Request quote
           </Link>
           <Link
             href="/contact/#book-call"
-            className="button-shine inline-flex items-center rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-3.5 py-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-white shadow-[0_10px_26px_rgba(8,145,178,0.35)] transition-all duration-300 hover:-translate-y-0.5"
+            className="button-shine inline-flex h-11 items-center rounded-xl border border-cyan-200 bg-cyan-300 px-3.5 text-xs font-bold text-[#02060b] transition-colors hover:bg-white"
           >
-            Book Call
+            Book call
           </Link>
           <button
             type="button"
             onClick={onDismiss}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-900/12 bg-white/85 text-xs font-semibold text-slate-600 transition hover:text-slate-900"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-200/20 bg-transparent text-sm font-semibold text-slate-400 transition-colors hover:border-cyan-200/50 hover:text-white"
             aria-label="Dismiss promotion"
           >
-            X
+            ×
           </button>
         </div>
       </div>

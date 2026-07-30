@@ -1,106 +1,121 @@
 import {
   getDiscountedSetupPrice,
   getSetupFeePromotionBadgeText,
-  PricingPackage,
   setupFeePromotion,
+  type PricingPackage,
 } from "@/data/pricing";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ButtonLink } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 function getPriceTextClass(value: string) {
-  if (value.length > 24) {
-    return "text-sm leading-snug [overflow-wrap:anywhere]";
+  if (value.length > 16) {
+    return "text-xl leading-snug [overflow-wrap:anywhere]";
   }
 
-  if (value.length > 12) {
-    return "text-lg leading-snug [overflow-wrap:anywhere]";
+  if (value.length > 10) {
+    return "text-2xl leading-tight [overflow-wrap:anywhere]";
   }
 
-  return "text-xl";
+  return "text-3xl leading-none";
 }
 
 export function PricingCard({ plan }: { plan: PricingPackage }) {
-  const previewHighlights = plan.highlights.slice(0, 5);
-  const remainingItems = Math.max(plan.highlights.length - previewHighlights.length, 0);
   const discountedSetupPrice = getDiscountedSetupPrice(plan.setupPrice);
+  const packageLabel = plan.offerLabel ?? (plan.featured ? "Featured package" : null);
 
   return (
-    <Card className={cn("flex h-full flex-col", plan.featured && "ring-2 ring-cyan-300/45")}>
-      <CardHeader className="space-y-4">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <h3 className="text-xl font-semibold leading-snug text-slate-900">{plan.name}</h3>
-            <p className="mt-1 text-sm leading-relaxed text-slate-600">{plan.summary}</p>
-          </div>
-          {plan.featured ? (
-            <span className="shrink-0 rounded-full bg-slate-900 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-white">
-              Popular
-            </span>
-          ) : null}
+    <Card
+      className={cn(
+        "flex h-full flex-col overflow-hidden bg-[#07111d]/95",
+        (plan.featured || plan.offerLabel) && "border-cyan-200/60 bg-[#091725]"
+      )}
+    >
+      {packageLabel ? (
+        <div
+          className={cn(
+            "border-b border-cyan-200/20 px-5 py-2 text-center text-xs font-bold",
+            plan.offerLabel
+              ? "bg-cyan-300 text-[#02060b]"
+              : "bg-cyan-300/12 text-cyan-100"
+          )}
+        >
+          {packageLabel}
         </div>
+      ) : null}
 
-        <div className="grid gap-2">
-          <div className="min-w-0 rounded-2xl border border-slate-900/10 bg-white/90 px-3.5 py-3">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-500">Setup</p>
+      <CardHeader className="pb-0">
+        <h3 className="text-2xl font-bold leading-tight text-white">{plan.name}</h3>
+        <p className="mt-3 text-sm leading-6 text-slate-300">{plan.summary}</p>
+
+        <div className="mt-6 grid grid-cols-2 border-y border-cyan-100/10">
+          <div className="min-w-0 py-5 pr-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-xs font-semibold text-slate-400">One-time setup</p>
               {discountedSetupPrice ? (
-                <span className="rounded-full bg-cyan-400/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em] text-cyan-700">
+                <span className="rounded-full border border-cyan-200/25 bg-cyan-300/10 px-2 py-0.5 text-[10px] font-semibold text-cyan-100">
                   {getSetupFeePromotionBadgeText()}
                 </span>
               ) : null}
             </div>
+            <p
+              className={cn(
+                "mt-3 font-extrabold tracking-[-0.03em] text-cyan-100",
+                getPriceTextClass(discountedSetupPrice ?? plan.setupPrice)
+              )}
+            >
+              {discountedSetupPrice ?? plan.setupPrice}
+            </p>
             {discountedSetupPrice ? (
-              <div className="mt-1 space-y-1">
-                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                  <span className="text-xs font-semibold text-slate-500 line-through">{plan.setupPrice}</span>
-                  <span className={cn("font-semibold text-slate-900", getPriceTextClass(discountedSetupPrice))}>
-                    {discountedSetupPrice}
-                  </span>
-                </div>
-                <p className="text-xs text-slate-500">Sale setup fee</p>
-              </div>
-            ) : (
-              <p className={cn("mt-1 font-semibold text-slate-900", getPriceTextClass(plan.setupPrice))}>
+              <p className="mt-2 text-xs font-semibold text-slate-500 line-through">
                 {plan.setupPrice}
               </p>
-            )}
+            ) : null}
           </div>
-          <div className="min-w-0 rounded-2xl border border-slate-900/10 bg-white/90 px-3.5 py-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-500">
-              Monthly Care
-            </p>
-            <p className={cn("mt-1 font-semibold text-slate-900", getPriceTextClass(plan.monthlyPrice))}>
+
+          <div className="min-w-0 border-l border-cyan-100/10 py-5 pl-4">
+            <p className="text-xs font-semibold text-slate-400">Monthly care</p>
+            <p
+              className={cn(
+                "mt-3 font-extrabold tracking-[-0.03em] text-white",
+                getPriceTextClass(plan.monthlyPrice)
+              )}
+            >
               {plan.monthlyPrice}
             </p>
-            {setupFeePromotion.enabled ? (
-              <p className="mt-1 text-xs text-slate-500">Not discounted</p>
-            ) : null}
+            <p className="mt-2 text-xs text-slate-500">
+              {setupFeePromotion.enabled ? "Not discounted" : "Required at launch"}
+            </p>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-900/10 bg-[rgba(255,255,255,0.72)] px-3.5 py-3">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-500">Best Fit</p>
-          <p className="mt-1 text-sm leading-relaxed text-slate-600">{plan.bestFor}</p>
+        <div className="border-b border-cyan-100/10 py-5">
+          <p className="text-xs font-semibold text-slate-400">Best for</p>
+          <p className="mt-2 text-sm leading-6 text-slate-200">{plan.bestFor}</p>
         </div>
       </CardHeader>
 
-      <CardContent className="mt-auto flex h-full flex-col gap-4 pt-0">
-        <ul className="space-y-1.5 text-sm text-slate-600">
-          {previewHighlights.map((item) => (
-            <li key={item} className="flex gap-2">
-              <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500/80" />
-              <span>{item}</span>
-            </li>
-          ))}
-          {remainingItems > 0 ? (
-            <li className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">
-              +{remainingItems} more included in final scope
-            </li>
-          ) : null}
-        </ul>
+      <CardContent className="flex flex-1 flex-col gap-6 pt-6 md:pt-6">
+        <div>
+          <p className="text-sm font-bold text-white">Starting scope</p>
+          <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-300">
+            {plan.highlights.map((item) => (
+              <li key={item} className="flex gap-3">
+                <span
+                  className="mt-2 h-2 w-2 shrink-0 rounded-full bg-cyan-300"
+                  aria-hidden="true"
+                />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <ButtonLink href={plan.ctaHref} variant={plan.featured ? "primary" : "secondary"} className="mt-auto w-full">
+        <ButtonLink
+          href={plan.ctaHref}
+          variant={plan.featured || plan.offerLabel ? "primary" : "secondary"}
+          className="mt-auto w-full"
+        >
           {plan.ctaLabel}
         </ButtonLink>
       </CardContent>

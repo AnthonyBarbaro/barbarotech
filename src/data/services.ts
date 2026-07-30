@@ -37,7 +37,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
       "Launch support and post-launch iteration plan",
     ],
     process: [
-      "Align on scope, audience, and measurable goals.",
+      "Align on scope, audience, and clear success criteria.",
       "Design and build the highest-impact pages first.",
       "QA, performance tuning, and launch with clear handoff.",
     ],
@@ -84,7 +84,7 @@ export const SERVICE_LANDINGS: ServiceLanding[] = [
     ],
     process: [
       "Audit the existing workflow and identify repetitive work.",
-      "Build a focused automation pilot with measurable impact.",
+      "Build a focused automation pilot with defined success criteria.",
       "Expand and harden the system after successful validation.",
     ],
     faqs: [

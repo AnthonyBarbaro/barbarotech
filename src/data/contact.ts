@@ -38,18 +38,11 @@ function buildCallTimeSlots() {
   return slots;
 }
 
-const legacyContactOptions = [
-  "Existing Site Tune-Up",
-  "Website Remodel",
-  "Monthly Care Plan",
-  "Custom Web App",
-  "Ongoing Retainer",
-];
-
 export const SERVICE_PLAN_OPTIONS: string[] = Array.from(new Set([
   "Not sure yet",
   ...pricingPackageOptions,
-  ...legacyContactOptions,
+  "Existing Website Redesign",
+  "Website Care Only",
   "Other",
 ]));
 

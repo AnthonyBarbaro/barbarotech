@@ -1,33 +1,30 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import Script from "next/script";
 import { Container } from "@/components/container";
-import { Reveal } from "@/components/reveal";
 import { ButtonLink } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { SITE } from "@/lib/site";
-import { canonicalUrl, estimateWordCount, withBaseKeywords } from "@/lib/seo";
+import { canonicalUrl, withBaseKeywords } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "About Anthony Barbaro",
   description:
-    "About Anthony Barbaro, a software engineer and founder building conversion-focused websites, AI automation, and practical business systems.",
+    "Meet Anthony Barbaro, the independent developer behind BarbaroTech. Work directly with one builder from the first conversation through launch and ongoing care.",
   alternates: {
     canonical: canonicalUrl("/about/"),
   },
   keywords: withBaseKeywords([
     "about Anthony Barbaro",
-    "AI automation engineer",
-    "software engineer profile",
-    "San Diego developer",
-    "technical founder",
-    "conversion-focused web engineer",
+    "independent web developer",
+    "San Diego web developer",
+    "solo website studio",
+    "BarbaroTech",
   ]),
   openGraph: {
     title: `About ${SITE.owner} | ${SITE.brand}`,
     description:
-      "Learn about Anthony Barbaro's work across AI automation, full-stack engineering, conversion strategy, and practical business systems.",
+      "Work directly with Anthony Barbaro on websites, stores, automation, and practical business software.",
     url: canonicalUrl("/about/"),
     siteName: SITE.brand,
     images: [{ url: "/og.png" }],
@@ -37,109 +34,63 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `About ${SITE.owner} | ${SITE.brand}`,
     description:
-      "Learn about Anthony Barbaro's work across AI automation, full-stack engineering, conversion strategy, and practical business systems.",
+      "Work directly with Anthony Barbaro on websites, stores, automation, and practical business software.",
     images: ["/og.png"],
   },
 };
 
-const linkedinHref =
-  SITE.socials.find((social) => social.label.toLowerCase().includes("linkedin"))?.href ||
-  "https://www.linkedin.com";
-
-const HIGHLIGHTS = [
+const DIRECT_ADVANTAGES = [
   {
-    label: "Primary Focus",
-    value: "AI automation, conversion systems, and full-stack delivery",
+    title: "One point of contact",
+    detail:
+      "You talk directly with the person planning, designing, and building the work.",
   },
   {
-    label: "Based In",
-    value: "San Diego, California",
+    title: "Connected decisions",
+    detail:
+      "Your message, design, technology, and next steps are shaped together instead of passed between teams.",
   },
   {
-    label: "Strategic Strength",
-    value: "Turning messy business workflows into clean software decisions",
-  },
-  {
-    label: "Best Known For",
-    value: "Connecting websites, process, data, and revenue",
+    title: "Care after launch",
+    detail:
+      "I stay responsible for hosting, maintenance, and practical improvements after the website goes live.",
   },
 ];
 
-const AI_EXPERTISE = [
+const PROCESS = [
   {
-    title: "AI Workflow Architecture",
+    title: "Start with the goal",
     detail:
-      "Designing AI-assisted workflows that reduce repetitive work, improve information quality, and shorten the path from request to action.",
+      "Tell me what you need, what is not working, and what a successful launch should change.",
   },
   {
-    title: "Conversion-Focused Web Systems",
+    title: "Build the clearest version",
     detail:
-      "Building sites around buyer intent, package clarity, service positioning, persuasive structure, and measurable next steps.",
+      "I recommend the right package, define the scope, and handle the design and development.",
   },
   {
-    title: "Data + API Integrations",
+    title: "Launch with support",
     detail:
-      "Connecting AI workflows to CRM, inventory, Google, and backend systems so outputs are useful inside real operations.",
-  },
-  {
-    title: "Practical Technical Judgment",
-    detail:
-      "Choosing the simplest architecture that can still scale, stay maintainable, and support the business outcome behind the build.",
+      "We test the important paths, launch the site, and keep it maintained through the care plan.",
   },
 ];
-
-const THINKING_SYSTEMS = [
-  {
-    label: "Business Logic",
-    detail: "I start by understanding how the company makes money, where friction exists, and what the website or system needs to make easier.",
-  },
-  {
-    label: "Technical Design",
-    detail: "I map the right data, components, integrations, and automation points before building so the final product feels intentional.",
-  },
-  {
-    label: "Execution",
-    detail: "I ship with clean implementation, responsive UI, practical QA, and a bias toward features that create a next step for the client.",
-  },
-];
-
-const STACK = {
-  strategy: ["Conversion strategy", "Offer structure", "Information architecture", "Operational mapping"],
-  aiAndAutomation: ["Python", "AI workflow design", "API orchestration", "Prompt-driven process tooling"],
-  frontend: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-  backend: ["Node.js", "REST APIs", "Authentication", "SQL / PostgreSQL"],
-};
 
 const EXPERIENCE = [
   {
-    title: "Admin & Developer",
+    role: "Admin & Developer",
     company: "Hilife Group",
-    period: "June 2024 - Present",
-    bullets: [
-      "Built and maintained operational systems tied to POS, inventory, reporting, and team workflows.",
-      "Automated recurring reporting and reduced manual coordination across day-to-day operations.",
-      "Owned request intake, reliability improvements, and feature delivery across business-critical workflows.",
-    ],
+    period: "June 2024–Present",
+    proof:
+      "Operational systems connected to POS, inventory, reporting, and day-to-day team workflows.",
   },
   {
-    title: "Software Engineering Intern",
+    role: "Software Engineering Intern",
     company: "Marcus & Millichap",
-    period: "Oct 2022 - May 2023",
-    bullets: [
-      "Shipped CRM and data workflow automation using Python and APIs.",
-      "Improved data consistency and removed repetitive manual process steps from internal operations.",
-      "Delivered production-facing internal tools with practical team adoption.",
-    ],
+    period: "October 2022–May 2023",
+    proof:
+      "CRM and data-workflow automation built with Python and APIs for internal operations.",
   },
 ];
-
-const ABOUT_WORD_COUNT = estimateWordCount([
-  ...HIGHLIGHTS.map((item) => `${item.label} ${item.value}`),
-  ...AI_EXPERTISE.map((item) => `${item.title} ${item.detail}`),
-  ...THINKING_SYSTEMS.map((item) => `${item.label} ${item.detail}`),
-  ...EXPERIENCE.flatMap((item) => [item.title, item.company, ...item.bullets]),
-  ...Object.values(STACK).flat(),
-]);
 
 export default function AboutPage() {
   const profileJsonLd = {
@@ -148,255 +99,211 @@ export default function AboutPage() {
     url: canonicalUrl("/about/"),
     name: `About ${SITE.owner}`,
     inLanguage: "en",
-    wordCount: ABOUT_WORD_COUNT,
     publisher: {
-      "@type": "Organization",
-      name: SITE.brand,
-      url: SITE.url,
+      "@type": "Person",
+      "@id": `${SITE.url}/about/#person`,
+      name: SITE.owner,
+      alternateName: SITE.brand,
+      url: canonicalUrl("/about/"),
     },
     mainEntity: {
       "@type": "Person",
+      "@id": `${SITE.url}/about/#person`,
       name: SITE.owner,
       url: canonicalUrl("/about/"),
       sameAs: SITE.socials.map((social) => social.href),
       knowsAbout: [
-        "AI automation",
-        "full-stack web development",
+        "website design and development",
+        "ecommerce development",
         "software engineering",
-        "workflow optimization",
-        "conversion-focused website strategy",
-        "technical business systems",
+        "workflow automation",
+        "business systems",
       ],
     },
   };
 
   return (
-    <main className="text-slate-900">
+    <main className="signal-page">
       <Script
         id="about-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }}
       />
 
-      <section className="section-shell border-b border-slate-900/10">
-        <Container className="relative z-10 py-16 md:py-20">
-          <div className="grid items-center gap-8 lg:grid-cols-[1.08fr_0.92fr]">
-            <Reveal className="space-y-5">
-              <div className="flex flex-wrap gap-2">
-                <Badge>Software Engineer</Badge>
-                <Badge>AI Systems Thinker</Badge>
-                <Badge>Conversion-Focused Builder</Badge>
-              </div>
-
-              <div className="space-y-3">
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">About</p>
-                <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
-                  I build the technical strategy
-                  <br />
-                  <span className="text-gradient">behind websites that sell and systems that scale.</span>
-                </h1>
-                <p className="max-w-2xl text-slate-600">
-                  I&apos;m {SITE.owner}, the engineer behind BarbaroTech. I combine software engineering,
-                  AI automation, conversion strategy, and operational thinking to build websites and systems
-                  that are clear, useful, and tied to business outcomes.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <ButtonLink href="/projects/">View Projects</ButtonLink>
-                <ButtonLink href={linkedinHref} variant="secondary">
-                  LinkedIn Profile
-                </ButtonLink>
-                <ButtonLink href="/contact/" variant="ghost">
-                  Work With Me
-                </ButtonLink>
-              </div>
-            </Reveal>
-
-            <Reveal delay={120}>
-              <div className="glass-panel rounded-3xl p-4">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-slate-900/10">
-                  <Image
-                    src={SITE.assets.headshot}
-                    alt={`${SITE.owner} headshot`}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-                <div className="mt-3 rounded-2xl border border-slate-900/10 bg-white/90 px-4 py-3">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Professional Profile</p>
-                  <p className="mt-1 text-sm text-slate-600">
-                    View experience, technical background, and professional history directly on LinkedIn.
-                  </p>
-                  <ButtonLink href={linkedinHref} variant="secondary" className="mt-3 w-full">
-                    Open LinkedIn
-                  </ButtonLink>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {HIGHLIGHTS.map((item, idx) => (
-              <Reveal key={item.label} delay={idx * 70}>
-                <div className="glass-panel h-full rounded-2xl px-4 py-3">
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">{item.label}</div>
-                  <div className="mt-1 text-sm font-semibold text-slate-900">{item.value}</div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b border-slate-900/10">
-        <Container className="py-14 md:py-16">
-          <Reveal className="mb-7 space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Technical Edge</p>
-            <h2 className="text-3xl font-semibold md:text-4xl">Smart systems, not surface-level websites.</h2>
-            <p className="max-w-2xl text-slate-600">
-              I think through the offer, the client journey, the operational workflow, and the technical architecture
-              behind the screen. That is what makes the work more valuable than a basic web build.
-            </p>
-          </Reveal>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {AI_EXPERTISE.map((item, idx) => (
-              <Reveal key={item.title} delay={idx * 70}>
-                <Card className="h-full">
-                  <CardContent className="space-y-2">
-                    <h3 className="text-xl font-semibold text-slate-900">{item.title}</h3>
-                    <p className="text-sm leading-relaxed text-slate-600">{item.detail}</p>
-                  </CardContent>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b border-slate-900/10 bg-white">
-        <Container className="py-14 md:py-16">
-          <Reveal className="mb-8 max-w-3xl space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">How I Think</p>
-            <h2 className="text-3xl font-semibold md:text-4xl">I translate business complexity into clean execution.</h2>
-            <p className="text-slate-600">
-              The best websites are not just designed well. They explain the offer, create trust, guide the next step,
-              and connect to the systems that keep the business moving after the request comes in.
-            </p>
-          </Reveal>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {THINKING_SYSTEMS.map((item, idx) => (
-              <Reveal key={item.label} delay={idx * 70}>
-                <Card className="h-full">
-                  <CardContent className="space-y-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-900/10 bg-slate-950 text-sm font-semibold text-white">
-                      {idx + 1}
-                    </div>
-                    <h3 className="text-xl font-semibold text-slate-900">{item.label}</h3>
-                    <p className="text-sm leading-relaxed text-slate-600">{item.detail}</p>
-                  </CardContent>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b border-slate-900/10">
-        <Container className="py-14 md:py-16">
-          <Reveal className="mb-8 space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Experience</p>
-            <h2 className="text-3xl font-semibold md:text-4xl">Recent technical delivery.</h2>
-          </Reveal>
-
-          <div className="space-y-5">
-            {EXPERIENCE.map((item, idx) => (
-              <Reveal key={item.title} delay={idx * 90}>
-                <Card>
-                  <CardContent className="space-y-4">
-                    <div className="flex flex-wrap items-start justify-between gap-2">
-                      <div>
-                        <h3 className="text-xl font-semibold text-slate-900">{item.title}</h3>
-                        <p className="text-sm text-slate-600">{item.company}</p>
-                      </div>
-                      <span className="rounded-full border border-slate-900/10 bg-white px-3 py-1 text-xs font-semibold text-slate-600">
-                        {item.period}
-                      </span>
-                    </div>
-                    <ul className="space-y-2 text-sm text-slate-600">
-                      {item.bullets.map((bullet) => (
-                        <li key={bullet} className="flex gap-2">
-                          <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-sky-500/80" />
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b border-slate-900/10">
-        <Container className="py-14 md:py-16">
-          <Reveal className="mb-8 space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Core Stack</p>
-            <h2 className="text-3xl font-semibold md:text-4xl">Tools I use to move from strategy to shipped product.</h2>
-          </Reveal>
-
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {Object.entries(STACK).map(([category, items], idx) => (
-              <Reveal key={category} delay={idx * 70}>
-                <Card className="h-full">
-                  <CardContent className="space-y-3">
-                  <h3 className="text-base font-semibold capitalize text-slate-900">
-                      {category.replace(/([A-Z])/g, " $1")}
-                    </h3>
-                    <ul className="space-y-1.5 text-sm text-slate-600">
-                      {items.map((item) => (
-                        <li key={item} className="flex gap-2">
-                          <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-sky-500/80" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-shell">
-        <Container className="py-14 md:py-16">
-          <Reveal>
-            <div className="glass-panel rounded-3xl p-8 md:p-10">
-              <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-                <div className="space-y-2">
-                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Let&apos;s Build</p>
-                  <h3 className="text-2xl font-semibold md:text-3xl">
-                    Need a technical partner who can think and ship?
-                  </h3>
-                  <p className="max-w-2xl text-slate-600">
-                    I can help turn the offer, website, automation, and operational workflow into one coherent system
-                    that makes the next step clear for clients.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <ButtonLink href="/contact/">Start a Conversation</ButtonLink>
-                  <ButtonLink href={linkedinHref} variant="secondary">
-                    Connect on LinkedIn
-                  </ButtonLink>
-                </div>
-              </div>
+      <section className="signal-hero">
+        <Container className="relative z-10 grid items-center gap-12 py-16 md:py-24 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-12 lg:gap-8">
+          <div className="space-y-7 lg:col-span-7">
+            <p className="signal-kicker">Anthony Barbaro · BarbaroTech</p>
+            <div className="space-y-5">
+              <h1 className="display-title max-w-[13ch] text-balance">
+                Your website stays clear because the process stays direct.
+              </h1>
+              <p className="signal-copy max-w-[62ch] text-lg md:text-xl">
+                I&apos;m Anthony, the independent developer behind BarbaroTech. You work
+                directly with me from the first conversation through design, development,
+                launch, and ongoing care.
+              </p>
             </div>
-          </Reveal>
+
+            <ButtonLink href="/contact/?intent=quote" className="signal-cta min-h-11">
+              Request a quote
+            </ButtonLink>
+
+            <div className="signal-rule max-w-xl" />
+            <ul className="flex flex-wrap gap-2" aria-label="Studio details">
+              <li className="signal-chip">Solo studio</li>
+              <li className="signal-chip">San Diego, California</li>
+              <li className="signal-chip">Websites, stores, and software</li>
+            </ul>
+          </div>
+
+          <figure className="signal-panel-strong relative overflow-hidden p-3 sm:p-4 lg:col-span-4 lg:col-start-9">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-[#02060b]">
+              <Image
+                src={SITE.assets.headshot}
+                alt={`${SITE.owner}, the developer behind BarbaroTech`}
+                fill
+                className="object-cover"
+                priority
+              />
+              <div
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#02060b] to-transparent"
+                aria-hidden="true"
+              />
+            </div>
+            <figcaption className="relative -mt-10 px-3 pb-3 sm:px-5">
+              <p className="text-sm font-semibold text-cyan-200">
+                One accountable builder
+              </p>
+              <p className="mt-2 max-w-[36ch] text-sm leading-6 text-slate-300">
+                No account manager, handoff, or mystery about who is doing the work.
+              </p>
+            </figcaption>
+          </figure>
+        </Container>
+      </section>
+
+      <section className="signal-section border-y border-cyan-100/10">
+        <Container className="grid gap-10 py-16 md:py-24 lg:grid-cols-12 lg:gap-8">
+          <div className="space-y-5 lg:col-span-4">
+            <h2 className="section-title max-w-[11ch] text-balance">
+              Why work directly with me?
+            </h2>
+            <p className="signal-copy max-w-[48ch]">
+              Small-business projects move faster when the person giving advice is also
+              responsible for the final result.
+            </p>
+          </div>
+
+          <dl className="signal-rail overflow-hidden rounded-2xl border border-cyan-100/10 lg:col-span-7 lg:col-start-6">
+            {DIRECT_ADVANTAGES.map((item) => (
+              <div
+                key={item.title}
+                className="grid gap-2 border-b border-cyan-100/10 p-6 last:border-b-0 sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] sm:gap-6 sm:p-7"
+              >
+                <dt className="text-lg font-semibold text-cyan-50">{item.title}</dt>
+                <dd className="text-sm leading-7 text-slate-300">{item.detail}</dd>
+              </div>
+            ))}
+          </dl>
+        </Container>
+      </section>
+
+      <section className="signal-section">
+        <Container className="py-16 md:py-24">
+          <div className="mb-10 max-w-3xl space-y-4">
+            <h2 className="section-title text-balance">
+              A simple path from idea to launch.
+            </h2>
+            <p className="signal-copy">
+              You do not need to know every feature before reaching out. We start with the
+              business goal and shape the right build from there.
+            </p>
+          </div>
+
+          <ol className="signal-rail grid overflow-hidden rounded-2xl border border-cyan-100/10 md:grid-cols-3">
+            {PROCESS.map((item, index) => (
+              <li
+                key={item.title}
+                className="border-b border-cyan-100/10 p-6 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0 md:p-8"
+              >
+                <span
+                  className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-200/30 text-sm font-semibold text-cyan-200"
+                  aria-hidden="true"
+                >
+                  {index + 1}
+                </span>
+                <h3 className="mt-7 text-xl font-semibold text-cyan-50">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-300">{item.detail}</p>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </section>
+
+      <section className="signal-section border-y border-cyan-100/10">
+        <Container className="grid gap-10 py-16 md:py-24 lg:grid-cols-12 lg:gap-8">
+          <div className="space-y-5 lg:col-span-4">
+            <h2 className="section-title max-w-[10ch] text-balance">
+              Real technical experience behind the offer.
+            </h2>
+            <p className="signal-copy max-w-[48ch]">
+              BarbaroTech combines customer-facing website work with hands-on experience
+              building the operational systems businesses rely on.
+            </p>
+            <Link
+              href="/projects/"
+              className="signal-link inline-flex min-h-11 items-center text-sm font-semibold"
+            >
+              See selected projects →
+            </Link>
+          </div>
+
+          <div className="space-y-8 lg:col-span-7 lg:col-start-6">
+            {EXPERIENCE.map((item) => (
+              <article
+                key={`${item.company}-${item.role}`}
+                className="border-b border-cyan-100/10 pb-8 last:border-b-0 last:pb-0"
+              >
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold text-cyan-50">{item.role}</h3>
+                    <p className="mt-1 text-sm font-semibold text-cyan-200">
+                      {item.company}
+                    </p>
+                  </div>
+                  <span className="signal-chip shrink-0">{item.period}</span>
+                </div>
+                <p className="mt-4 max-w-[62ch] text-sm leading-7 text-slate-300">
+                  {item.proof}
+                </p>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="signal-section">
+        <Container className="py-16 md:py-24">
+          <div className="signal-panel-strong grid gap-8 p-7 md:p-10 lg:grid-cols-12 lg:items-end">
+            <div className="space-y-4 lg:col-span-8">
+              <h2 className="section-title max-w-[17ch] text-balance">
+                Bring me the goal. I&apos;ll help define the right build.
+              </h2>
+              <p className="signal-copy max-w-[62ch]">
+                Share what you need, what is not working, and the timeline you have in
+                mind. I&apos;ll reply directly with the clearest next step.
+              </p>
+            </div>
+            <div className="lg:col-span-4">
+              <ButtonLink
+                href="/contact/?intent=quote"
+                className="signal-cta min-h-11 w-full"
+              >
+                Request a quote
+              </ButtonLink>
+            </div>
+          </div>
         </Container>
       </section>
     </main>

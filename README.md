@@ -18,8 +18,8 @@ Built with Next.js App Router, TypeScript, React, and Tailwind CSS. The public s
 - Marketing pages: Home, Services, Projects, Pricing, About, Contact
 - Dynamic project case studies: `/projects/[slug]`
 - Dynamic service landing pages: `/services/[slug]`
-- Productized website package pricing
-- Monthly care plan copy, add-ons, payment terms, pricing FAQ, and quote CTAs
+- Five template-aligned website starting packages plus custom software
+- Required monthly care, simple payment terms, pricing FAQ, and quote CTAs
 - Data-driven content from local TypeScript files
 - Responsive UI components, reveal animations, SEO metadata, Open Graph tags, and JSON-LD
 - Contact page with direct phone/email fallback and optional form components
@@ -73,13 +73,12 @@ public/                # static assets and project images
 Edit all productized pricing content in `src/data/pricing.ts`.
 
 - Flash sale setup-fee discounts are controlled by `setupFeePromotion.percentOff`.
-- Website package groups are exported as `pricingPackageGroups`.
-- Standard add-ons are exported as `pricingAddOns`.
-- Monthly care copy is exported as `monthlyCareIncludes`, `monthlyCarePlans`, and `additionalCareWork`.
+- Website package groups are exported as `pricingPackageGroups`, with one public starting package per real template.
+- Standard add-on ranges remain in `pricingAddOns` as quote-time references and are not rendered on the public pricing page.
+- Monthly care copy is exported as `monthlyCareIncludes`; each package carries its required monthly price.
 - Payment terms are exported as `paymentTerms`.
 - Third-party platform cost notes are exported as `platformCostNotes`.
 - Pricing FAQ content is exported as `pricingFaqs`.
-- Optional add-ons, including the AI Concierge Add-On, are exported as `optionalPricingAddOns`.
 
 Plan slugs connect to quote links through `pricingQuoteHref(planSlug)`, which creates `/contact/?plan=<plan-slug>` links. The contact form resolves plan slugs through `getPlanLabelFromParam()` and the contact options in `src/data/contact.ts`.
 

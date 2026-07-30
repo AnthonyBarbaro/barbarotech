@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Container } from "@/components/container";
-import { ProjectCard } from "@/components/project-card";
+import { ProjectMedia } from "@/components/project-media";
 import { Reveal } from "@/components/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { PROJECTS } from "@/data/projects";
@@ -35,86 +36,178 @@ export const metadata: Metadata = {
   },
 };
 
-const featuredCount = PROJECTS.filter((project) => project.featured).length;
+const leadProject = PROJECTS.find((project) => project.featured) ?? PROJECTS[0];
+const archiveProjects = leadProject
+  ? PROJECTS.filter((project) => project.slug !== leadProject.slug)
+  : PROJECTS;
 
 export default function ProjectsPage() {
   return (
-    <main className="text-slate-900">
-      <section className="section-shell border-b border-slate-900/10">
-        <div className="ambient-orb left-[-4rem] top-12 h-44 w-44 bg-sky-300/70" />
-        <Container className="relative z-10 py-16 md:py-20">
-          <Reveal className="space-y-4">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-              Projects
-            </p>
-            <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
-              Real builds.
-              <br />
-              <span className="text-gradient">Production outcomes.</span>
-            </h1>
-            <p className="max-w-2xl text-slate-600">
-              A focused set of projects across web platforms, ecommerce, automation, and backend systems.
-            </p>
+    <main className="signal-page">
+      <section className="signal-hero">
+        <Container className="relative z-10 py-14 sm:py-20 lg:py-24">
+          <Reveal className="grid gap-8 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-8">
+              <p className="signal-kicker">Selected work</p>
+              <h1 className="display-title mt-5 max-w-[12ch]">
+                See the work.
+                <span className="block text-cyan-300">Then read the build.</span>
+              </h1>
+            </div>
+            <div className="lg:col-span-4 lg:pb-1">
+              <p className="signal-copy">
+                Websites, storefronts, and custom systems designed and built directly by
+                Anthony. Each project opens into the problem, decisions, and shipped result.
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <ButtonLink href="/contact/?intent=quote">Start a project</ButtonLink>
+                <a
+                  href="#project-library"
+                  className="signal-link inline-flex min-h-11 items-center gap-2 py-2 text-sm font-semibold"
+                >
+                  Browse projects <span aria-hidden="true">↓</span>
+                </a>
+              </div>
+            </div>
           </Reveal>
 
-          <Reveal delay={120} className="mt-8 grid gap-4 sm:grid-cols-3">
-            <div className="glass-panel rounded-2xl px-4 py-3">
-              <div className="text-xs uppercase tracking-wide text-slate-500">Projects</div>
-              <div className="text-2xl font-semibold text-slate-900">{PROJECTS.length}</div>
-            </div>
-            <div className="glass-panel rounded-2xl px-4 py-3">
-              <div className="text-xs uppercase tracking-wide text-slate-500">Featured</div>
-              <div className="text-2xl font-semibold text-slate-900">{featuredCount}</div>
-            </div>
-            <div className="glass-panel rounded-2xl px-4 py-3">
-              <div className="text-xs uppercase tracking-wide text-slate-500">Focus</div>
-              <div className="text-2xl font-semibold text-slate-900">Speed + UX</div>
-            </div>
-          </Reveal>
+          {leadProject ? (
+            <Reveal delay={120} className="mt-12 sm:mt-16">
+              <div className="signal-panel-strong project-frame overflow-hidden p-2 sm:p-3">
+                <ProjectMedia
+                  project={leadProject}
+                  priority
+                  sizes="(max-width: 1280px) 100vw, 1200px"
+                />
+              </div>
+              <div className="grid gap-5 border-b border-cyan-200/15 py-6 sm:py-8 lg:grid-cols-12 lg:items-end">
+                <div className="lg:col-span-7">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="signal-chip">Featured build</span>
+                    <span className="font-mono text-[10px] text-slate-500">
+                      {String(PROJECTS.indexOf(leadProject) + 1).padStart(2, "0")} /{" "}
+                      {String(PROJECTS.length).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <h2 className="mt-4 text-3xl font-extrabold tracking-[-0.025em] text-white sm:text-4xl">
+                    <Link
+                      href={`/projects/${leadProject.slug}/`}
+                      className="transition-colors hover:text-cyan-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                    >
+                      {leadProject.title}
+                    </Link>
+                  </h2>
+                </div>
+                <div className="lg:col-span-5">
+                  <p className="text-base leading-7 text-slate-300">{leadProject.summary}</p>
+                  <Link
+                    href={`/projects/${leadProject.slug}/`}
+                    className="signal-link mt-4 inline-flex min-h-11 items-center gap-2 py-2 text-sm font-semibold"
+                  >
+                    Open case study <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </div>
+            </Reveal>
+          ) : null}
         </Container>
       </section>
 
-      <section className="border-b border-slate-900/10">
-        <Container className="py-14 md:py-16">
+      <section id="project-library" className="signal-section signal-section--quiet scroll-mt-24">
+        <Container className="py-16 sm:py-20 lg:py-24">
+          <Reveal className="grid gap-6 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-7">
+              <p className="signal-kicker">Project library</p>
+              <h2 className="section-title mt-5 max-w-[13ch]">
+                Real surfaces. Clear build notes.
+              </h2>
+            </div>
+            <p className="signal-copy max-w-xl lg:col-span-5">
+              Each preview keeps the interface front and center, with the problem, build
+              notes, and shipped result one click away.
+            </p>
+          </Reveal>
+
           {PROJECTS.length === 0 ? (
-            <Reveal>
-              <p className="text-slate-600">No projects have been added yet.</p>
+            <Reveal className="signal-panel mt-12 p-6">
+              <p className="signal-copy">No projects have been added yet.</p>
             </Reveal>
           ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {PROJECTS.map((project, idx) => (
-                <Reveal key={project.slug} delay={(idx % 6) * 80}>
-                  <ProjectCard project={project} />
-                </Reveal>
-              ))}
+            <div className="mt-12 grid gap-x-8 gap-y-14 lg:grid-cols-2 lg:gap-y-18">
+              {archiveProjects.map((project, index) => {
+                const projectNumber = PROJECTS.indexOf(project) + 1;
+
+                return (
+                  <Reveal key={project.slug} delay={(index % 2) * 80}>
+                    <article className="border-t border-cyan-200/15 pt-5">
+                      <ProjectMedia
+                        project={project}
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="project-frame"
+                      />
+
+                      <div className="mt-5 flex items-center justify-between gap-4">
+                        <p className="font-mono text-[10px] tracking-[0.08em] text-cyan-300">
+                          Project {String(projectNumber).padStart(2, "0")}
+                        </p>
+                        <p className="font-mono text-[10px] text-slate-500">
+                          {project.video ? "Demo video" : "Case study"}
+                        </p>
+                      </div>
+
+                      <h3 className="mt-3 text-2xl font-extrabold leading-tight tracking-[-0.025em] text-white sm:text-3xl">
+                        <Link
+                          href={`/projects/${project.slug}/`}
+                          className="transition-colors hover:text-cyan-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                        >
+                          {project.title}
+                        </Link>
+                      </h3>
+                      <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">
+                        {project.summary}
+                      </p>
+
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {project.tech.slice(0, 4).map((tech) => (
+                          <span key={tech} className="signal-chip">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      <Link
+                        href={`/projects/${project.slug}/`}
+                        className="signal-link mt-5 inline-flex min-h-11 items-center gap-2 py-2 text-sm font-semibold"
+                      >
+                        View project <span aria-hidden="true">→</span>
+                      </Link>
+                    </article>
+                  </Reveal>
+                );
+              })}
             </div>
           )}
         </Container>
       </section>
 
-      <section className="section-shell">
-        <Container className="py-14 md:py-16">
-          <Reveal>
-            <div className="glass-panel rounded-3xl p-8 md:p-10">
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div className="space-y-2">
-                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
-                    Build Something New
-                  </p>
-                  <h2 className="text-2xl font-semibold text-slate-900 md:text-3xl">
-                    Want this level of polish for your business?
-                  </h2>
-                  <p className="max-w-2xl text-slate-600">
-                    Share what you need and get a clear scope, timeline, and quote.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  <ButtonLink href="/contact/">Start Here</ButtonLink>
-                  <ButtonLink href="/pricing/" variant="secondary">
-                    View Pricing
-                  </ButtonLink>
-                </div>
-              </div>
+      <section className="signal-section">
+        <Container className="py-16 sm:py-20 lg:py-24">
+          <Reveal className="grid gap-8 border-y border-cyan-200/15 py-10 sm:py-12 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-8">
+              <p className="signal-kicker">Your project next</p>
+              <h2 className="section-title mt-5 max-w-[13ch]">
+                Bring the goal. I&apos;ll map the build.
+              </h2>
+              <p className="signal-copy mt-5 max-w-2xl">
+                Tell me what needs to work, what already exists, and where the current
+                experience falls short.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3 lg:col-span-4 lg:justify-end">
+              <ButtonLink href="/contact/?intent=quote">Request a quote</ButtonLink>
+              <ButtonLink href="/pricing/" variant="secondary">
+                View pricing
+              </ButtonLink>
             </div>
           </Reveal>
         </Container>

@@ -3,47 +3,37 @@ import Script from "next/script";
 import { Container } from "@/components/container";
 import { PricingCard } from "@/components/pricing-card";
 import { Reveal } from "@/components/reveal";
-import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import {
-  additionalCareWork,
   getSetupFeePromotionText,
   monthlyCareIncludes,
-  monthlyCarePlans,
-  optionalPricingAddOns,
   paymentTerms,
-  platformCostNotes,
-  pricingAddOns,
-  pricingPackageGroups,
   pricingFaqs,
+  pricingPackageGroups,
   setupFeePromotion,
 } from "@/data/pricing";
 import { SITE } from "@/lib/site";
 import { canonicalUrl, withBaseKeywords } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Website & Software Pricing",
+  title: "Simple Website Pricing",
   description:
-    "Explore BarbaroTech website packages and custom software scopes for business websites, restaurants, booking sites, ecommerce stores, premium brands, and operational workflows.",
+    "Choose a clear BarbaroTech starting package for a business website, restaurant, booking business, online store, or premium website. Required monthly care is shown up front.",
   alternates: {
     canonical: canonicalUrl("/pricing/"),
   },
   keywords: withBaseKeywords([
     "website pricing",
     "website packages",
-    "monthly care plans",
-    "business website pricing",
+    "monthly website care",
     "restaurant website pricing",
     "booking website pricing",
     "ecommerce website pricing",
-    "premium business website pricing",
-    "custom software pricing",
   ]),
   openGraph: {
-    title: `Website & Software Pricing | ${SITE.brand}`,
+    title: `Simple Website Pricing | ${SITE.brand}`,
     description:
-      "Website packages and custom software scopes for business websites, restaurants, booking sites, ecommerce stores, premium brands, and operational workflows.",
+      "Five clear website starting points with one-time setup and required monthly care shown together.",
     url: canonicalUrl("/pricing/"),
     siteName: SITE.brand,
     images: [{ url: "/og.png" }],
@@ -51,12 +41,19 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `Website & Software Pricing | ${SITE.brand}`,
+    title: `Simple Website Pricing | ${SITE.brand}`,
     description:
-      "Website packages and custom software scopes for business websites, restaurants, booking sites, ecommerce stores, premium brands, and operational workflows.",
+      "Five clear website starting points with one-time setup and required monthly care shown together.",
     images: ["/og.png"],
   },
 };
+
+const websitePackageGroups = pricingPackageGroups.filter(
+  (group) => group.id !== "custom-software"
+);
+const customSoftwareGroup = pricingPackageGroups.find(
+  (group) => group.id === "custom-software"
+);
 
 export default function PricingPage() {
   const faqJsonLd = {
@@ -73,305 +70,256 @@ export default function PricingPage() {
   };
 
   return (
-    <main className="text-slate-900">
+    <main className="signal-page">
       <Script
         id="pricing-faq-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      <section className="section-shell border-b border-slate-900/10">
-        <div className="ambient-orb right-[-5rem] top-10 h-56 w-56 bg-sky-300/70" />
-        <div className="ambient-orb ambient-orb--slow left-[-5rem] bottom-[-4rem] h-52 w-52 bg-blue-300/60" />
-        <Container className="relative z-10 py-16 md:py-20">
-          <Reveal className="max-w-4xl space-y-5">
-            <div className="flex flex-wrap gap-2">
-              <Badge>Setup Pricing</Badge>
-              <Badge>Monthly Care</Badge>
-              <Badge>Upgrade Paths</Badge>
-              {setupFeePromotion.enabled ? (
-                <Badge>
-                  {setupFeePromotion.label}: {getSetupFeePromotionText()}
-                </Badge>
-              ) : null}
-            </div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Website & Software Pricing</p>
-            <h1 className="text-4xl font-semibold leading-tight md:text-6xl">
-              Website and software packages built
-              <br />
-              <span className="text-gradient">for real business growth.</span>
-            </h1>
-            <p className="max-w-3xl text-base leading-relaxed text-slate-600 md:text-lg">
-              Clear launch pricing, monthly care options, and upgrade paths for business websites,
-              restaurants, booking sites, ecommerce stores, premium brands, and custom software scopes.
+      <section className="signal-hero">
+        <Container className="relative z-10 py-16 md:py-24">
+          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.75fr] lg:items-center">
+            <Reveal>
+              <p className="signal-kicker">Simple starting prices</p>
+              <h1 className="display-title mt-6">
+                Choose the closest build.{" "}
+                <span className="signal-accent">I&apos;ll handle the details.</span>
+              </h1>
+              <p className="signal-copy mt-6">
+                Each package shows the one-time setup and required monthly care. If your
+                project needs extra pages, content, or integrations, I&apos;ll include them
+                in one clear quote.
+              </p>
+              <ButtonLink href="/contact/?intent=quote" className="mt-7">
+                Get my recommendation
+              </ButtonLink>
+            </Reveal>
+
+            <Reveal delay={110}>
+              <div className="signal-panel-strong p-6 md:p-7">
+                <div className="flex items-center justify-between gap-4">
+                  <p className="font-mono text-[10px] text-cyan-300">How pricing works</p>
+                  <span className="signal-node" aria-hidden="true" />
+                </div>
+                <div className="mt-5 divide-y divide-cyan-200/15 border-y border-cyan-200/15">
+                  <div className="grid grid-cols-[5.5rem_1fr] gap-3 py-4">
+                    <span className="font-mono text-[10px] text-slate-500">Setup</span>
+                    <p className="text-sm leading-6 text-slate-300">
+                      Covers the agreed website build and launch.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-[5.5rem_1fr] gap-3 py-4">
+                    <span className="font-mono text-[10px] text-slate-500">Monthly</span>
+                    <p className="text-sm leading-6 text-slate-300">
+                      Keeps the site hosted, maintained, and supported.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-[5.5rem_1fr] gap-3 py-4">
+                    <span className="font-mono text-[10px] text-slate-500">Extras</span>
+                    <p className="text-sm leading-6 text-slate-300">
+                      Added only when your project actually needs them.
+                    </p>
+                  </div>
+                </div>
+                {setupFeePromotion.enabled ? (
+                  <p className="mt-5 text-sm leading-6 text-cyan-100">
+                    {setupFeePromotion.label}: {getSetupFeePromotionText()}. Monthly care
+                    stays unchanged.
+                  </p>
+                ) : null}
+              </div>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      <section id="packages" className="signal-section scroll-mt-24">
+        <Container className="py-16 md:py-24">
+          <Reveal className="max-w-3xl">
+            <p className="signal-kicker">Pick by project type</p>
+            <h2 className="section-title mt-5">Five clear website packages.</h2>
+            <p className="signal-copy mt-5">
+              Choose the one that looks closest. The final scope can flex without making you
+              compare a long list of tiers and technical options.
             </p>
-            {setupFeePromotion.enabled ? (
-              <div className="max-w-3xl rounded-3xl border border-cyan-300/30 bg-white/85 px-5 py-4 shadow-[0_18px_44px_rgba(8,17,40,0.08)]">
-                <p className="text-sm font-semibold text-slate-900">
-                  {setupFeePromotion.label}: {getSetupFeePromotionText()}.
-                </p>
-                <p className="mt-1 text-sm leading-relaxed text-slate-600">
-                  This discount applies to setup fees only. Monthly care, add-ons, third-party costs,
-                  and usage-based expenses are not discounted.
-                </p>
+          </Reveal>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-6">
+            {websitePackageGroups.map((group, index) => {
+              const plan = group.packages[0];
+              if (!plan) return null;
+
+              return (
+                <Reveal
+                  key={group.id}
+                  delay={index * 60}
+                  className={`h-full ${index < 3 ? "xl:col-span-2" : "xl:col-span-3"}`}
+                >
+                  <div id={group.id} className="h-full scroll-mt-28">
+                    <PricingCard plan={plan} />
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+
+          <Reveal className="mt-10">
+            {customSoftwareGroup?.packages[0] ? (
+              <div
+                id={customSoftwareGroup.id}
+                className="flex scroll-mt-28 flex-col gap-5 border-y border-cyan-200/15 py-7 md:flex-row md:items-center md:justify-between"
+              >
+                <div>
+                  <p className="text-lg font-extrabold text-white">
+                    Need something outside these packages?
+                  </p>
+                  <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
+                    Extra pages, content, provider connections, and special features are added
+                    to one quote. Workflows, internal tools, and automations start with a short
+                    discovery conversation.
+                  </p>
+                </div>
+                <ButtonLink
+                  href={customSoftwareGroup.packages[0].ctaHref}
+                  variant="secondary"
+                  className="shrink-0"
+                >
+                  Discuss a custom build
+                </ButtonLink>
               </div>
             ) : null}
-            <div className="flex flex-wrap gap-3">
-              <ButtonLink href="/contact/?intent=quote">Request a Quote</ButtonLink>
-              <ButtonLink href="/contact/?intent=call" variant="secondary">
-                Book a Call
-              </ButtonLink>
-            </div>
-            <p className="max-w-2xl text-sm text-slate-500">
-              Final pricing depends on scope, integrations, content, and launch timeline.
-            </p>
           </Reveal>
         </Container>
       </section>
 
-      <section className="border-b border-slate-900/10">
-        <Container className="py-8 md:py-10">
-          <Reveal className="flex flex-wrap gap-2">
-            {pricingPackageGroups.map((group) => (
-              <a
-                key={group.id}
-                href={`#${group.id}`}
-                className="inline-flex rounded-full border border-slate-900/10 bg-white/85 px-4 py-2 text-xs font-semibold uppercase tracking-[0.1em] text-slate-600 transition hover:border-sky-500/40 hover:text-slate-900"
-              >
-                {group.title.replace(" Websites", "").replace(" Stores", "")}
-              </a>
-            ))}
-          </Reveal>
-        </Container>
-      </section>
+      <section className="signal-section signal-section--deep">
+        <Container className="py-16 md:py-24">
+          <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+            <Reveal>
+              <p className="signal-kicker">Required monthly care</p>
+              <h2 className="section-title mt-5">
+                Your website stays handled after launch.
+              </h2>
+              <p className="signal-copy mt-5">
+                Monthly care is part of every website package and begins when the site launches.
+                The amount shown on each package reflects the support that type of website needs.
+              </p>
+              <p className="mt-5 text-sm leading-7 text-slate-400">
+                Larger changes are discussed and approved before any extra work begins.
+              </p>
+            </Reveal>
 
-      {pricingPackageGroups.map((group, groupIndex) => (
-        <section key={group.id} id={group.id} className="scroll-mt-28 border-b border-slate-900/10">
-          <Container className="py-12 md:py-16">
-            <Reveal className="mb-7 grid gap-5 lg:grid-cols-[1fr_0.8fr] lg:items-end">
-              <div className="space-y-3">
-                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
-                  {group.eyebrow}
-                </p>
-                <h2 className="text-3xl font-semibold md:text-4xl">{group.title}</h2>
-                <p className="max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
-                  {group.description}
-                </p>
-              </div>
-              <div className="rounded-2xl border border-slate-900/10 bg-white/80 px-4 py-3">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">Best For</p>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {group.bestFor.slice(0, 8).map((item) => (
-                    <span
+            <Reveal delay={100}>
+              <div className="signal-panel-strong p-6 md:p-7">
+                <h3 className="text-2xl font-extrabold text-white">
+                  What monthly care covers
+                </h3>
+                <div className="mt-5 grid gap-x-6 sm:grid-cols-2">
+                  {monthlyCareIncludes.map((item) => (
+                    <div
                       key={item}
-                      className="rounded-full border border-slate-900/10 bg-white px-2.5 py-1 text-xs text-slate-600"
+                      className="flex gap-3 border-b border-cyan-200/12 py-3 text-sm leading-6 text-slate-300"
                     >
-                      {item}
-                    </span>
+                      <span
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-300"
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </div>
                   ))}
                 </div>
               </div>
             </Reveal>
-
-            <div className="grid gap-5 lg:grid-cols-3">
-              {group.packages.map((plan, idx) => (
-                <Reveal key={plan.slug} delay={(idx + groupIndex) * 60}>
-                  <PricingCard plan={plan} />
-                </Reveal>
-              ))}
-            </div>
-          </Container>
-        </section>
-      ))}
-
-      <section className="section-shell border-b border-slate-900/10">
-        <Container className="relative z-10 py-12 md:py-16">
-          <Reveal className="mb-7 space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Optional Add-On</p>
-            <h2 className="text-3xl font-semibold md:text-4xl">AI concierge for guided website conversations.</h2>
-            <p className="max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
-              Add this after the core website scope is clear. It can answer common questions, route visitors
-              to services, and help prepare lead summaries without giving legal, medical, financial, or
-              regulated advice.
-            </p>
-          </Reveal>
-          <div className="grid gap-5 lg:grid-cols-3">
-            {optionalPricingAddOns.map((plan) => (
-              <Reveal key={plan.slug}>
-                <PricingCard plan={plan} />
-              </Reveal>
-            ))}
           </div>
         </Container>
       </section>
 
-      <section id="pricing-faq" className="scroll-mt-28 border-b border-slate-900/10">
-        <Container className="py-12 md:py-16">
-          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-            <Reveal className="space-y-3">
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
-                Monthly Care
+      <section className="signal-section">
+        <Container className="py-16 md:py-24">
+          <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+            <Reveal>
+              <p className="signal-kicker">Before the build</p>
+              <h2 className="section-title mt-5">One quote. No feature maze.</h2>
+              <p className="signal-copy mt-5">
+                Tell me what the website needs to do. I&apos;ll choose the right foundation,
+                add only the work your project needs, and explain the total before we begin.
               </p>
-              <h2 className="text-3xl font-semibold md:text-4xl">What monthly care covers.</h2>
-              <p className="text-sm leading-relaxed text-slate-600 md:text-base">
-                Monthly care starts at launch and keeps the website supported after the initial build.
-                Additional work outside the included monthly edit time is billed at {additionalCareWork}.
-              </p>
-              <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-                {monthlyCarePlans.map((plan) => (
-                  <div key={plan.name} className="rounded-2xl border border-slate-900/10 bg-white/85 px-4 py-3">
-                    <h3 className="text-sm font-semibold text-slate-900">{plan.name}</h3>
-                    <p className="mt-1 text-sm font-semibold text-sky-700">{plan.editingLimit}</p>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-600">{plan.description}</p>
-                  </div>
-                ))}
+            </Reveal>
+
+            <Reveal delay={100}>
+              <div className="signal-panel p-6 md:p-7">
+                <h3 className="text-2xl font-extrabold text-white">Simple terms</h3>
+                <ul className="mt-5 divide-y divide-cyan-200/12 border-y border-cyan-200/12">
+                  {paymentTerms.map((term) => (
+                    <li
+                      key={term}
+                      className="flex gap-3 py-3 text-sm leading-6 text-slate-300"
+                    >
+                      <span
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-300"
+                        aria-hidden="true"
+                      />
+                      <span>{term}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-5 text-xs leading-6 text-slate-500">
+                  Domain registration, software subscriptions, payment processing, and provider
+                  usage fees are billed separately when needed.
+                </p>
               </div>
             </Reveal>
-
-            <Reveal delay={120}>
-              <Card>
-                <CardContent className="space-y-4">
-                  <h3 className="text-xl font-semibold text-slate-900">Care plan coverage may include</h3>
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    {monthlyCareIncludes.map((item) => (
-                      <div key={item} className="flex gap-2 rounded-2xl border border-slate-900/10 bg-white px-3 py-2 text-sm text-slate-600">
-                        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500/80" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </Reveal>
           </div>
         </Container>
       </section>
 
-      <section className="border-b border-slate-900/10">
-        <Container className="py-12 md:py-16">
-          <Reveal className="mb-7 space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Add-Ons</p>
-            <h2 className="text-3xl font-semibold md:text-4xl">Standard add-ons and upgrade ranges.</h2>
-            <p className="max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
-              Add-ons are scoped into the quote when the project needs more pages, content, integrations,
-              product work, or a faster launch timeline.
-            </p>
+      <section id="pricing-faq" className="signal-section signal-section--deep scroll-mt-24">
+        <Container className="py-16 md:py-24">
+          <Reveal className="mb-9">
+            <p className="signal-kicker">Pricing FAQ</p>
+            <h2 className="section-title mt-5">The important questions.</h2>
           </Reveal>
-
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
-            {pricingAddOns.map((addOn, idx) => (
-              <Reveal key={addOn.name} delay={(idx % 6) * 45}>
-                <div className="h-full rounded-2xl border border-slate-900/10 bg-white/85 px-4 py-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-sm font-semibold text-slate-900">{addOn.name}</h3>
-                    <span className="shrink-0 rounded-full border border-slate-900/10 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700">
-                      {addOn.price}
+          <div className="grid gap-x-8 lg:grid-cols-2">
+            {pricingFaqs.map((faq, index) => (
+              <Reveal key={faq.question} delay={(index % 4) * 60}>
+                <details className="group border-b border-cyan-200/15">
+                  <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-4 py-4 text-lg font-bold text-white marker:hidden">
+                    {faq.question}
+                    <span
+                      className="font-mono text-cyan-300 transition-transform group-open:rotate-45"
+                      aria-hidden="true"
+                    >
+                      +
                     </span>
-                  </div>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{addOn.detail}</p>
-                </div>
+                  </summary>
+                  <p className="max-w-2xl pb-5 text-sm leading-7 text-slate-400">
+                    {faq.answer}
+                  </p>
+                </details>
               </Reveal>
             ))}
           </div>
         </Container>
       </section>
 
-      <section className="border-b border-slate-900/10">
-        <Container className="py-12 md:py-16">
-          <div className="grid gap-6 lg:grid-cols-2">
-            <Reveal>
-              <Card className="h-full">
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
-                      Third-Party Costs
-                    </p>
-                    <h2 className="text-2xl font-semibold text-slate-900 md:text-3xl">
-                      Platform costs stay separate.
-                    </h2>
-                    <p className="text-sm leading-relaxed text-slate-600">
-                      Third-party costs are separate and billed directly to the client when applicable.
-                      These costs vary by provider and can change over time.
-                    </p>
-                  </div>
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    {platformCostNotes.map((note) => (
-                      <div key={note} className="rounded-2xl border border-slate-900/10 bg-white px-3 py-2 text-sm text-slate-600">
-                        {note}
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </Reveal>
-
-            <Reveal delay={120}>
-              <Card className="h-full">
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">
-                      Payment Terms
-                    </p>
-                    <h2 className="text-2xl font-semibold text-slate-900 md:text-3xl">
-                      Typical payment structure.
-                    </h2>
-                  </div>
-                  <ul className="space-y-2 text-sm text-slate-600">
-                    {paymentTerms.map((term) => (
-                      <li key={term} className="flex gap-2">
-                        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-sky-500/80" />
-                        <span>{term}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b border-slate-900/10">
-        <Container className="py-12 md:py-16">
-          <Reveal className="mb-7 space-y-3">
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Pricing FAQ</p>
-            <h2 className="text-3xl font-semibold md:text-4xl">Common pricing questions.</h2>
-          </Reveal>
-          <div className="grid gap-4 md:grid-cols-2">
-            {pricingFaqs.map((faq, idx) => (
-              <Reveal key={faq.question} delay={(idx % 4) * 70}>
-                <Card className="h-full">
-                  <CardContent className="space-y-2">
-                    <h3 className="text-lg font-semibold text-slate-900">{faq.question}</h3>
-                    <p className="text-sm leading-relaxed text-slate-600">{faq.answer}</p>
-                  </CardContent>
-                </Card>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="section-shell">
-        <Container className="py-12 md:py-16">
+      <section className="signal-section">
+        <Container className="py-14 md:py-20">
           <Reveal>
-            <div className="glass-panel rounded-3xl p-7 md:p-9">
-              <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-                <div className="space-y-2">
-                  <p className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500">Next Step</p>
-                  <h2 className="text-2xl font-semibold text-slate-900 md:text-3xl">
-                    Not sure which package fits?
+            <div className="signal-cta p-7 md:p-10">
+              <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <p className="signal-kicker">Not sure which one fits?</p>
+                  <h2 className="mt-5 max-w-3xl text-3xl font-extrabold tracking-[-0.03em] text-white md:text-5xl">
+                    Tell me the goal. I&apos;ll recommend the package.
                   </h2>
-                  <p className="max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">
-                    Send the project details and I&apos;ll recommend the right launch path.
+                  <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
+                    You do not need to figure out every page or feature before reaching out.
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-3">
-                  <ButtonLink href="/contact/?intent=quote">Request a Quote</ButtonLink>
-                  <ButtonLink href="/contact/?intent=call" variant="secondary">
-                    Book a Call
-                  </ButtonLink>
-                </div>
+                <ButtonLink href="/contact/?intent=quote" className="shrink-0">
+                  Request a quote
+                </ButtonLink>
               </div>
             </div>
           </Reveal>

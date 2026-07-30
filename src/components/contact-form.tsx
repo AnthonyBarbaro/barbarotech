@@ -22,8 +22,9 @@ type FormState = {
 };
 
 const INPUT_CLASS =
-  "w-full rounded-2xl border border-slate-900/10 bg-white/90 px-3.5 py-2.5 text-sm text-slate-900 " +
-  "placeholder:text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] focus:outline-none focus:ring-4 focus:ring-sky-300/30";
+  "min-h-12 w-full rounded-[14px] border border-cyan-100/15 bg-[#07111d]/95 px-4 py-3 text-sm text-[#effbff] " +
+  "placeholder:text-[#7890a3] shadow-[inset_0_1px_0_rgba(165,243,252,0.04)] transition-colors " +
+  "focus:border-cyan-300/60 focus:outline-none focus:ring-4 focus:ring-cyan-400/15 disabled:cursor-not-allowed disabled:opacity-50";
 
 function getInitialPlan(defaultPlan: string) {
   const trimmed = resolveContactPlanLabel(defaultPlan);
@@ -172,7 +173,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <input
         className="hidden"
         tabIndex={-1}
@@ -235,7 +236,7 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <label className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-600">Service / Plan *</label>
+        <label className="text-xs font-semibold text-cyan-100">Service / Plan *</label>
         <select className={INPUT_CLASS} value={state.selectedPlan} onChange={update("selectedPlan")}>
           {SERVICE_PLAN_OPTIONS.map((option) => (
             <option key={option} value={option}>
@@ -274,16 +275,21 @@ export function ContactForm() {
         <p
           className={
             status === "error"
-              ? "text-xs text-red-600"
+              ? "rounded-[12px] border border-rose-300/25 bg-rose-400/10 px-3 py-2 text-xs leading-relaxed text-rose-200"
               : status === "success"
-                ? "text-xs text-emerald-600"
-                : "text-xs text-slate-500"
+                ? "rounded-[12px] border border-cyan-300/25 bg-cyan-300/10 px-3 py-2 text-xs leading-relaxed text-cyan-100"
+                : "text-xs leading-relaxed text-[#9bb2c3]"
           }
         >
           {feedback || "Required fields: name, email, service/plan, and message."}
         </p>
 
-        <Button type="submit" variant="primary" disabled={!canSubmit || status === "submitting"}>
+        <Button
+          type="submit"
+          variant="primary"
+          className="min-h-12 shrink-0 px-6"
+          disabled={!canSubmit || status === "submitting"}
+        >
           {status === "submitting" ? "Sending..." : "Send Request →"}
         </Button>
       </div>

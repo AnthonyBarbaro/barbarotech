@@ -41,8 +41,9 @@ type SlotDisplay = {
 };
 
 const INPUT_CLASS =
-  "w-full rounded-2xl border border-slate-900/10 bg-white/90 px-3.5 py-2.5 text-sm text-slate-900 " +
-  "placeholder:text-slate-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)] focus:outline-none focus:ring-4 focus:ring-sky-300/30";
+  "min-h-12 w-full rounded-[14px] border border-cyan-100/15 bg-[#07111d]/95 px-4 py-3 text-sm text-[#effbff] " +
+  "placeholder:text-[#7890a3] shadow-[inset_0_1px_0_rgba(165,243,252,0.04)] transition-colors " +
+  "focus:border-cyan-300/60 focus:outline-none focus:ring-4 focus:ring-cyan-400/15 disabled:cursor-not-allowed disabled:opacity-50";
 
 const PACIFIC_TIME_ZONE = "America/Los_Angeles";
 
@@ -344,13 +345,13 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         onChange={update("fax")}
       />
 
-      <div className="rounded-2xl border border-slate-900/10 bg-[linear-gradient(155deg,rgba(255,255,255,0.98),rgba(236,249,255,0.72))] p-3 sm:p-4">
+      <div className="rounded-[16px] border border-cyan-100/10 bg-[#07111d]/90 p-3 sm:p-4">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <div>
-            <label className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-700">Meeting Type</label>
-            <p className="text-xs text-slate-500">Choose the call format you prefer.</p>
+            <label className="text-xs font-semibold text-cyan-100">Meeting Type</label>
+            <p className="mt-1 text-xs text-[#9bb2c3]">Choose the call format you prefer.</p>
           </div>
-          <span className="rounded-full border border-slate-900/15 bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-600">
+          <span className="rounded-full border border-cyan-200/20 bg-cyan-300/10 px-2.5 py-1 font-mono text-[10px] font-medium text-cyan-100">
             Step 1
           </span>
         </div>
@@ -363,10 +364,10 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
                 type="button"
                 onClick={() => selectMethod(option.value)}
                 className={cn(
-                  "rounded-2xl border px-3 py-3 text-left transition",
+                  "min-h-[88px] rounded-[14px] border px-4 py-3 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
                   selected
-                    ? "border-cyan-400/45 bg-slate-900 text-white shadow-[0_10px_22px_rgba(15,23,42,0.3)]"
-                    : "border-slate-900/10 bg-white text-slate-600 hover:border-slate-900/20 hover:text-slate-900"
+                    ? "border-cyan-300/55 bg-cyan-300/[0.12] text-cyan-50 shadow-[inset_0_1px_0_rgba(165,243,252,0.12)]"
+                    : "border-cyan-100/10 bg-[#02060b]/55 text-[#9bb2c3] hover:border-cyan-200/30 hover:bg-cyan-300/[0.05] hover:text-cyan-50"
                 )}
               >
                 <div className="flex items-center justify-between gap-2">
@@ -376,13 +377,13 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
                       "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em]",
                       selected
                         ? "border border-cyan-300/45 bg-cyan-400/20 text-cyan-100"
-                        : "border border-slate-900/10 bg-slate-100 text-slate-500"
+                        : "border border-cyan-100/10 bg-cyan-100/[0.04] text-[#9bb2c3]"
                     )}
                   >
                     {selected ? "Selected" : option.tag}
                   </span>
                 </div>
-                <p className={cn("mt-1.5 text-xs", selected ? "text-slate-200" : "text-slate-500")}>
+                <p className={cn("mt-1.5 text-xs", selected ? "text-cyan-50/75" : "text-[#9bb2c3]")}>
                   {option.detail}
                 </p>
               </button>
@@ -391,10 +392,10 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         </div>
       </div>
 
-      <div className="space-y-2 rounded-2xl border border-slate-900/10 bg-white/80 p-3 sm:p-4">
+      <div className="space-y-3 rounded-[16px] border border-cyan-100/10 bg-[#07111d]/90 p-3 sm:p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <label className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-600">Pick a Date *</label>
-          <span className="rounded-full border border-slate-900/15 bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-600">
+          <label className="text-xs font-semibold text-cyan-100">Pick a Date *</label>
+          <span className="rounded-full border border-cyan-200/20 bg-cyan-300/10 px-2.5 py-1 font-mono text-[10px] font-medium text-cyan-100">
             Step 2
           </span>
         </div>
@@ -407,10 +408,10 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
                 type="button"
                 onClick={() => selectDate(date.value)}
                 className={cn(
-                  "rounded-2xl border px-3 py-2 text-left transition",
+                  "min-h-16 rounded-[14px] border px-3 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
                   selected
-                    ? "border-cyan-500/40 bg-cyan-50 text-slate-900"
-                    : "border-slate-900/10 bg-white text-slate-600 hover:border-slate-900/20 hover:text-slate-900"
+                    ? "border-cyan-200 bg-cyan-300 text-[#02060b]"
+                    : "border-cyan-100/10 bg-[#02060b]/55 text-[#9bb2c3] hover:border-cyan-200/30 hover:bg-cyan-300/[0.05] hover:text-cyan-50"
                 )}
               >
                 <div className="text-[11px] font-semibold uppercase tracking-[0.08em]">{date.weekday}</div>
@@ -421,10 +422,10 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         </div>
       </div>
 
-      <div className="space-y-2 rounded-2xl border border-slate-900/10 bg-white/80 p-3 sm:p-4">
+      <div className="space-y-3 rounded-[16px] border border-cyan-100/10 bg-[#07111d]/90 p-3 sm:p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <label className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-600">Timezone</label>
-          <span className="rounded-full border border-slate-900/15 bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-600">
+          <label className="text-xs font-semibold text-cyan-100">Timezone</label>
+          <span className="rounded-full border border-cyan-200/20 bg-cyan-300/10 px-2.5 py-1 font-mono text-[10px] font-medium text-cyan-100">
             Step 3
           </span>
         </div>
@@ -439,20 +440,20 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
           <button
             type="button"
             onClick={applyLocalTimezone}
-            className="rounded-2xl border border-slate-900/10 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-900/20 hover:text-slate-900"
+            className="min-h-12 shrink-0 rounded-[14px] border border-cyan-100/15 bg-[#02060b]/55 px-4 py-3 text-sm font-semibold text-cyan-100 transition-colors hover:border-cyan-200/35 hover:bg-cyan-300/[0.07] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
           >
             Use My Local Time
           </button>
         </div>
-        <p className="text-[11px] text-slate-500">
-          Detected timezone: <span className="font-semibold text-slate-700">{formatTimeZoneOptionLabel(detectedTimeZone)}</span>
+        <p className="text-[11px] text-[#9bb2c3]">
+          Detected timezone: <span className="font-semibold text-cyan-100">{formatTimeZoneOptionLabel(detectedTimeZone)}</span>
         </p>
       </div>
 
-      <div className="space-y-2 rounded-2xl border border-slate-900/10 bg-white/80 p-3 sm:p-4">
+      <div className="space-y-3 rounded-[16px] border border-cyan-100/10 bg-[#07111d]/90 p-3 sm:p-4">
         <div className="flex items-center justify-between gap-2">
-          <label className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-600">Pick a Time *</label>
-          <span className="rounded-full border border-slate-900/15 bg-white px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-600">
+          <label className="text-xs font-semibold text-cyan-100">Pick a Time *</label>
+          <span className="rounded-full border border-cyan-200/20 bg-cyan-300/10 px-2.5 py-1 font-mono text-[10px] font-medium text-cyan-100">
             Step 4
           </span>
         </div>
@@ -466,15 +467,15 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
                 type="button"
                 onClick={() => selectTime(slot.id)}
                 className={cn(
-                  "rounded-2xl border px-3 py-2 text-left transition",
+                  "min-h-[76px] rounded-[14px] border px-3 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
                   selected
-                    ? "border-cyan-500/40 bg-cyan-50 text-slate-900"
-                    : "border-slate-900/10 bg-white text-slate-600 hover:border-slate-900/20 hover:text-slate-900"
+                    ? "border-cyan-200 bg-cyan-300 text-[#02060b]"
+                    : "border-cyan-100/10 bg-[#02060b]/55 text-[#9bb2c3] hover:border-cyan-200/30 hover:bg-cyan-300/[0.05] hover:text-cyan-50"
                 )}
               >
                 <div className="text-sm font-semibold">{display.localTimeLabel}</div>
-                <div className={cn("text-xs", selected ? "text-slate-600" : "text-slate-500")}>{display.localDateLabel}</div>
-                <div className={cn("text-[11px]", selected ? "text-slate-500" : "text-slate-400")}>{display.referenceLabel}</div>
+                <div className={cn("text-xs", selected ? "text-cyan-950/75" : "text-[#9bb2c3]")}>{display.localDateLabel}</div>
+                <div className={cn("text-[11px]", selected ? "text-cyan-950/60" : "text-[#7890a3]")}>{display.referenceLabel}</div>
               </button>
             );
           })}
@@ -482,12 +483,12 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
       </div>
 
       {selectedDate && selectedSlotDisplay && (
-        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 px-3 py-2.5">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-emerald-700">Selected Slot</p>
-          <p className="text-sm font-semibold text-emerald-900">
+        <div className="rounded-[14px] border border-cyan-300/30 bg-cyan-300/10 px-4 py-3">
+          <p className="text-[11px] font-semibold text-cyan-200">Selected Slot</p>
+          <p className="mt-1 text-sm font-semibold text-cyan-50">
             {selectedSlotDisplay.localDateLabel} at {selectedSlotDisplay.localTimeLabel}
           </p>
-          <p className="text-xs text-emerald-800/80">{selectedSlotDisplay.referenceLabel}</p>
+          <p className="text-xs text-cyan-100/70">{selectedSlotDisplay.referenceLabel}</p>
         </div>
       )}
 
@@ -540,16 +541,21 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         <p
           className={
             status === "error"
-              ? "text-xs text-red-600"
+              ? "rounded-[12px] border border-rose-300/25 bg-rose-400/10 px-3 py-2 text-xs leading-relaxed text-rose-200"
               : status === "success"
-                ? "text-xs text-emerald-600"
-                : "text-xs text-slate-500"
+                ? "rounded-[12px] border border-cyan-300/25 bg-cyan-300/10 px-3 py-2 text-xs leading-relaxed text-cyan-100"
+                : "text-xs leading-relaxed text-[#9bb2c3]"
           }
         >
           {feedback || "Required: name, email, date, and time. Phone is required if meeting type is Phone."}
         </p>
 
-        <Button type="submit" variant="secondary" disabled={!canSubmit || status === "submitting"}>
+        <Button
+          type="submit"
+          variant="secondary"
+          className="min-h-12 shrink-0 px-6"
+          disabled={!canSubmit || status === "submitting"}
+        >
           {status === "submitting" ? "Sending..." : "Request Call →"}
         </Button>
       </div>

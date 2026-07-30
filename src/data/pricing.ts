@@ -9,6 +9,7 @@ export type PricingPackage = {
   ctaLabel: string;
   ctaHref: string;
   featured?: boolean;
+  offerLabel?: string;
 };
 
 export type PricingPackageGroup = {
@@ -45,11 +46,13 @@ type PricingPackageInput = Omit<PricingPackage, "ctaHref" | "ctaLabel"> & {
 
 // Change percentOff here to update the flash sale across pricing surfaces.
 export const setupFeePromotion = {
-  enabled: true,
+  enabled: false,
   label: "Flash Sale",
   percentOff: 25,
   appliesTo: "Setup fees only. Monthly care pricing is unchanged.",
 };
+
+export const limitedStarterOfferEnabled = true;
 
 function formatCurrency(value: number) {
   return new Intl.NumberFormat("en-US", {
@@ -99,376 +102,188 @@ function definePackage({
 export const pricingPackageGroups: PricingPackageGroup[] = [
   {
     id: "business-websites",
-    title: "Business Websites",
-    eyebrow: "Local Service Websites",
+    title: "Starter Website",
+    eyebrow: "Small Business Launch",
     description:
-      "Clean, fast company websites for service businesses that need credibility, clear calls to action, and monthly care after launch.",
+      "A clean, template-based website for businesses that need a credible first launch without a large upfront build.",
     templateType: "bt-static-info-template",
     bestFor: [
-      "Contractors",
+      "New businesses",
+      "Local services",
       "Consultants",
-      "Accountants",
-      "Lawyers",
-      "Doctors and dentists",
-      "Cleaners and landscapers",
-      "Mechanics",
-      "Agencies",
-      "Real estate agents",
-      "Local service businesses",
+      "Independent professionals",
       "Simple company websites",
     ],
     packages: [
-      definePackage({
-        slug: "static-starter",
-        name: "Static Starter",
-        setupPrice: "$1,500",
-        monthlyPrice: "$149/mo",
-        summary: "Good for simple service-business websites.",
-        bestFor: "A focused launch with up to 5 standard pages.",
-        highlights: [
-          "Up to 5 standard pages",
-          "Responsive design",
-          "Basic SEO setup",
-          "Contact CTA",
-          "Launch support",
-          "Monthly care",
-        ],
-      }),
-      definePackage({
-        slug: "static-growth",
-        name: "Static Growth",
-        setupPrice: "$2,500",
-        monthlyPrice: "$249/mo",
-        summary:
-          "Good for businesses that need more polish, content sections, service pages, project examples, or stronger SEO structure.",
-        bestFor: "A stronger content structure with up to 8 standard pages.",
-        highlights: [
-          "Up to 8 standard pages",
-          "Improved content layout",
-          "Stronger service sections",
-          "Project examples",
-          "Analytics setup",
-          "Monthly care",
-        ],
-        featured: true,
-      }),
-      definePackage({
-        slug: "static-custom",
-        name: "Static Custom",
-        setupPrice: "$4,000+",
-        monthlyPrice: "$399/mo",
-        summary:
-          "Good for more custom layouts, extra pages, stronger visual direction, or a more complete brand presence.",
-        bestFor: "A more custom brand presence with higher-touch monthly care.",
-        highlights: [
-          "Custom sections",
-          "Expanded SEO structure",
-          "Extra pages",
-          "Stronger visual direction",
-          "More advanced animations",
-          "Higher-touch monthly care",
-        ],
-      }),
+      ...(limitedStarterOfferEnabled
+        ? [
+            definePackage({
+              slug: "static-starter-kit",
+              name: "Starter Website",
+              setupPrice: "$399",
+              monthlyPrice: "$80/mo",
+              summary:
+                "A fast, template-based website with up to three pages and a clear contact path.",
+              bestFor:
+                "New and small businesses that need a professional website without custom features.",
+              highlights: [
+                "Up to 3 template-based pages",
+                "Mobile-friendly design",
+                "Client-supplied copy and images",
+                "Basic SEO setup",
+                "Hosting, updates, and support",
+              ],
+              ctaLabel: "Claim Starter Price",
+              offerLabel: "Limited-time starting price",
+            }),
+          ]
+        : [
+            definePackage({
+              slug: "static-starter",
+              name: "Business Website",
+              setupPrice: "$1,250+",
+              monthlyPrice: "$149/mo",
+              summary:
+                "A focused business website with clear services, proof, and a direct contact path.",
+              bestFor: "Small businesses that need a tailored website and ongoing support.",
+              highlights: [
+                "Tailored page structure",
+                "Mobile-friendly design",
+                "Client-supplied copy and images",
+                "Basic SEO setup",
+                "Hosting, updates, and support",
+              ],
+            }),
+          ]),
     ],
   },
   {
     id: "restaurant-websites",
-    title: "Restaurant Websites",
-    eyebrow: "Food and Hospitality",
+    title: "Restaurant Website",
+    eyebrow: "Restaurants and Food Brands",
     description:
-      "Restaurant websites that make menus, locations, ordering links, reviews, and catering requests easy to find on mobile.",
+      "A mobile-first restaurant website that makes the menu, location, and order-now path easy to find.",
     templateType: "bt-restaurant-pos-template",
     bestFor: [
       "Restaurants",
       "Cafes",
       "Bakeries",
-      "Pizza shops",
       "Food trucks",
-      "Ghost kitchens",
-      "Catering businesses",
-      "Local food brands",
+      "Caterers",
     ],
     packages: [
       definePackage({
-        slug: "restaurant-starter",
-        name: "Restaurant Starter",
-        setupPrice: "$2,500",
-        monthlyPrice: "$249/mo",
-        summary: "A clean restaurant launch built around menu visibility and order-online calls to action.",
-        bestFor: "Restaurants that need the essentials online quickly.",
+        slug: "restaurant-website",
+        name: "Restaurant Website",
+        setupPrice: "$1,500+",
+        monthlyPrice: "$199/mo",
+        summary: "A focused restaurant launch built around menu visibility and customer action.",
+        bestFor: "Food businesses that need the essentials online and easy to maintain.",
         highlights: [
-          "Homepage",
-          "Menu",
-          "Order-online CTA",
-          "Gallery",
-          "Hours and location",
-          "Reviews and contact",
-          "External ordering links first",
-        ],
-      }),
-      definePackage({
-        slug: "restaurant-growth",
-        name: "Restaurant Growth",
-        setupPrice: "$4,500",
-        monthlyPrice: "$399/mo",
-        summary: "A more complete restaurant presence with stronger menu, promotion, and local SEO sections.",
-        bestFor: "Restaurants that need better presentation and ongoing content support.",
-        highlights: [
-          "Stronger menu presentation",
-          "Catering section",
-          "Promotions",
-          "Google Maps section",
-          "Review CTAs",
-          "Better SEO",
-          "Monthly menu/content support",
-        ],
-        featured: true,
-      }),
-      definePackage({
-        slug: "restaurant-pos-api",
-        name: "POS/API Advanced",
-        setupPrice: "$7,500+",
-        monthlyPrice: "$699/mo",
-        summary:
-          "Advanced restaurant planning for supported POS providers, menu sync needs, and custom integration scope.",
-        bestFor: "Restaurants that need provider coordination beyond standard ordering links.",
-        highlights: [
-          "Custom POS/API planning",
-          "Provider coordination",
-          "Menu sync scaffolding",
-          "Advanced integrations where supported",
-          "Integration scope review",
-          "Provider access required",
+          "Menu, hours, and location",
+          "External order-online link",
+          "Gallery or review section",
+          "Direct contact path",
+          "Monthly menu and website care",
         ],
       }),
     ],
   },
   {
     id: "booking-websites",
-    title: "Booking Websites",
-    eyebrow: "Appointment-Based Services",
+    title: "Booking Website",
+    eyebrow: "Appointment Businesses",
     description:
-      "Booking-focused websites that guide visitors from service discovery to a clear book-now request or scheduling flow.",
+      "A service website that moves visitors from services and proof to a clear booking action.",
     templateType: "bt-booking-service-template",
     bestFor: [
       "Barbers",
       "Salons",
-      "Tailors",
       "Med spas",
       "Consultants",
-      "Repair shops",
       "Photographers",
       "Trainers",
-      "Auto detailers",
-      "Therapists",
-      "Clinics",
-      "Appointment-based businesses",
+      "Appointment businesses",
     ],
     packages: [
       definePackage({
-        slug: "booking-starter",
-        name: "Booking Starter",
-        setupPrice: "$2,500",
-        monthlyPrice: "$249/mo",
-        summary: "A focused booking site with clear service pages and a direct book-now path.",
-        bestFor: "Service businesses using an existing booking link or scheduling tool.",
+        slug: "booking-website",
+        name: "Booking Website",
+        setupPrice: "$1,500+",
+        monthlyPrice: "$199/mo",
+        summary: "A focused service website with a clear book-now or appointment-request path.",
+        bestFor: "Service businesses using an existing booking link or a simple request flow.",
         highlights: [
-          "Services",
-          "Book-now CTA",
-          "Booking link integration",
-          "Gallery",
-          "Reviews",
-          "Contact",
-          "Local SEO basics",
-        ],
-      }),
-      definePackage({
-        slug: "booking-pro",
-        name: "Booking Pro",
-        setupPrice: "$4,500",
-        monthlyPrice: "$399/mo",
-        summary: "A stronger booking experience with staff, services, proof, analytics, and lead capture.",
-        bestFor: "Teams that need more trust-building content before the booking step.",
-        highlights: [
-          "Staff profiles",
-          "Service detail pages",
-          "Before/after gallery",
-          "Lead capture",
-          "Google Maps",
-          "Analytics",
-          "Stronger booking CTAs",
-        ],
-        featured: true,
-      }),
-      definePackage({
-        slug: "booking-api",
-        name: "Booking API",
-        setupPrice: "$8,500+",
-        monthlyPrice: "$799/mo",
-        summary:
-          "Advanced scheduling work for custom availability, provider integrations, and client handoff flows where supported.",
-        bestFor: "Appointment businesses with custom scheduling requirements.",
-        highlights: [
-          "Custom availability flow",
-          "Advanced scheduling integration",
-          "Provider API work",
-          "Webhooks where supported",
-          "CRM/email/SMS handoff",
-          "Provider access and client requirements review",
+          "Services and booking path",
+          "Existing booking-link connection",
+          "Team, gallery, or reviews",
+          "Contact and local search setup",
+          "Monthly website and booking care",
         ],
       }),
     ],
   },
   {
     id: "ecommerce-stores",
-    title: "Ecommerce Stores",
-    eyebrow: "Product and Retail",
+    title: "Online Store",
+    eyebrow: "Shopify and WooCommerce",
     description:
-      "Premium storefront builds for product brands that need stronger product discovery, shopping flow, and launch support.",
-    templateType: "bt-commerce-template",
+      "A polished storefront connected to an existing Shopify or WooCommerce store.",
+    templateType: "bt-ecommerce-woocommerce-template",
     bestFor: [
       "Shopify stores",
       "WooCommerce stores",
       "Boutiques",
-      "Apparel brands",
       "Specialty retail",
-      "Home goods",
-      "Local retailers",
       "Product brands",
-      "Stores that need a premium frontend",
     ],
     packages: [
       definePackage({
-        slug: "commerce-starter",
-        name: "Commerce Starter",
-        setupPrice: "$5,000",
-        monthlyPrice: "$499/mo",
-        summary: "A complete starter storefront for Shopify or WooCommerce-backed stores.",
-        bestFor: "Product businesses launching or upgrading the core shopping experience.",
+        slug: "online-store",
+        name: "Online Store",
+        setupPrice: "$3,500+",
+        monthlyPrice: "$349/mo",
+        summary: "A focused storefront with product discovery and hosted checkout flows.",
+        bestFor: "Product businesses with an existing Shopify or WooCommerce backend.",
         highlights: [
-          "Home",
-          "Shop",
-          "Product pages",
-          "Collections/categories",
-          "Checkout redirect",
-          "Basic product SEO",
-          "Responsive design",
-          "Launch support",
-        ],
-      }),
-      definePackage({
-        slug: "commerce-growth",
-        name: "Commerce Growth",
-        setupPrice: "$8,500",
-        monthlyPrice: "$799/mo",
-        summary: "A stronger ecommerce build for larger catalogs, better product layouts, and monthly store support.",
-        bestFor: "Stores that need better merchandising, product templates, and conversion flow.",
-        highlights: [
-          "Stronger collection pages",
-          "Advanced product layouts",
-          "Filtering",
-          "Analytics",
-          "Email capture",
-          "SEO product templates",
-          "Monthly store support",
-        ],
-        featured: true,
-      }),
-      definePackage({
-        slug: "commerce-advanced",
-        name: "Commerce Advanced",
-        setupPrice: "$15,000+",
-        monthlyPrice: "$1,499/mo",
-        summary:
-          "A high-touch commerce engagement for custom features, complex products, and provider-specific integration work.",
-        bestFor: "Established stores with complex product, subscription, or integration requirements.",
-        highlights: [
-          "Custom commerce features",
-          "Advanced filtering",
-          "Custom carts where appropriate",
-          "Subscriptions or complex product support",
-          "Account experience planning",
-          "Provider-specific API work",
-          "Higher-touch retainers",
+          "Home, shop, and product pages",
+          "Collections and search",
+          "Cart and hosted checkout",
+          "Core product search setup",
+          "Monthly storefront support",
         ],
       }),
     ],
   },
   {
     id: "premium-business-websites",
-    title: "Premium Business Websites",
-    eyebrow: "Authority and Lead Generation",
+    title: "Premium Website",
+    eyebrow: "Higher-Touch Brand Sites",
     description:
-      "Premium website engagements for higher-value businesses that need stronger positioning, richer content, and ongoing iteration.",
+      "A higher-touch website for businesses that need stronger positioning, content, and visual direction.",
     templateType: "bt-premium-business-template",
     bestFor: [
-      "Construction companies",
-      "Architecture firms",
+      "Established service businesses",
       "Law firms",
-      "Finance firms",
-      "Insurance agencies",
-      "Doctors",
-      "Med spas",
-      "Cannabis businesses",
       "Agencies",
       "Technology companies",
-      "Consultants",
-      "Real estate groups",
-      "Luxury service businesses",
-      "High-value B2B/local service companies",
+      "B2B companies",
+      "High-value brands",
     ],
     packages: [
       definePackage({
-        slug: "premium-launch",
-        name: "Premium Launch",
-        setupPrice: "$7,500-$12,500",
-        monthlyPrice: "$699-$1,199/mo",
-        summary: "Premium strategy and launch execution for businesses that need a sharper market presence.",
-        bestFor: "A premium launch with better positioning, pages, and lead capture.",
+        slug: "premium-website",
+        name: "Premium Website",
+        setupPrice: "$5,500+",
+        monthlyPrice: "$499+/mo",
+        summary: "A more original, content-rich website with deeper strategy and ongoing support.",
+        bestFor: "Businesses that need a distinctive presence and stronger lead generation.",
         highlights: [
-          "Premium website strategy",
-          "Stronger visual design",
-          "Service pages",
-          "Case-study structure",
-          "Team/about pages",
-          "Lead forms",
-          "Analytics",
-          "SEO-ready launch",
-        ],
-      }),
-      definePackage({
-        slug: "premium-growth",
-        name: "Premium Growth",
-        setupPrice: "$12,500-$20,000",
-        monthlyPrice: "$1,199-$2,000/mo",
-        summary: "A growth-focused website engagement with landing pages, content structure, and conversion tracking.",
-        bestFor: "Businesses that want stronger lead capture and ongoing improvement.",
-        highlights: [
-          "Landing pages",
-          "Content/SEO structure",
-          "Case studies",
-          "Stronger lead capture",
-          "CRM/email handoff",
-          "Conversion tracking",
-          "Ongoing iteration",
-        ],
-        featured: true,
-      }),
-      definePackage({
-        slug: "premium-authority",
-        name: "Premium Authority",
-        setupPrice: "$20,000-$40,000+",
-        monthlyPrice: "$2,000-$5,000+/mo",
-        summary: "A high-touch authority build with deeper integrations, campaigns, analytics, and retainers.",
-        bestFor: "Established brands that need a more complete digital growth system.",
-        highlights: [
-          "Custom design systems",
-          "Authority content structure",
-          "Campaign landing pages",
-          "Advanced analytics",
-          "Deeper integrations",
-          "Ongoing SEO/content/CRO support",
-          "High-touch monthly retainers",
+          "Strategy and visual direction",
+          "Services, proof, and team content",
+          "Case-study or insight structure",
+          "Lead-focused page flow",
+          "Higher-touch monthly care",
         ],
       }),
     ],
@@ -476,62 +291,36 @@ export const pricingPackageGroups: PricingPackageGroup[] = [
   {
     id: "custom-software",
     title: "Custom Software",
-    eyebrow: "Scoped Software Builds",
+    eyebrow: "Anything Beyond the Packages",
     description:
-      "Custom software work for businesses that need a workflow, internal tool, automation, integration, or platform feature beyond a standard website package.",
+      "Custom workflows, tools, automations, and deeper integrations are scoped after a short discovery conversation.",
     templateType: "bt-custom-software-scope",
     bestFor: [
       "Internal tools",
       "Workflow automation",
-      "Client request systems",
-      "Inventory workflows",
-      "CRM handoffs",
-      "Reporting tools",
       "Custom integrations",
-      "AI-assisted operations",
-      "Business process software",
+      "Web applications",
     ],
     packages: [
       definePackage({
         slug: "custom-software-scope",
-        name: "Custom Software Scope",
+        name: "Custom Software",
         setupPrice: "Upon request",
-        monthlyPrice: "Care quoted after discovery",
+        monthlyPrice: "Quoted with the build",
         summary:
-          "A scoped software engagement for custom workflows, internal tools, automations, and integrations.",
-        bestFor: "Businesses that need software built around a specific operational workflow.",
+          "A scoped build for a workflow, internal tool, automation, or integration.",
+        bestFor: "Businesses that need something beyond a standard website.",
         highlights: [
-          "Discovery and requirements mapping",
-          "Workflow and data model planning",
-          "Custom UI or internal tool build",
-          "API and automation planning",
-          "AI features where useful",
-          "Care plan quoted after scope is clear",
+          "Short discovery and scope",
+          "Clear build recommendation",
+          "Custom development",
+          "Integration planning",
+          "Ongoing care quoted up front",
         ],
-        ctaLabel: "Request Software Scope",
+        ctaLabel: "Discuss a Custom Build",
       }),
     ],
   },
-];
-
-export const optionalPricingAddOns = [
-  definePackage({
-    slug: "ai-concierge-addon",
-    name: "AI Concierge Add-On",
-    setupPrice: "$2,500-$7,500",
-    monthlyPrice: "$250-$750/mo plus usage",
-    summary:
-      "A guided AI website concierge that can answer common questions, route visitors to services, and help prepare lead summaries.",
-    bestFor: "Businesses that want a guided website assistant after the core website scope is clear.",
-    highlights: [
-      "Common question guidance",
-      "Visitor routing to services",
-      "Lead summary preparation",
-      "Scope and usage planning",
-      "No legal, medical, financial, or regulated advice",
-    ],
-    ctaLabel: "Ask About This Add-On",
-  }),
 ];
 
 export const pricingAddOns: PricingAddOn[] = [
@@ -606,30 +395,38 @@ export const monthlyCareIncludes = [
   "Hosting and deployment management",
   "SSL/domain launch support",
   "Security and dependency updates",
-  "Uptime checks",
-  "Analytics checks",
-  "Small content edits",
-  "Form and lead-flow monitoring",
-  "Git/source-control management",
-  "Technical support",
-  "Monthly improvement recommendations",
+  "Uptime and contact-path checks",
+  "Included content edit time",
+  "Source-controlled updates",
+  "Direct technical support",
+  "Practical improvement recommendations",
 ];
 
 export const monthlyCarePlans: MonthlyCarePlan[] = [
+  ...(limitedStarterOfferEnabled
+    ? [
+        {
+          name: "Starter Kit care",
+          editingLimit: "Up to 15 minutes/month",
+          description:
+            "Required with the limited-time Starter Kit for routine checks and one small content edit.",
+        },
+      ]
+    : []),
   {
     name: "Starter care",
     editingLimit: "Up to 30 minutes/month",
-    description: "For light content updates and basic launch support after the site goes live.",
+    description: "For light content updates and routine checks after launch.",
   },
   {
     name: "Growth care",
     editingLimit: "Up to 2 hours/month",
-    description: "For businesses that expect regular edits, small improvements, and lead-flow checks.",
+    description: "For regular edits, small improvements, and lead-flow checks.",
   },
   {
     name: "Advanced care",
     editingLimit: "Up to 5 hours/month",
-    description: "For higher-touch support, improvement planning, and more frequent website changes.",
+    description: "For higher-touch support, improvement planning, and more frequent changes.",
   },
 ];
 
@@ -650,33 +447,27 @@ export const platformCostNotes = [
 ];
 
 export const paymentTerms = [
-  "50% deposit to begin",
-  "25% after design/content approval",
-  "25% before launch",
+  "The setup payment schedule is confirmed before work begins",
   "Monthly care begins at launch",
-  "Third-party platform, app, hosting, SMS, email, and payment-processing fees are separate",
+  "Extra pages, content, and integrations are approved before they are added",
+  "Third-party platform, app, and usage fees stay separate",
 ];
 
 export const pricingFaqs: PricingFaq[] = [
   {
     question: "Why is there a setup price and a monthly care plan?",
     answer:
-      "The setup price covers strategy, design, development, content structure, launch work, and initial QA. Monthly care starts at launch and keeps the site supported, monitored, and ready for small improvements.",
+      "The setup price covers strategy, design, development, content structure, launch work, and initial QA. Monthly care begins at launch and keeps the site monitored, supported, and ready for small improvements.",
   },
   {
-    question: "Can I start smaller and upgrade later?",
+    question: "Can I add more pages or features?",
     answer:
-      "Yes. Many clients start with the package that matches the current project and then add pages, stronger SEO structure, integrations, or a higher care plan later.",
+      "Yes. Choose the closest starting package. Extra pages, content, booking tools, store features, or integrations are added to the quote only when your project needs them.",
   },
   {
     question: "Do I have to use a monthly care plan?",
     answer:
-      "Most packages include monthly care because the site still needs support after launch. If your project has unusual requirements, mention that in the quote request and I can recommend the right next step.",
-  },
-  {
-    question: "Does the flash sale discount monthly care too?",
-    answer:
-      "No. The flash sale applies to setup fees only. Monthly care, add-ons, third-party platform costs, and usage-based expenses stay at their listed or scoped rates.",
+      "Yes. Website packages include a required monthly care plan that begins at launch. It covers ongoing monitoring, technical support, included edit time, and practical improvements based on the selected package.",
   },
   {
     question: "Are Shopify, WooCommerce, booking tools, or POS costs included?",
@@ -684,9 +475,9 @@ export const pricingFaqs: PricingFaq[] = [
       "No. Third-party platform costs are separate and are billed directly to the client when applicable. The package covers the website work and the agreed integration scope.",
   },
   {
-    question: "How fast can a site launch?",
+    question: "Can I start smaller and grow later?",
     answer:
-      "Timeline depends on scope, content readiness, revisions, integrations, and launch requirements. A focused business website can move quickly, while ecommerce, booking, and premium builds need more planning.",
+      "Yes. The packages are designed as starting points. Your website can add pages, integrations, or a higher level of monthly support as the business grows.",
   },
   {
     question: "Do you work with existing websites?",
@@ -694,19 +485,9 @@ export const pricingFaqs: PricingFaq[] = [
       "Yes. Existing websites can be remodeled, expanded, moved into a stronger structure, or supported through a monthly care plan when the current setup is a good fit.",
   },
   {
-    question: "Can you connect forms, analytics, booking tools, or ecommerce?",
-    answer:
-      "Yes. Standard links and embeds are straightforward. Deeper provider integrations depend on provider access, supported features, client requirements, and final scope.",
-  },
-  {
-    question: "Do you build custom software too?",
-    answer:
-      "Yes. Custom software is available upon request for scoped workflows, internal tools, automation, reporting, AI-assisted operations, and integrations beyond a standard website package.",
-  },
-  {
     question: "What happens after I request a quote?",
     answer:
-      "Send the project details, preferred package, timeline, and current website if you have one. I will review the request and recommend the right launch path, quote range, and next step.",
+      "Send the project details and the closest package if you know it. I will recommend the right starting point, include any needed extras, and return a clear scope and price.",
   },
 ];
 
@@ -714,29 +495,44 @@ export const allPricingPackages = pricingPackageGroups.flatMap((group) => group.
 
 export const pricingPackageOptions = [
   ...allPricingPackages.map((pricingPackage) => pricingPackage.name),
-  ...optionalPricingAddOns.map((pricingPackage) => pricingPackage.name),
 ];
 
 export const legacyPlanLabels: Record<string, string> = {
-  starter: "Static Starter",
-  pro: "Static Growth",
+  starter: "Starter Website",
+  pro: "Starter Website",
   "tune-up": "Existing Site Tune-Up",
   remodel: "Website Remodel",
-  shopify: "Commerce Starter",
+  shopify: "Online Store",
   migration: "Platform Migration",
   maintenance: "Monthly Care Plan",
-  "backend-basic": "Premium Growth",
-  "Static Pro": "Static Growth",
+  "backend-basic": "Premium Website",
+  "static-starter": "Starter Website",
+  "static-growth": "Starter Website",
+  "static-custom": "Starter Website",
+  "restaurant-starter": "Restaurant Website",
+  "restaurant-growth": "Restaurant Website",
+  "restaurant-pos-api": "Restaurant Website",
+  "booking-starter": "Booking Website",
+  "booking-pro": "Booking Website",
+  "booking-api": "Booking Website",
+  "commerce-starter": "Online Store",
+  "commerce-growth": "Online Store",
+  "commerce-advanced": "Online Store",
+  "premium-launch": "Premium Website",
+  "premium-growth": "Premium Website",
+  "premium-authority": "Premium Website",
+  "ai-concierge-addon": "Custom Feature Request",
+  "Static Pro": "Starter Website",
   "Existing Site Tune-Up": "Existing Site Tune-Up",
   "Website Remodel (Redesign)": "Website Remodel",
-  "Shopify / Ecommerce Enhancements": "Commerce Starter",
+  "Shopify / Ecommerce Enhancements": "Online Store",
   "Platform Migration (Move Sites)": "Platform Migration",
   "Monthly Site Care": "Monthly Care Plan",
-  "Backend Basic (Vercel Hosted)": "Premium Growth",
+  "Backend Basic (Vercel Hosted)": "Premium Website",
 };
 
 export function getPricingPackageBySlug(slug: string) {
-  return [...allPricingPackages, ...optionalPricingAddOns].find(
+  return allPricingPackages.find(
     (pricingPackage) => pricingPackage.slug === slug
   );
 }

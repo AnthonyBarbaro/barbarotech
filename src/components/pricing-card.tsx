@@ -27,17 +27,17 @@ export function PricingCard({ plan }: { plan: PricingPackage }) {
   return (
     <Card
       className={cn(
-        "flex h-full flex-col overflow-hidden bg-[#07111d]/95",
-        (plan.featured || plan.offerLabel) && "border-cyan-200/60 bg-[#091725]"
+        "pricing-package-card flex h-full flex-col overflow-hidden",
+        (plan.featured || plan.offerLabel) && "pricing-package-card--featured"
       )}
     >
       {packageLabel ? (
         <div
           className={cn(
-            "border-b border-cyan-200/20 px-5 py-2 text-center text-xs font-bold",
+            "pricing-card-badge border-b px-5 py-2 text-center text-xs font-bold",
             plan.offerLabel
-              ? "bg-cyan-300 text-[#02060b]"
-              : "bg-cyan-300/12 text-cyan-100"
+              ? "pricing-card-badge--offer"
+              : "pricing-card-badge--featured"
           )}
         >
           {packageLabel}
@@ -45,60 +45,60 @@ export function PricingCard({ plan }: { plan: PricingPackage }) {
       ) : null}
 
       <CardHeader className="pb-0">
-        <h3 className="text-2xl font-bold leading-tight text-white">{plan.name}</h3>
-        <p className="mt-3 text-sm leading-6 text-slate-300">{plan.summary}</p>
+        <h3 className="pricing-card-title text-2xl font-bold leading-tight">{plan.name}</h3>
+        <p className="pricing-card-copy mt-3 text-sm leading-6">{plan.summary}</p>
 
         <div className="mt-6 grid grid-cols-2 border-y border-cyan-100/10">
           <div className="min-w-0 py-5 pr-4">
             <div className="flex flex-wrap items-center gap-2">
-              <p className="text-xs font-semibold text-slate-400">One-time setup</p>
+              <p className="pricing-card-label text-xs font-semibold">One-time setup</p>
               {discountedSetupPrice ? (
-                <span className="rounded-full border border-cyan-200/25 bg-cyan-300/10 px-2 py-0.5 text-[10px] font-semibold text-cyan-100">
+                <span className="pricing-card-promo rounded-full border px-2 py-0.5 text-[10px] font-semibold">
                   {getSetupFeePromotionBadgeText()}
                 </span>
               ) : null}
             </div>
             <p
               className={cn(
-                "mt-3 font-extrabold tracking-[-0.03em] text-cyan-100",
+                "pricing-card-setup-price mt-3 font-extrabold tracking-[-0.03em]",
                 getPriceTextClass(discountedSetupPrice ?? plan.setupPrice)
               )}
             >
               {discountedSetupPrice ?? plan.setupPrice}
             </p>
             {discountedSetupPrice ? (
-              <p className="mt-2 text-xs font-semibold text-slate-500 line-through">
+              <p className="pricing-card-note mt-2 text-xs font-semibold line-through">
                 {plan.setupPrice}
               </p>
             ) : null}
           </div>
 
           <div className="min-w-0 border-l border-cyan-100/10 py-5 pl-4">
-            <p className="text-xs font-semibold text-slate-400">Monthly care</p>
+            <p className="pricing-card-label text-xs font-semibold">Monthly care</p>
             <p
               className={cn(
-                "mt-3 font-extrabold tracking-[-0.03em] text-white",
+                "pricing-card-monthly-price mt-3 font-extrabold tracking-[-0.03em]",
                 getPriceTextClass(plan.monthlyPrice)
               )}
             >
               {plan.monthlyPrice}
             </p>
-            <p className="mt-2 text-xs text-slate-500">
-              {setupFeePromotion.enabled ? "Not discounted" : "Required at launch"}
+            <p className="pricing-card-note mt-2 text-xs">
+              {setupFeePromotion.enabled ? "Not discounted" : "Starts the following month"}
             </p>
           </div>
         </div>
 
         <div className="border-b border-cyan-100/10 py-5">
-          <p className="text-xs font-semibold text-slate-400">Best for</p>
-          <p className="mt-2 text-sm leading-6 text-slate-200">{plan.bestFor}</p>
+          <p className="pricing-card-label text-xs font-semibold">Best for</p>
+          <p className="pricing-card-best-for mt-2 text-sm leading-6">{plan.bestFor}</p>
         </div>
       </CardHeader>
 
       <CardContent className="flex flex-1 flex-col gap-6 pt-6 md:pt-6">
         <div>
-          <p className="text-sm font-bold text-white">Starting scope</p>
-          <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-300">
+          <p className="pricing-card-title text-sm font-bold">Starting scope</p>
+          <ul className="pricing-card-copy mt-4 space-y-3 text-sm leading-6">
             {plan.highlights.map((item) => (
               <li key={item} className="flex gap-3">
                 <span

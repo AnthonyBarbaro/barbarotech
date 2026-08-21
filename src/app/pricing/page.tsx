@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Container } from "@/components/container";
-import { PricingCard } from "@/components/pricing-card";
+import { PricingPackageDeck } from "@/components/pricing-package-deck";
 import { Reveal } from "@/components/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import {
   getSetupFeePromotionText,
   monthlyCareIncludes,
   paymentTerms,
+  pricingAddOns,
   pricingFaqs,
   pricingPackageGroups,
   setupFeePromotion,
@@ -53,6 +54,9 @@ const websitePackageGroups = pricingPackageGroups.filter(
 );
 const customSoftwareGroup = pricingPackageGroups.find(
   (group) => group.id === "custom-software"
+);
+const websitePackages = websitePackageGroups.flatMap((group) =>
+  group.packages.slice(0, 1).map((plan) => ({ id: group.id, plan }))
 );
 
 export default function PricingPage() {
@@ -145,24 +149,9 @@ export default function PricingPage() {
             </p>
           </Reveal>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-6">
-            {websitePackageGroups.map((group, index) => {
-              const plan = group.packages[0];
-              if (!plan) return null;
-
-              return (
-                <Reveal
-                  key={group.id}
-                  delay={index * 60}
-                  className={`h-full ${index < 3 ? "xl:col-span-2" : "xl:col-span-3"}`}
-                >
-                  <div id={group.id} className="h-full scroll-mt-28">
-                    <PricingCard plan={plan} />
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
+          <Reveal className="mt-10">
+            <PricingPackageDeck items={websitePackages} />
+          </Reveal>
 
           <Reveal className="mt-10">
             {customSoftwareGroup?.packages[0] ? (
@@ -193,7 +182,7 @@ export default function PricingPage() {
         </Container>
       </section>
 
-      <section className="signal-section signal-section--deep">
+      <section id="monthly-care" className="signal-section signal-section--deep scroll-mt-24">
         <Container className="py-16 md:py-24">
           <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
             <Reveal>
@@ -202,11 +191,16 @@ export default function PricingPage() {
                 Your website stays handled after launch.
               </h2>
               <p className="signal-copy mt-5">
-                Monthly care is part of every website package and begins when the site launches.
-                The amount shown on each package reflects the support that type of website needs.
+                Monthly care is part of every website package and begins the month after the
+                website launches. The amount shown on each package reflects the support that
+                type of website needs.
               </p>
               <p className="mt-5 text-sm leading-7 text-slate-400">
                 Larger changes are discussed and approved before any extra work begins.
+              </p>
+              <p className="mt-5 border-l-2 border-cyan-300 pl-4 text-sm leading-7 text-cyan-100">
+                Select new clients receive their first two months of monthly website care free.
+                Eligibility is confirmed in the project scope before work begins.
               </p>
             </Reveal>
 
@@ -229,6 +223,32 @@ export default function PricingPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+            </Reveal>
+          </div>
+        </Container>
+      </section>
+
+      <section id="add-ons" className="signal-section scroll-mt-24">
+        <Container className="py-16 md:py-24">
+          <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+            <Reveal>
+              <p className="signal-kicker">Optional add-ons</p>
+              <h2 className="section-title mt-5">Add only what the project needs.</h2>
+              <p className="signal-copy mt-5">
+                Add-ons are scoped alongside the main build so the launch price stays clear.
+              </p>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <div className="pricing-addons-grid">
+                {pricingAddOns.map((addOn) => (
+                  <article key={addOn.name} className="pricing-addon-card">
+                    <h3>{addOn.name}</h3>
+                    <p>{addOn.detail}</p>
+                    <strong>{addOn.price}</strong>
+                  </article>
+                ))}
               </div>
             </Reveal>
           </div>

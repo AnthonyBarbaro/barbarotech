@@ -41,9 +41,9 @@ type SlotDisplay = {
 };
 
 const INPUT_CLASS =
-  "min-h-12 w-full rounded-[14px] border border-cyan-100/15 bg-[#07111d]/95 px-4 py-3 text-sm text-[#effbff] " +
-  "placeholder:text-[#7890a3] shadow-[inset_0_1px_0_rgba(165,243,252,0.04)] transition-colors " +
-  "focus:border-cyan-300/60 focus:outline-none focus:ring-4 focus:ring-cyan-400/15 disabled:cursor-not-allowed disabled:opacity-50";
+  "min-h-12 w-full rounded-[10px] border border-[#0a5b89]/25 bg-[#f4fbff]/95 px-4 py-3 text-sm text-[#071a2d] " +
+  "placeholder:text-[#648297] transition-colors focus:border-[#8edcff]/65 focus:outline-none focus:ring-4 " +
+  "focus:ring-[#8edcff]/10 disabled:cursor-not-allowed disabled:opacity-50";
 
 const PACIFIC_TIME_ZONE = "America/Los_Angeles";
 
@@ -345,15 +345,12 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         onChange={update("fax")}
       />
 
-      <div className="rounded-[16px] border border-cyan-100/10 bg-[#07111d]/90 p-3 sm:p-4">
+      <div className="rounded-[16px] border border-[#0a5b89]/20 bg-[#d8f2ff]/90 p-3 sm:p-4">
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <div>
-            <label className="text-xs font-semibold text-cyan-100">Meeting Type</label>
-            <p className="mt-1 text-xs text-[#9bb2c3]">Choose the call format you prefer.</p>
+            <label className="text-xs font-semibold text-[#075f91]">Meeting Type</label>
+            <p className="mt-1 text-xs text-[#3d6077]">Choose the call format you prefer.</p>
           </div>
-          <span className="rounded-full border border-cyan-200/20 bg-cyan-300/10 px-2.5 py-1 font-mono text-[10px] font-medium text-cyan-100">
-            Step 1
-          </span>
         </div>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {METHOD_OPTIONS.map((option) => {
@@ -363,11 +360,13 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
                 key={option.value}
                 type="button"
                 onClick={() => selectMethod(option.value)}
+                data-selected={selected}
+                aria-pressed={selected}
                 className={cn(
                   "min-h-[88px] rounded-[14px] border px-4 py-3 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
                   selected
-                    ? "border-cyan-300/55 bg-cyan-300/[0.12] text-cyan-50 shadow-[inset_0_1px_0_rgba(165,243,252,0.12)]"
-                    : "border-cyan-100/10 bg-[#02060b]/55 text-[#9bb2c3] hover:border-cyan-200/30 hover:bg-cyan-300/[0.05] hover:text-cyan-50"
+                    ? "border-[#8edcff]/45 bg-[#bfeaff] text-[#071a2d] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]"
+                    : "border-[#0a5b89]/20 bg-[#effaff]/90 text-[#3d6077] hover:border-[#8edcff]/35 hover:bg-[#c8edff] hover:text-[#071a2d]"
                 )}
               >
                 <div className="flex items-center justify-between gap-2">
@@ -376,14 +375,14 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
                     className={cn(
                       "rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.08em]",
                       selected
-                        ? "border border-cyan-300/45 bg-cyan-400/20 text-cyan-100"
-                        : "border border-cyan-100/10 bg-cyan-100/[0.04] text-[#9bb2c3]"
+                        ? "border border-[#8edcff]/35 bg-[#8edcff]/10 text-[#075f91]"
+                        : "border border-[#0a5b89]/15 bg-white/40 text-[#3d6077]"
                     )}
                   >
                     {selected ? "Selected" : option.tag}
                   </span>
                 </div>
-                <p className={cn("mt-1.5 text-xs", selected ? "text-cyan-50/75" : "text-[#9bb2c3]")}>
+                <p className={cn("mt-1.5 text-xs", selected ? "text-[#244f69]" : "text-[#3d6077]")}>
                   {option.detail}
                 </p>
               </button>
@@ -392,12 +391,9 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         </div>
       </div>
 
-      <div className="space-y-3 rounded-[16px] border border-cyan-100/10 bg-[#07111d]/90 p-3 sm:p-4">
+      <div className="space-y-3 rounded-[16px] border border-[#0a5b89]/20 bg-[#d8f2ff]/90 p-3 sm:p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <label className="text-xs font-semibold text-cyan-100">Pick a Date *</label>
-          <span className="rounded-full border border-cyan-200/20 bg-cyan-300/10 px-2.5 py-1 font-mono text-[10px] font-medium text-cyan-100">
-            Step 2
-          </span>
+          <label className="text-xs font-semibold text-[#075f91]">Pick a Date *</label>
         </div>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {dateOptions.map((date) => {
@@ -407,11 +403,13 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
                 key={date.value}
                 type="button"
                 onClick={() => selectDate(date.value)}
+                data-selected={selected}
+                aria-pressed={selected}
                 className={cn(
                   "min-h-16 rounded-[14px] border px-3 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
                   selected
-                    ? "border-cyan-200 bg-cyan-300 text-[#02060b]"
-                    : "border-cyan-100/10 bg-[#02060b]/55 text-[#9bb2c3] hover:border-cyan-200/30 hover:bg-cyan-300/[0.05] hover:text-cyan-50"
+                    ? "border-[#8edcff]/45 bg-[#9edfff] text-[#071a2d]"
+                    : "border-[#0a5b89]/20 bg-[#effaff]/90 text-[#3d6077] hover:border-[#8edcff]/35 hover:bg-[#c8edff] hover:text-[#071a2d]"
                 )}
               >
                 <div className="text-[11px] font-semibold uppercase tracking-[0.08em]">{date.weekday}</div>
@@ -422,12 +420,9 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         </div>
       </div>
 
-      <div className="space-y-3 rounded-[16px] border border-cyan-100/10 bg-[#07111d]/90 p-3 sm:p-4">
+      <div className="space-y-3 rounded-[16px] border border-[#0a5b89]/20 bg-[#d8f2ff]/90 p-3 sm:p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <label className="text-xs font-semibold text-cyan-100">Timezone</label>
-          <span className="rounded-full border border-cyan-200/20 bg-cyan-300/10 px-2.5 py-1 font-mono text-[10px] font-medium text-cyan-100">
-            Step 3
-          </span>
+          <label className="text-xs font-semibold text-[#075f91]">Timezone</label>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
           <select className={INPUT_CLASS} value={state.timezone} onChange={update("timezone")}>
@@ -440,22 +435,19 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
           <button
             type="button"
             onClick={applyLocalTimezone}
-            className="min-h-12 shrink-0 rounded-[14px] border border-cyan-100/15 bg-[#02060b]/55 px-4 py-3 text-sm font-semibold text-cyan-100 transition-colors hover:border-cyan-200/35 hover:bg-cyan-300/[0.07] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+            className="min-h-12 shrink-0 rounded-[14px] border border-[#0a5b89]/20 bg-[#effaff]/90 px-4 py-3 text-sm font-semibold text-[#075f91] transition-colors hover:border-[#8edcff]/35 hover:bg-[#c8edff] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8edcff]"
           >
             Use My Local Time
           </button>
         </div>
-        <p className="text-[11px] text-[#9bb2c3]">
-          Detected timezone: <span className="font-semibold text-cyan-100">{formatTimeZoneOptionLabel(detectedTimeZone)}</span>
+        <p className="text-[11px] text-[#3d6077]">
+          Detected timezone: <span className="font-semibold text-[#075f91]">{formatTimeZoneOptionLabel(detectedTimeZone)}</span>
         </p>
       </div>
 
-      <div className="space-y-3 rounded-[16px] border border-cyan-100/10 bg-[#07111d]/90 p-3 sm:p-4">
+      <div className="space-y-3 rounded-[16px] border border-[#0a5b89]/20 bg-[#d8f2ff]/90 p-3 sm:p-4">
         <div className="flex items-center justify-between gap-2">
-          <label className="text-xs font-semibold text-cyan-100">Pick a Time *</label>
-          <span className="rounded-full border border-cyan-200/20 bg-cyan-300/10 px-2.5 py-1 font-mono text-[10px] font-medium text-cyan-100">
-            Step 4
-          </span>
+          <label className="text-xs font-semibold text-[#075f91]">Pick a Time *</label>
         </div>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           {CALL_TIME_SLOTS.map((slot) => {
@@ -466,11 +458,13 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
                 key={slot.id}
                 type="button"
                 onClick={() => selectTime(slot.id)}
+                data-selected={selected}
+                aria-pressed={selected}
                 className={cn(
                   "min-h-[76px] rounded-[14px] border px-3 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300",
                   selected
-                    ? "border-cyan-200 bg-cyan-300 text-[#02060b]"
-                    : "border-cyan-100/10 bg-[#02060b]/55 text-[#9bb2c3] hover:border-cyan-200/30 hover:bg-cyan-300/[0.05] hover:text-cyan-50"
+                    ? "border-[#8edcff]/45 bg-[#9edfff] text-[#071a2d]"
+                    : "border-[#0a5b89]/20 bg-[#effaff]/90 text-[#3d6077] hover:border-[#8edcff]/35 hover:bg-[#c8edff] hover:text-[#071a2d]"
                 )}
               >
                 <div className="text-sm font-semibold">{display.localTimeLabel}</div>
@@ -484,11 +478,11 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
 
       {selectedDate && selectedSlotDisplay && (
         <div className="rounded-[14px] border border-cyan-300/30 bg-cyan-300/10 px-4 py-3">
-          <p className="text-[11px] font-semibold text-cyan-200">Selected Slot</p>
-          <p className="mt-1 text-sm font-semibold text-cyan-50">
+          <p className="text-[11px] font-semibold text-[#075f91]">Selected Slot</p>
+          <p className="mt-1 text-sm font-semibold text-[#071a2d]">
             {selectedSlotDisplay.localDateLabel} at {selectedSlotDisplay.localTimeLabel}
           </p>
-          <p className="text-xs text-cyan-100/70">{selectedSlotDisplay.referenceLabel}</p>
+          <p className="text-xs text-[#3d6077]">{selectedSlotDisplay.referenceLabel}</p>
         </div>
       )}
 
@@ -496,6 +490,7 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         <input
           className={INPUT_CLASS}
           placeholder="Name *"
+          aria-label="Name"
           autoComplete="name"
           value={state.name}
           onChange={update("name")}
@@ -503,6 +498,7 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         <input
           className={INPUT_CLASS}
           placeholder="Business"
+          aria-label="Business name"
           autoComplete="organization"
           value={state.business}
           onChange={update("business")}
@@ -513,6 +509,7 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         <input
           className={INPUT_CLASS}
           placeholder="Email *"
+          aria-label="Email address"
           autoComplete="email"
           type="email"
           value={state.email}
@@ -521,6 +518,7 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
         <input
           className={INPUT_CLASS}
           placeholder={requiresPhone ? "Phone (required for phone calls)" : "Phone"}
+          aria-label="Phone number"
           type="tel"
           inputMode="numeric"
           autoComplete="tel"
@@ -533,6 +531,7 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
       <textarea
         className={`${INPUT_CLASS} min-h-[100px]`}
         placeholder="Anything specific to cover?"
+        aria-label="Call notes"
         value={state.notes}
         onChange={update("notes")}
       />
@@ -543,8 +542,8 @@ export function CallBookingForm({ context }: { context?: string } = {}) {
             status === "error"
               ? "rounded-[12px] border border-rose-300/25 bg-rose-400/10 px-3 py-2 text-xs leading-relaxed text-rose-200"
               : status === "success"
-                ? "rounded-[12px] border border-cyan-300/25 bg-cyan-300/10 px-3 py-2 text-xs leading-relaxed text-cyan-100"
-                : "text-xs leading-relaxed text-[#9bb2c3]"
+                ? "rounded-[12px] border border-[#0a5b89]/25 bg-[#bfeaff]/50 px-3 py-2 text-xs leading-relaxed text-[#075f91]"
+                : "text-xs leading-relaxed text-[#3d6077]"
           }
         >
           {feedback || "Required: name, email, date, and time. Phone is required if meeting type is Phone."}

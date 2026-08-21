@@ -40,6 +40,7 @@ function buildCallTimeSlots() {
 
 export const SERVICE_PLAN_OPTIONS: string[] = Array.from(new Set([
   "Not sure yet",
+  "Free Custom Website Demo",
   ...pricingPackageOptions,
   "Existing Website Redesign",
   "Website Care Only",

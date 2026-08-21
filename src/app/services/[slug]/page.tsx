@@ -236,11 +236,9 @@ export default async function ServiceSlugPage({ params }: ServicePageProps) {
             <div className="signal-panel-strong p-6 sm:p-8">
               <h2 className="text-2xl font-bold text-[#effbff]">Delivery Flow</h2>
               <ol className="relative mt-8 space-y-8 before:absolute before:bottom-3 before:left-[0.88rem] before:top-3 before:w-px before:bg-cyan-200/15">
-                {service.process.map((step, index) => (
+                {service.process.map((step) => (
                   <li key={step} className="relative grid grid-cols-[2rem_1fr] gap-4">
-                    <span className="relative z-10 grid h-7 w-7 place-items-center rounded-full border border-cyan-200/30 bg-[#07111d] font-mono text-[10px] text-cyan-200">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
+                    <span className="relative z-10 mt-2 block h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.6)]" aria-hidden="true" />
                     <p className="signal-copy pt-0.5 text-sm text-cyan-50">{step}</p>
                   </li>
                 ))}
@@ -265,14 +263,11 @@ export default async function ServiceSlugPage({ params }: ServicePageProps) {
 
           <Reveal delay={100} className="lg:col-span-7">
             <ul className="signal-rail border-y border-cyan-100/10">
-              {service.deliverables.map((deliverable, index) => (
+              {service.deliverables.map((deliverable) => (
                 <li
                   key={deliverable}
-                  className="group grid min-h-20 grid-cols-[2.5rem_1fr] items-center gap-4 border-b border-cyan-100/10 py-4 last:border-b-0"
+                  className="group grid min-h-20 grid-cols-1 items-center border-b border-cyan-100/10 py-4 last:border-b-0"
                 >
-                  <span className="font-mono text-xs text-cyan-300" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
                   <p className="text-base font-semibold leading-relaxed text-cyan-50">{deliverable}</p>
                 </li>
               ))}

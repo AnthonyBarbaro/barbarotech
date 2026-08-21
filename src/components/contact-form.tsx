@@ -22,9 +22,9 @@ type FormState = {
 };
 
 const INPUT_CLASS =
-  "min-h-12 w-full rounded-[14px] border border-cyan-100/15 bg-[#07111d]/95 px-4 py-3 text-sm text-[#effbff] " +
-  "placeholder:text-[#7890a3] shadow-[inset_0_1px_0_rgba(165,243,252,0.04)] transition-colors " +
-  "focus:border-cyan-300/60 focus:outline-none focus:ring-4 focus:ring-cyan-400/15 disabled:cursor-not-allowed disabled:opacity-50";
+  "min-h-12 w-full rounded-[10px] border border-[#0a5b89]/25 bg-[#f4fbff]/95 px-4 py-3 text-sm text-[#071a2d] " +
+  "placeholder:text-[#648297] transition-colors focus:border-[#8edcff]/65 focus:outline-none focus:ring-4 " +
+  "focus:ring-[#8edcff]/10 disabled:cursor-not-allowed disabled:opacity-50";
 
 function getInitialPlan(defaultPlan: string) {
   const trimmed = resolveContactPlanLabel(defaultPlan);
@@ -50,7 +50,7 @@ function getInitialPlan(defaultPlan: string) {
 
 export function ContactForm() {
   const searchParams = useSearchParams();
-  const queryPlan = searchParams.get("plan") ?? "";
+  const queryPlan = searchParams.get("plan") ?? searchParams.get("context") ?? "";
   const initialPlan = useMemo(() => getInitialPlan(queryPlan), [queryPlan]);
 
   const [state, setState] = useState<FormState>({
@@ -150,7 +150,7 @@ export function ContactForm() {
       }
 
       setStatus("success");
-      setFeedback("Your quote request was sent. I will get back to you shortly.");
+      setFeedback("Your demo request was sent. I will get back to you shortly.");
       setState({
         name: "",
         business: "",
@@ -186,6 +186,7 @@ export function ContactForm() {
         <input
           className={INPUT_CLASS}
           placeholder="Name *"
+          aria-label="Name"
           autoComplete="name"
           value={state.name}
           onChange={update("name")}
@@ -193,6 +194,7 @@ export function ContactForm() {
         <input
           className={INPUT_CLASS}
           placeholder="Business"
+          aria-label="Business name"
           autoComplete="organization"
           value={state.business}
           onChange={update("business")}
@@ -203,6 +205,7 @@ export function ContactForm() {
         <input
           className={INPUT_CLASS}
           placeholder="Email *"
+          aria-label="Email address"
           autoComplete="email"
           type="email"
           value={state.email}
@@ -211,6 +214,7 @@ export function ContactForm() {
         <input
           className={INPUT_CLASS}
           placeholder="Phone"
+          aria-label="Phone number"
           type="tel"
           inputMode="numeric"
           autoComplete="tel"
@@ -224,19 +228,21 @@ export function ContactForm() {
         <input
           className={INPUT_CLASS}
           placeholder="Current website"
+          aria-label="Current website"
           value={state.website}
           onChange={update("website")}
         />
         <input
           className={INPUT_CLASS}
           placeholder="Platform (Shopify, Wix, WordPress, Custom)"
+          aria-label="Current website platform"
           value={state.platform}
           onChange={update("platform")}
         />
       </div>
 
       <div className="space-y-2">
-        <label className="text-xs font-semibold text-cyan-100">Service / Plan *</label>
+        <label className="text-xs font-semibold text-[#164f72]">What should I demo? *</label>
         <select className={INPUT_CLASS} value={state.selectedPlan} onChange={update("selectedPlan")}>
           {SERVICE_PLAN_OPTIONS.map((option) => (
             <option key={option} value={option}>
@@ -248,6 +254,7 @@ export function ContactForm() {
           <input
             className={INPUT_CLASS}
             placeholder="Describe the service you need"
+            aria-label="Describe the service you need"
             value={state.customPlan}
             onChange={update("customPlan")}
           />
@@ -258,15 +265,17 @@ export function ContactForm() {
         <input
           className={INPUT_CLASS}
           placeholder="Timeline (ASAP, 2 weeks, etc.)"
+          aria-label="Preferred timeline"
           value={state.timeline}
           onChange={update("timeline")}
         />
-        <input className={INPUT_CLASS} placeholder="Budget" value={state.budget} onChange={update("budget")} />
+        <input className={INPUT_CLASS} placeholder="Budget" aria-label="Budget" value={state.budget} onChange={update("budget")} />
       </div>
 
       <textarea
         className={`${INPUT_CLASS} min-h-[140px]`}
         placeholder="What do you want built or improved? *"
+        aria-label="Project details"
         value={state.message}
         onChange={update("message")}
       />
@@ -277,11 +286,11 @@ export function ContactForm() {
             status === "error"
               ? "rounded-[12px] border border-rose-300/25 bg-rose-400/10 px-3 py-2 text-xs leading-relaxed text-rose-200"
               : status === "success"
-                ? "rounded-[12px] border border-cyan-300/25 bg-cyan-300/10 px-3 py-2 text-xs leading-relaxed text-cyan-100"
-                : "text-xs leading-relaxed text-[#9bb2c3]"
+                ? "rounded-[12px] border border-[#0a5b89]/25 bg-[#bfeaff]/50 px-3 py-2 text-xs leading-relaxed text-[#075f91]"
+                : "text-xs leading-relaxed text-[#3d6077]"
           }
         >
-          {feedback || "Required fields: name, email, service/plan, and message."}
+          {feedback || "Required fields: name, email, project type, and message."}
         </p>
 
         <Button
@@ -290,7 +299,7 @@ export function ContactForm() {
           className="min-h-12 shrink-0 px-6"
           disabled={!canSubmit || status === "submitting"}
         >
-          {status === "submitting" ? "Sending..." : "Send Request →"}
+          {status === "submitting" ? "Sending..." : "Request Free Demo →"}
         </Button>
       </div>
     </form>

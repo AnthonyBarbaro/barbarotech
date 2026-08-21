@@ -91,7 +91,6 @@ export default async function ProjectSlugPage({ params }: PageProps) {
   const primaryLink = getPrimaryLink(projectLinks);
   const metrics = project.metrics?.slice(0, 3) ?? [];
   const resultItems = project.results?.slice(0, 4) ?? [];
-  const projectNumber = PROJECTS.indexOf(project) + 1;
   const wordCount = estimateWordCount([
     project.summary,
     project.description,
@@ -143,13 +142,7 @@ export default async function ProjectSlugPage({ params }: PageProps) {
 
           <div className="mt-6 grid gap-8 lg:grid-cols-12 lg:items-end">
             <Reveal className="lg:col-span-8">
-              <div className="flex flex-wrap items-center gap-3">
-                <p className="signal-kicker">Case study</p>
-                <span className="font-mono text-[10px] text-slate-500">
-                  {String(projectNumber).padStart(2, "0")} /{" "}
-                  {String(PROJECTS.length).padStart(2, "0")}
-                </span>
-              </div>
+              <p className="signal-kicker">Case study</p>
               <h1 className="display-title mt-5 max-w-[13ch]">{project.title}</h1>
             </Reveal>
 

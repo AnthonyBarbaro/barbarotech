@@ -158,7 +158,7 @@ export default function AboutPage() {
           </div>
 
           <figure className="signal-panel-strong relative overflow-hidden p-3 sm:p-4 lg:col-span-4 lg:col-start-9">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-[#02060b]">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-[#050505]">
               <Image
                 src={SITE.assets.headshot}
                 alt={`${SITE.owner}, the developer behind BarbaroTech`}
@@ -167,7 +167,7 @@ export default function AboutPage() {
                 priority
               />
               <div
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#02060b] to-transparent"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#050505] to-transparent"
                 aria-hidden="true"
               />
             </div>
@@ -222,18 +222,13 @@ export default function AboutPage() {
           </div>
 
           <ol className="signal-rail grid overflow-hidden rounded-2xl border border-cyan-100/10 md:grid-cols-3">
-            {PROCESS.map((item, index) => (
+            {PROCESS.map((item) => (
               <li
                 key={item.title}
                 className="border-b border-cyan-100/10 p-6 last:border-b-0 md:border-b-0 md:border-r md:last:border-r-0 md:p-8"
               >
-                <span
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-200/30 text-sm font-semibold text-cyan-200"
-                  aria-hidden="true"
-                >
-                  {index + 1}
-                </span>
-                <h3 className="mt-7 text-xl font-semibold text-cyan-50">{item.title}</h3>
+                <span className="block h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.6)]" aria-hidden="true" />
+                <h3 className="mt-5 text-xl font-semibold text-cyan-50">{item.title}</h3>
                 <p className="mt-3 text-sm leading-7 text-slate-300">{item.detail}</p>
               </li>
             ))}

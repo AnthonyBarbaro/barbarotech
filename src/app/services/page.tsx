@@ -132,19 +132,16 @@ export default function ServicesPage() {
                 <h2 id="service-index-title" className="text-sm font-semibold text-cyan-50">
                   Choose the closest starting point
                 </h2>
-                <span className="font-mono text-[10px] text-cyan-300">5 paths</span>
+                <span className="font-mono text-[10px] text-cyan-300">Website paths</span>
               </div>
 
               <ol className="divide-y divide-cyan-100/10">
-                {WEBSITE_SERVICE_PATHS.map((service, index) => (
+                {WEBSITE_SERVICE_PATHS.map((service) => (
                   <li key={service.id}>
                     <Link
                       href={`/pricing/#${service.id}`}
-                      className="group grid min-h-16 grid-cols-[2rem_1fr_auto] items-center gap-3 py-3.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                      className="group grid min-h-16 grid-cols-[1fr_auto] items-center gap-3 py-3.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
                     >
-                      <span className="font-mono text-[10px] text-cyan-300" aria-hidden="true">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
                       <span>
                         <span className="block text-sm font-semibold text-cyan-50">
                           {service.name}
@@ -183,32 +180,28 @@ export default function ServicesPage() {
             </p>
           </Reveal>
 
-          <ol className="signal-rail mt-12 border-y border-cyan-100/10">
+          <ol className="services-path-rail signal-rail mt-12 border-y border-cyan-100/10">
             {WEBSITE_SERVICE_PATHS.map((service, index) => (
               <li key={service.id} className="border-b border-cyan-100/10 last:border-b-0">
                 <Reveal delay={index * 60}>
-                  <article className="group grid gap-5 py-7 sm:grid-cols-[3rem_1fr] lg:grid-cols-12 lg:items-center lg:gap-6 lg:py-9">
-                    <div className="font-mono text-xs text-cyan-300 lg:col-span-1">
-                      {String(index + 1).padStart(2, "0")}
-                    </div>
-
-                    <div className="lg:col-span-3">
-                      <p className="text-xs font-semibold text-cyan-200/70">{service.eyebrow}</p>
-                      <h3 className="mt-2 text-xl font-bold leading-tight text-[#effbff] md:text-2xl">
+                  <article className="services-path-row group grid gap-5 py-7 lg:grid-cols-12 lg:items-center lg:gap-6 lg:py-9">
+                    <div className="lg:col-span-4">
+                      <p className="services-path-eyebrow text-xs font-semibold">{service.eyebrow}</p>
+                      <h3 className="services-path-title mt-2 text-xl font-bold leading-tight md:text-2xl">
                         {service.name}
                       </h3>
                     </div>
 
-                    <div className="sm:col-start-2 lg:col-span-5 lg:col-start-auto">
-                      <p className="signal-copy text-sm lg:text-base">{service.description}</p>
-                      <p className="mt-2 text-xs leading-5 text-slate-500">
+                    <div className="lg:col-span-5">
+                      <p className="services-path-description signal-copy text-sm lg:text-base">{service.description}</p>
+                      <p className="services-path-best mt-2 text-xs leading-5">
                         Best for: {service.bestFor}
                       </p>
                     </div>
 
-                    <div className="sm:col-start-2 lg:col-span-2 lg:col-start-auto lg:text-right">
-                      <p className="font-mono text-base text-cyan-100">{service.setupPrice}</p>
-                      <p className="mt-1 text-xs text-slate-400">
+                    <div className="lg:col-span-2 lg:text-right">
+                      <p className="services-path-price font-mono text-base">{service.setupPrice}</p>
+                      <p className="services-path-monthly mt-1 text-xs">
                         + {service.monthlyPrice} required care
                       </p>
                     </div>
@@ -217,7 +210,7 @@ export default function ServicesPage() {
                       <Link
                         href={`/pricing/#${service.id}`}
                         aria-label={`See ${service.name} details`}
-                        className="signal-link inline-flex min-h-11 items-center gap-2 py-2 font-semibold"
+                        className="services-path-link signal-link inline-flex min-h-11 items-center gap-2 py-2 font-semibold"
                       >
                         Details
                         <span aria-hidden="true">→</span>

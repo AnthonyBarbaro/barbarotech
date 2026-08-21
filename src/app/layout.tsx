@@ -70,6 +70,20 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const themeInitializationScript = `
+    (function () {
+      try {
+        var storedTheme = window.localStorage.getItem("barbarotech-theme");
+        var theme = storedTheme === "light" ? "light" : "dark";
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch (error) {
+        document.documentElement.dataset.theme = "dark";
+        document.documentElement.style.colorScheme = "dark";
+      }
+    })();
+  `;
+
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -96,7 +110,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitializationScript }} />
+      </head>
       <body className={`${archivo.className} ${archivo.variable} ${fragmentMono.variable} min-h-screen`}>
         <Script
           id="person-jsonld"
@@ -112,7 +129,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="app-shell flex min-h-screen flex-col">
           <Navbar />
           <SaleHeroBanner />
-          <main className="flex-1 bg-grid-light">{children}</main>
+          <div className="flex-1">{children}</div>
           <Footer />
         </div>
         <QuickCommandDock />

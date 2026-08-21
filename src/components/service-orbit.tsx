@@ -50,7 +50,7 @@ export function ServiceOrbit() {
         <circle cx="300" cy="260" r="56" fill="rgba(14,165,233,0.05)" stroke="rgba(165,243,252,0.2)" />
       </svg>
 
-      <div className="absolute left-1/2 top-[52%] grid h-28 w-28 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-cyan-200/35 bg-[#07111d]/95 text-center shadow-[0_14px_44px_rgba(0,0,0,0.36)] sm:h-36 sm:w-36">
+      <div className="absolute left-1/2 top-[52%] grid h-28 w-28 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-cyan-200/35 bg-[#0d0d0f]/95 text-center shadow-[0_14px_44px_rgba(0,0,0,0.36)] sm:h-36 sm:w-36">
         <div>
           <span className="signal-node mx-auto mb-3" aria-hidden="true" />
           <p className="text-sm font-extrabold text-white sm:text-base">Anthony</p>
@@ -62,7 +62,7 @@ export function ServiceOrbit() {
         <Link
           key={path.href}
           href={path.href}
-          className={`absolute ${path.position} min-w-[8rem] rounded-xl border border-cyan-200/20 bg-[#07111d]/92 px-3 py-2.5 transition-colors hover:border-cyan-200/65 hover:bg-[#0a1725] sm:min-w-[10rem] sm:px-4 sm:py-3`}
+          className={`absolute ${path.position} min-w-[8rem] rounded-xl border border-cyan-200/20 bg-[#0d0d0f]/92 px-3 py-2.5 transition-colors hover:border-cyan-200/65 hover:bg-[#1a1a1d] sm:min-w-[10rem] sm:px-4 sm:py-3`}
         >
           <span className="block text-sm font-extrabold text-white sm:text-base">{path.label}</span>
           <span className="mt-1 hidden font-mono text-[9px] leading-4 text-slate-400 sm:block">

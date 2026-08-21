@@ -28,11 +28,11 @@ export function ProjectMedia({
   return (
     <div
       className={cn(
-        "group/media overflow-hidden rounded-xl border border-cyan-100/15 bg-[#02060b]",
+        "group/media overflow-hidden rounded-xl border border-cyan-100/15 bg-[#050505]",
         className
       )}
     >
-      <div className="flex h-10 items-center justify-between gap-4 border-b border-cyan-100/10 bg-[#07111d] px-4">
+      <div className="flex h-10 items-center justify-between gap-4 border-b border-cyan-100/10 bg-[#0d0d0f] px-4">
         <div className="flex items-center gap-1.5" aria-hidden="true">
           <span className="h-1.5 w-1.5 rounded-full bg-cyan-200/65" />
           <span className="h-1.5 w-1.5 rounded-full bg-sky-400/45" />
@@ -87,7 +87,7 @@ export function ProjectMedia({
 
         {!showVideo ? (
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#02060b]/25 via-transparent to-transparent"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505]/25 via-transparent to-transparent"
             aria-hidden="true"
           />
         ) : null}

@@ -325,6 +325,11 @@ export const pricingPackageGroups: PricingPackageGroup[] = [
 
 export const pricingAddOns: PricingAddOn[] = [
   {
+    name: "Content management system (CMS)",
+    price: "$100/mo",
+    detail: "Adds a straightforward editing workflow for the approved content types included in the project scope.",
+  },
+  {
     name: "Additional standard page",
     price: "$250-$500",
     detail: "Useful when a launch needs more standard content pages than the selected package includes.",
@@ -448,7 +453,7 @@ export const platformCostNotes = [
 
 export const paymentTerms = [
   "The setup payment schedule is confirmed before work begins",
-  "Monthly care begins at launch",
+  "Monthly care begins the month after launch",
   "Extra pages, content, and integrations are approved before they are added",
   "Third-party platform, app, and usage fees stay separate",
 ];
@@ -457,7 +462,7 @@ export const pricingFaqs: PricingFaq[] = [
   {
     question: "Why is there a setup price and a monthly care plan?",
     answer:
-      "The setup price covers strategy, design, development, content structure, launch work, and initial QA. Monthly care begins at launch and keeps the site monitored, supported, and ready for small improvements.",
+      "The setup price covers strategy, design, development, content structure, launch work, and initial QA. Monthly care begins the month after launch and keeps the site monitored, supported, and ready for small improvements.",
   },
   {
     question: "Can I add more pages or features?",
@@ -467,7 +472,7 @@ export const pricingFaqs: PricingFaq[] = [
   {
     question: "Do I have to use a monthly care plan?",
     answer:
-      "Yes. Website packages include a required monthly care plan that begins at launch. It covers ongoing monitoring, technical support, included edit time, and practical improvements based on the selected package.",
+      "Yes. Website packages include a required monthly care plan that begins the month after launch. It covers ongoing monitoring, technical support, included edit time, and practical improvements based on the selected package.",
   },
   {
     question: "Are Shopify, WooCommerce, booking tools, or POS costs included?",

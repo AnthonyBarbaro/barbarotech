@@ -1,9 +1,9 @@
 export const SITE = {
     brand: "BarbaroTech",
     owner: "Anthony Barbaro",
-    headline: "Engineering clean, fast websites — plus full-stack apps when you need a backend.",
+    headline: "Websites, storefronts, and custom platforms built directly by Anthony Barbaro.",
     description:
-      "BarbaroTech is a web & software studio by Anthony Barbaro. Portfolio, pricing, and fast client inquiries.",
+      "Explore live websites, storefronts, and custom platforms designed and built by Anthony Barbaro.",
   
     url: "https://barbaro.tech",
   
@@ -22,5 +22,6 @@ export const SITE = {
     assets: {
       headshot: "/headshot.png", // put file in /public
       resumePdf: "/resume.pdf",  // put file in /public
+      socialImage: "/og.png",
     },
   } as const;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -10,6 +10,14 @@ import {
   pricingPackageGroups,
   setupFeePromotion,
 } from "@/data/pricing";
+import {
+  PROMOTION_COLLAPSED_EVENT,
+  PROMOTION_COLLAPSED_STORAGE_KEY,
+  PROMOTION_EXPANDED_EVENT,
+  PROMOTION_OPEN_EVENT,
+  type PromotionCollapsedDetail,
+} from "@/lib/promotion-events";
+import { cn } from "@/lib/utils";
 
 type Promo = {
   badge: string;
@@ -35,6 +43,13 @@ const STARTER_SAVINGS = `$${(
 
 const PROMOS: Promo[] = [
   {
+    badge: "Free Custom Demo",
+    title: "See a custom direction for your website before you commit.",
+    description:
+      "Tell me about the business and I will build something you can react to. If you do not move forward, it costs nothing.",
+    quoteContext: "Free custom website demo",
+  },
+  {
     badge: setupFeePromotion.enabled ? setupFeePromotion.label : "Website Packages",
     title: setupFeePromotion.enabled
       ? "Website package flash sale."
@@ -42,7 +57,7 @@ const PROMOS: Promo[] = [
     description:
       setupFeePromotion.enabled
         ? `${getSetupFeePromotionText()}. Monthly care is unchanged.`
-        : `Start with 40%. Monthly care begins at launch from ${STARTER_MONTHLY_CARE}.`,
+        : `Start with 40%. Monthly care begins the month after launch from ${STARTER_MONTHLY_CARE}.`,
     quoteContext: "Website package consultation",
     salePricing: setupFeePromotion.enabled
       ? {
@@ -84,15 +99,57 @@ const PROMOS: Promo[] = [
 ];
 
 export function QuickCommandDock() {
-  const [hidden, setHidden] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [isRetiring, setIsRetiring] = useState(false);
+  const [isEngaged, setIsEngaged] = useState(false);
+  const [forceOpen, setForceOpen] = useState(false);
   const [entered, setEntered] = useState(false);
   const [promoIndex, setPromoIndex] = useState(0);
+  const [activityVersion, setActivityVersion] = useState(0);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const retireTimerRef = useRef<number | null>(null);
+  const focusPanelRef = useRef(false);
   const pathname = usePathname() ?? "/";
   const hasContextualActions =
     pathname.startsWith("/pricing") ||
     pathname.startsWith("/contact") ||
     pathname.startsWith("/projects");
   const promo = PROMOS[promoIndex] ?? PROMOS[0];
+  const canShowHere = !hasContextualActions || forceOpen;
+  const showPanel = entered && canShowHere && !collapsed && !isRetiring;
+  const keepRetiringPanelMounted = entered && isRetiring;
+
+  const markActivity = useCallback(() => {
+    setActivityVersion((current) => current + 1);
+  }, []);
+
+  const collapseToNavigation = useCallback((focusTrigger = false) => {
+    if (retireTimerRef.current !== null) {
+      window.clearTimeout(retireTimerRef.current);
+    }
+
+    setIsEngaged(false);
+    setIsRetiring(true);
+    setForceOpen(false);
+
+    try {
+      window.sessionStorage.setItem(PROMOTION_COLLAPSED_STORAGE_KEY, "true");
+    } catch {
+      // The navigation trigger still works for the current page if storage is unavailable.
+    }
+
+    window.dispatchEvent(
+      new CustomEvent<PromotionCollapsedDetail>(PROMOTION_COLLAPSED_EVENT, {
+        detail: { focusTrigger },
+      })
+    );
+
+    retireTimerRef.current = window.setTimeout(() => {
+      setCollapsed(true);
+      setIsRetiring(false);
+      retireTimerRef.current = null;
+    }, 320);
+  }, []);
 
   useEffect(() => {
     const updateEntry = () => {
@@ -100,13 +157,66 @@ export function QuickCommandDock() {
       setEntered(window.scrollY > entryPoint);
     };
 
-    updateEntry();
+    const syncFrame = window.requestAnimationFrame(() => {
+      try {
+        setCollapsed(
+          window.sessionStorage.getItem(PROMOTION_COLLAPSED_STORAGE_KEY) === "true"
+        );
+      } catch {
+        setCollapsed(false);
+      }
+      updateEntry();
+    });
+
     window.addEventListener("scroll", updateEntry, { passive: true });
-    return () => window.removeEventListener("scroll", updateEntry);
+    return () => {
+      window.cancelAnimationFrame(syncFrame);
+      window.removeEventListener("scroll", updateEntry);
+    };
   }, []);
 
   useEffect(() => {
-    if (hidden || PROMOS.length <= 1) return;
+    const openPromotion = () => {
+      if (retireTimerRef.current !== null) {
+        window.clearTimeout(retireTimerRef.current);
+        retireTimerRef.current = null;
+      }
+
+      try {
+        window.sessionStorage.removeItem(PROMOTION_COLLAPSED_STORAGE_KEY);
+      } catch {
+        // The offer can still reopen if storage is unavailable.
+      }
+
+      focusPanelRef.current = true;
+      setForceOpen(true);
+      setEntered(true);
+      setCollapsed(false);
+      setIsRetiring(false);
+      setIsEngaged(false);
+      markActivity();
+      window.dispatchEvent(new Event(PROMOTION_EXPANDED_EVENT));
+    };
+
+    window.addEventListener(PROMOTION_OPEN_EVENT, openPromotion);
+    return () => window.removeEventListener(PROMOTION_OPEN_EVENT, openPromotion);
+  }, [markActivity]);
+
+  useEffect(() => {
+    if (!showPanel || !focusPanelRef.current) return;
+    focusPanelRef.current = false;
+    panelRef.current?.focus();
+  }, [showPanel]);
+
+  useEffect(() => {
+    if (!showPanel || isEngaged) return;
+
+    const idleTimer = window.setTimeout(() => collapseToNavigation(false), 5000);
+    return () => window.clearTimeout(idleTimer);
+  }, [activityVersion, collapseToNavigation, isEngaged, showPanel]);
+
+  useEffect(() => {
+    if (!showPanel || isEngaged || PROMOS.length <= 1) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const rotationId = window.setInterval(() => {
@@ -114,73 +224,115 @@ export function QuickCommandDock() {
     }, 12000);
 
     return () => window.clearInterval(rotationId);
-  }, [hidden]);
+  }, [isEngaged, showPanel]);
 
-  const onDismiss = () => {
-    setHidden(true);
-  };
+  useEffect(
+    () => () => {
+      if (retireTimerRef.current !== null) {
+        window.clearTimeout(retireTimerRef.current);
+      }
+    },
+    []
+  );
 
-  if (hidden || !entered || hasContextualActions) return null;
+  if (!showPanel && !keepRetiringPanelMounted) return null;
 
   return (
-    <aside className="pointer-events-none fixed inset-x-0 bottom-5 z-40 hidden justify-end px-6 lg:flex">
+    <aside
+      className={cn(
+        "quick-command-shell pointer-events-none fixed inset-x-0 bottom-5 z-40 hidden justify-end px-6 lg:flex",
+        forceOpen && "quick-command-shell--forced"
+      )}
+    >
       <div
-        aria-label="Promotion"
-        className="pointer-events-auto flex w-full max-w-3xl items-center justify-between gap-4 rounded-2xl border border-cyan-200/25 bg-[#07111d]/95 px-4 py-3 shadow-[0_18px_46px_rgba(0,0,0,0.38)] backdrop-blur-xl"
+        ref={panelRef}
+        id="barbarotech-promotion"
+        tabIndex={-1}
+        role="region"
+        aria-label="Current website offer"
+        onPointerEnter={() => {
+          setIsEngaged(true);
+          markActivity();
+        }}
+        onPointerLeave={() => {
+          setIsEngaged(false);
+          markActivity();
+        }}
+        onPointerDown={markActivity}
+        onFocusCapture={() => {
+          setIsEngaged(true);
+          markActivity();
+        }}
+        onBlurCapture={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+            setIsEngaged(false);
+            markActivity();
+          }
+        }}
+        onKeyDown={markActivity}
+        className={cn(
+          "quick-command-panel pointer-events-auto",
+          isRetiring && "quick-command-panel--retiring",
+          isEngaged && "quick-command-panel--engaged"
+        )}
       >
-        <div className="min-w-0">
-          <p className="font-mono text-[11px] tracking-[0.07em] text-cyan-300">{promo.badge}</p>
-          <p className="text-sm font-bold text-white">
-            {promo.title}
-          </p>
+        <span
+          key={activityVersion}
+          className="quick-command-countdown"
+          aria-hidden="true"
+        />
+        <div className="quick-command-copy min-w-0" aria-live="polite" aria-atomic="true">
+          <p className="quick-command-badge">{promo.badge}</p>
+          <p className="quick-command-title">{promo.title}</p>
           {promo.salePricing ? (
-            <div className="mt-1 flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold text-slate-500 line-through">
+            <div className="quick-command-pricing">
+              <span className="quick-command-original">
                 {promo.salePricing.originalSetup}
               </span>
-              <span className="font-mono text-sm text-cyan-200">{promo.salePricing.saleSetup}</span>
-              <span className="font-mono text-xs text-cyan-300">
+              <span className="quick-command-sale">{promo.salePricing.saleSetup}</span>
+              <span className="quick-command-sale">
                 {getSetupFeePromotionBadgeText()}
               </span>
               {promo.salePricing.savings ? (
-                <span className="font-mono text-xs text-slate-400">
+                <span className="quick-command-meta">
                   Save {promo.salePricing.savings}
                 </span>
               ) : null}
-              <span className="text-xs text-slate-400">+ {promo.salePricing.monthlyCare} care</span>
+              <span className="quick-command-meta">+ {promo.salePricing.monthlyCare} care</span>
             </div>
           ) : null}
-          <p className="max-w-xl text-xs leading-5 text-slate-400">
-            {promo.description}
-          </p>
+          <p className="quick-command-description">{promo.description}</p>
         </div>
 
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="quick-command-actions">
           <button
             type="button"
-            onClick={() => setPromoIndex((prev) => (prev + 1) % PROMOS.length)}
-            className="inline-flex h-11 items-center justify-center rounded-xl border border-cyan-200/20 bg-transparent px-3 text-xs font-semibold text-slate-300 transition-colors hover:border-cyan-200/50 hover:text-white"
+            onClick={() => {
+              setPromoIndex((prev) => (prev + 1) % PROMOS.length);
+              markActivity();
+            }}
+            className="quick-command-action quick-command-action--quiet"
             aria-label="Show next promotion"
           >
             Next
           </button>
           <Link
             href={`/contact/?context=${encodeURIComponent(promo.quoteContext)}`}
-            className="button-shine inline-flex h-11 items-center rounded-xl border border-cyan-200/30 bg-[#0a1725] px-3.5 text-xs font-bold text-cyan-100 transition-colors hover:border-cyan-200/70"
+            className="quick-command-action quick-command-action--secondary"
           >
-            Request quote
+            Get free demo
           </Link>
           <Link
             href="/contact/#book-call"
-            className="button-shine inline-flex h-11 items-center rounded-xl border border-cyan-200 bg-cyan-300 px-3.5 text-xs font-bold text-[#02060b] transition-colors hover:bg-white"
+            className="button-shine quick-command-action quick-command-action--primary"
           >
             Book call
           </Link>
           <button
             type="button"
-            onClick={onDismiss}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-200/20 bg-transparent text-sm font-semibold text-slate-400 transition-colors hover:border-cyan-200/50 hover:text-white"
-            aria-label="Dismiss promotion"
+            onClick={() => collapseToNavigation(true)}
+            className="quick-command-action quick-command-action--close"
+            aria-label="Move this offer to the navigation"
           >
             ×
           </button>

@@ -2,35 +2,27 @@
 version: 1
 slug: "src-app-page-tsx"
 primary_target: "src/app/page.tsx"
-related_targets: ["src/app/pricing/page.tsx","src/app/services/page.tsx","src/app/services/[slug]/page.tsx","src/app/projects/page.tsx","src/app/projects/[slug]/page.tsx","src/app/about/page.tsx","src/app/contact/page.tsx"]
+related_targets: ["src/app/projects/page.tsx", "src/app/contact/page.tsx", "src/app/pricing/page.tsx"]
 ---
 
-# Homepage and Site-Wide Marketing Surface
+# Homepage Portfolio Surface
 
-## Scope and Mode
+## Audience and action
 
-Primary target: `src/app/page.tsx`, with the same visual world extended across every public marketing route. Mode: Persuade.
+Small-business owners and operators should be able to understand the offer, inspect shipped work, choose the closest build type, and request a free custom demo directly from Anthony.
 
-## Audience, Job, and Action
+## Chosen direction
 
-Small-business owners, founders, and operators need to decide whether Anthony is the right person to build or improve their website, store, or web application. The primary action is requesting a quote; viewing packages, viewing real work, and booking a call support that decision.
+Signal Interface: a simple navy, ice-blue, cobalt, and white system. Dark mode is the default, with a compact persistent switch to a fully composed ice-blue light mode. A timed hero presents the main commercial messages without changing height. The moving logo belt proves breadth. The next section translates that proof into static, premium, and Shopify buying paths.
 
-## Proof and Content
+## Content constraints
 
-Use direct access to Anthony, real project screenshots and case studies, transparent package and care-plan pricing, scoped capabilities, and the existing contact fallbacks. Do not invent customers, testimonials, results, team scale, or incorporation status.
+Use only user-supplied offers and verified project identities. Do not invent testimonials, results, credentials, company scale, or performance claims. Avoid decorative list numbering. Prices and offer terms must match pricing data.
 
-## Constraints
+## Interaction constraints
 
-Keep the cyan-to-blue identity, preserve every factual price and service term, remain static-friendly, work without hover, respect reduced motion, and collapse into a deliberate mobile sequence with early actions and at least 44px touch targets.
+Hero slides advance when the timeline light completes its pass, support desktop arrows, topic selection, touch swipe, pause, and reduced motion. The logo belt supports pause and reduced motion. Pricing packages use a touch-first scroll-snap deck on mobile and a grid on larger screens. The theme control persists the visitor choice while defaulting new visitors to dark. All logos and project surfaces remain real links.
 
-## Chosen Direction
+## Memorable moment
 
-Conversion Current structure combined with Proof Orbit's one-builder story. A responsive signal field flows through service paths, package choices, process, proof, and contact. The field is atmosphere and wayfinding, not content chrome.
-
-## Memorable Moment
-
-In the first viewport, a cyan-to-cobalt current crosses the offer and resolves into three service paths while every proof path visually returns to one node: Anthony.
-
-## Unresolved Decisions
-
-None. Generated mockup project art and placeholder copy are not implementation assets; use repository evidence.
+The opening offer changes with the light sweep while the animated belt remains anchored below it, creating a controlled transmission rather than a conventional carousel.

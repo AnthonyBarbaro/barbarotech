@@ -4,16 +4,16 @@ import { cn } from "@/lib/utils";
 type Variant = "primary" | "secondary" | "ghost";
 
 const base =
-  "button-shine inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border px-5 py-2.5 text-sm font-bold tracking-[0.01em] " +
-  "transition-[background-color,border-color,color,box-shadow] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#02060b] " +
+  "button-shine inline-flex min-h-[46px] items-center justify-center gap-2 rounded-[10px] border px-5 py-2.5 text-sm font-extrabold tracking-[-0.01em] " +
+  "transition-[background-color,border-color,color,box-shadow,transform] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8edcff] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--future-black)] " +
   "disabled:opacity-50 disabled:pointer-events-none";
 
 const variants: Record<Variant, string> = {
   primary:
-    "border-cyan-200 bg-cyan-300 text-[#02060b] shadow-[0_10px_30px_rgba(34,211,238,0.16)] hover:border-white hover:bg-white",
+    "border-[#8edcff] bg-[#8edcff] text-[#050505] shadow-[0_0_28px_rgba(142,220,255,0.24)] hover:-translate-y-px hover:border-[#c8efff] hover:bg-[#c8efff] hover:shadow-[0_0_38px_rgba(142,220,255,0.42)]",
   secondary:
-    "border-cyan-200/30 bg-[#07111d]/90 text-cyan-100 hover:border-cyan-200/70 hover:bg-[#0a1725]",
-  ghost: "border-transparent bg-transparent text-slate-300 hover:border-cyan-200/20 hover:text-white",
+    "border-[#176b9b]/25 bg-white/90 text-[#071a2d] hover:-translate-y-px hover:border-[#8edcff] hover:bg-[#f2faff]",
+  ghost: "border-transparent bg-transparent text-current hover:border-current",
 };
 
 export function Button({
@@ -21,7 +21,7 @@ export function Button({
   variant = "primary",
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant }) {
-  return <button className={cn(base, variants[variant], className)} {...props} />;
+  return <button data-variant={variant} className={cn(base, variants[variant], className)} {...props} />;
 }
 
 export function ButtonLink({
@@ -35,6 +35,7 @@ export function ButtonLink({
   return (
     <Link
       href={href}
+      data-variant={variant}
       className={cn(base, variants[variant], className)}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noreferrer" : undefined}

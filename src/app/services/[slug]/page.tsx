@@ -11,6 +11,7 @@ import Script from "next/script";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
+import { PROJECTS } from "@/data/projects";
 import { getServiceBySlug, SERVICE_LANDINGS } from "@/data/services";
 import { SITE } from "@/lib/site";
 import { canonicalUrl, estimateWordCount, withBaseKeywords } from "@/lib/seo";
@@ -68,13 +69,24 @@ export default async function ServiceSlugPage({ params }: ServicePageProps) {
   if (!service) notFound();
 
   const canonical = canonicalUrl(`/services/${service.slug}/`);
-  const related = SERVICE_LANDINGS.filter((item) => item.slug !== service.slug).slice(0, 2);
+  const related = service.relatedSlugs
+    .flatMap((relatedSlug) => {
+      const relatedService = getServiceBySlug(relatedSlug);
+      return relatedService ? [relatedService] : [];
+    })
+    .slice(0, 2);
+  const proofProjects = service.proof.flatMap((proof) => {
+    const project = PROJECTS.find((candidate) => candidate.slug === proof.projectSlug);
+    return project ? [{ ...proof, project }] : [];
+  });
   const wordCount = estimateWordCount([
     service.summary,
     service.audience,
     ...service.outcomes,
+    ...service.considerations.flatMap((item) => [item.title, item.detail]),
     ...service.deliverables,
     ...service.process,
+    ...service.proof.map((item) => item.relevance),
     ...service.faqs.flatMap((item) => [item.question, item.answer]),
   ]);
 
@@ -91,7 +103,17 @@ export default async function ServiceSlugPage({ params }: ServicePageProps) {
       alternateName: SITE.brand,
       url: canonicalUrl("/about/"),
     },
-    areaServed: "United States",
+    areaServed:
+      service.category === "San Diego web design"
+        ? {
+            "@type": "City",
+            name: "San Diego",
+            containedInPlace: {
+              "@type": "State",
+              name: "California",
+            },
+          }
+        : "United States",
     inLanguage: "en",
     wordCount,
   };
@@ -248,6 +270,39 @@ export default async function ServiceSlugPage({ params }: ServicePageProps) {
         </Container>
       </section>
 
+      <section
+        className="signal-section border-b border-cyan-100/10"
+        aria-labelledby="considerations-title"
+      >
+        <Container className="grid gap-10 py-20 lg:grid-cols-12 lg:gap-16 lg:py-28">
+          <Reveal className="lg:col-span-5">
+            <p className="signal-kicker">How I Approach It</p>
+            <h2 id="considerations-title" className="section-title mt-5 text-balance">
+              Decisions that shape the right build.
+            </h2>
+            <p className="signal-copy mt-6 max-w-md">
+              These are the practical tradeoffs I would resolve before adding pages, software, or
+              complexity to the scope.
+            </p>
+          </Reveal>
+
+          <div className="signal-rail lg:col-span-7">
+            {service.considerations.map((item, index) => (
+              <Reveal
+                key={item.title}
+                delay={index * 70}
+                className="border-b border-cyan-100/10 last:border-b-0"
+              >
+                <article className="py-6 sm:px-2 sm:py-7">
+                  <h3 className="text-lg font-bold text-cyan-50">{item.title}</h3>
+                  <p className="signal-copy mt-3 text-sm md:text-base">{item.detail}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </Container>
+      </section>
+
       <section className="signal-section border-b border-cyan-100/10" aria-labelledby="deliverables-title">
         <Container className="grid gap-10 py-20 lg:grid-cols-12 lg:gap-16 lg:py-28">
           <Reveal className="lg:col-span-5">
@@ -275,6 +330,59 @@ export default async function ServiceSlugPage({ params }: ServicePageProps) {
           </Reveal>
         </Container>
       </section>
+
+      {proofProjects.length > 0 && (
+        <section
+          className="signal-section border-b border-cyan-100/10"
+          aria-labelledby="relevant-work-title"
+        >
+          <Container className="py-20 lg:py-28">
+            <Reveal className="grid gap-6 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-7">
+                <p className="signal-kicker">Relevant Work</p>
+                <h2 id="relevant-work-title" className="section-title mt-5 text-balance">
+                  Proof connected to this service.
+                </h2>
+              </div>
+              <p className="signal-copy lg:col-span-5">
+                These are shipped projects from the portfolio—not stock examples or invented client
+                results.
+              </p>
+            </Reveal>
+
+            <div className="signal-rail mt-10 border-y border-cyan-100/10">
+              {proofProjects.map(({ project, relevance }, index) => (
+                <Reveal
+                  key={project.slug}
+                  delay={index * 80}
+                  className="border-b border-cyan-100/10 last:border-b-0"
+                >
+                  <article className="grid gap-5 py-7 lg:grid-cols-12 lg:items-center lg:gap-8">
+                    <div className="lg:col-span-4">
+                      <h3 className="text-xl font-bold text-cyan-50">{project.title}</h3>
+                      <p className="mt-2 text-xs font-semibold text-cyan-200">
+                        {project.tech.slice(0, 3).join(" · ")}
+                      </p>
+                    </div>
+                    <div className="lg:col-span-6">
+                      <p className="signal-copy text-sm md:text-base">{relevance}</p>
+                    </div>
+                    <div className="lg:col-span-2 lg:justify-self-end">
+                      <Link
+                        href={`/projects/${project.slug}/`}
+                        className="signal-link inline-flex min-h-11 items-center gap-2 py-2 font-semibold"
+                      >
+                        View project
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </Container>
+        </section>
+      )}
 
       <section className="signal-section border-b border-cyan-100/10" aria-labelledby="faq-title">
         <Container className="py-20 lg:py-28">

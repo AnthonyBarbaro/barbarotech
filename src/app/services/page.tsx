@@ -10,6 +10,7 @@ import Script from "next/script";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
 import { pricingPackageGroups } from "@/data/pricing";
+import { SERVICE_CATEGORIES, SERVICE_LANDINGS } from "@/data/services";
 import { SITE } from "@/lib/site";
 import { canonicalUrl, withBaseKeywords } from "@/lib/seo";
 
@@ -77,6 +78,14 @@ const CUSTOM_SOFTWARE_PATH = pricingPackageGroups.find(
   (group) => group.id === "custom-software"
 );
 
+const DISCOVERY_SERVICE_GROUPS = SERVICE_CATEGORIES.map((category) => ({
+  category,
+  id: category.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+  services: SERVICE_LANDINGS.filter((service) => service.category === category).sort(
+    (a, b) => a.priority - b.priority
+  ),
+}));
+
 export default function ServicesPage() {
   const itemListJsonLd = {
     "@context": "https://schema.org",
@@ -89,6 +98,17 @@ export default function ServicesPage() {
       url: canonicalUrl(`/pricing/#${service.id}`),
     })),
   };
+  const discoveryServiceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "BarbaroTech Service Guides",
+    itemListElement: SERVICE_LANDINGS.map((service, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: service.title,
+      url: canonicalUrl(`/services/${service.slug}/`),
+    })),
+  };
 
   return (
     <main className="signal-page">
@@ -96,6 +116,11 @@ export default function ServicesPage() {
         id="services-itemlist-jsonld"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
+      <Script
+        id="service-guides-itemlist-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(discoveryServiceJsonLd) }}
       />
 
       <section className="signal-hero border-b border-cyan-100/10">
@@ -221,6 +246,90 @@ export default function ServicesPage() {
               </li>
             ))}
           </ol>
+        </Container>
+      </section>
+
+      <section className="signal-section border-t border-cyan-100/10" aria-labelledby="service-guides-title">
+        <Container className="py-20 md:py-28">
+          <Reveal className="grid gap-6 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-7">
+              <p className="signal-kicker">Explore by need</p>
+              <h2 id="service-guides-title" className="section-title mt-5 text-balance">
+                Specific answers for specific projects.
+              </h2>
+            </div>
+            <p className="signal-copy lg:col-span-5">
+              Each guide covers a distinct buying decision, implementation path, or project type
+              and connects it to relevant shipped work.
+            </p>
+          </Reveal>
+
+          <div className="mt-14 space-y-14">
+            {DISCOVERY_SERVICE_GROUPS.map((group) => (
+              <section key={group.category} aria-labelledby={`service-group-${group.id}`}>
+                <Reveal>
+                  <h3
+                    id={`service-group-${group.id}`}
+                    className="text-xl font-bold text-cyan-50 md:text-2xl"
+                  >
+                    {group.category}
+                  </h3>
+                </Reveal>
+
+                <div className="signal-rail mt-5 border-y border-cyan-100/10">
+                  {group.services.map((service, index) => (
+                    <Reveal
+                      key={service.slug}
+                      delay={index * 45}
+                      className="border-b border-cyan-100/10 last:border-b-0"
+                    >
+                      <Link
+                        href={`/services/${service.slug}/`}
+                        className="group grid min-h-28 gap-4 py-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 md:grid-cols-12 md:items-center md:gap-6 md:px-2"
+                      >
+                        <span className="md:col-span-4">
+                          <span className="block text-lg font-bold text-cyan-50">
+                            {service.shortTitle}
+                          </span>
+                          <span className="mt-2 block font-mono text-[10px] text-cyan-300">
+                            {service.navLabel}
+                          </span>
+                        </span>
+                        <span className="signal-copy text-sm md:col-span-7 md:text-base">
+                          {service.description}
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          className="text-cyan-300 transition-transform group-hover:translate-x-1 md:col-span-1 md:justify-self-end"
+                        >
+                          →
+                        </span>
+                      </Link>
+                    </Reveal>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+
+          <Reveal>
+            <div className="mt-14 grid gap-5 border-y border-cyan-100/10 py-7 md:grid-cols-[1fr_auto] md:items-center md:gap-10">
+              <div>
+                <h3 className="text-xl font-bold text-cyan-50">Planning before you choose a service?</h3>
+                <p className="signal-copy mt-3 text-sm md:text-base">
+                  Use the buyer guides to compare providers, review proposals, estimate costs, and
+                  protect ownership before a build begins.
+                </p>
+              </div>
+              <Link
+                href="/guides/"
+                className="signal-link inline-flex min-h-11 items-center gap-2 py-2 font-semibold"
+              >
+                Open planning guides
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </Reveal>
         </Container>
       </section>
 

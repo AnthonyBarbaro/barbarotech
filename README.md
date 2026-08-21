@@ -18,6 +18,7 @@ Built with Next.js App Router, TypeScript, React, and Tailwind CSS. The public s
 - Marketing pages: Home, Services, Projects, Pricing, About, Contact
 - Dynamic project case studies: `/projects/[slug]`
 - Dynamic service landing pages: `/services/[slug]`
+- Decision-focused website planning guides: `/guides/[slug]`
 - Five template-aligned website starting packages plus custom software
 - Required monthly care, simple payment terms, pricing FAQ, and quote CTAs
 - Data-driven content from local TypeScript files
@@ -91,6 +92,7 @@ Third-party platform, app, hosting, SMS, email, and payment-processing costs are
 - Contact plan options and booking slots: `src/data/contact.ts`
 - Project cards and case study fields: `src/data/projects.ts`
 - Service landing page content: `src/data/services.ts`
+- Website planning guide content: `src/data/guides.ts`
 - Industry-focused content: `src/data/industries.ts`
 - Route-level page copy:
   - `src/app/page.tsx`

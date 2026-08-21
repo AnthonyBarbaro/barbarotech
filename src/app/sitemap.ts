@@ -3,6 +3,8 @@ import { PROJECTS } from "@/data/projects";
 import { SERVICE_LANDINGS } from "@/data/services";
 import { canonicalUrl } from "@/lib/seo";
 
+export const dynamic = "force-static";
+
 const CORE_ROUTES = ["/", "/about/", "/projects/", "/pricing/", "/contact/", "/services/"];
 
 export default function sitemap(): MetadataRoute.Sitemap {

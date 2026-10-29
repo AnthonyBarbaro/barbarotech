@@ -190,6 +190,10 @@ export default function ServicesPage() {
         </Container>
       </section>
 
+      <section className="services-shopify-spotlight" aria-labelledby="shopify-service-title">
+        <Container className="portfolio-container py-16 lg:py-20"><div className="services-shopify-spotlight-inner"><div><p className="section-label">Shopify development</p><h2 id="shopify-service-title">A storefront with your name on it.</h2><p>Custom Liquid themes, store redesigns, and mobile shopping improvements. Explore live Shopify work and plans for future theme releases.</p></div><Link href="/services/shopify-developer/" className="signal-cta">Explore Shopify services <span aria-hidden="true">↗</span></Link></div></Container>
+      </section>
+
       <section className="signal-section" aria-labelledby="service-paths-title">
         <Container className="py-20 md:py-28">
           <Reveal className="grid gap-6 lg:grid-cols-12 lg:items-end">

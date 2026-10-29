@@ -17,8 +17,9 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { href: "/services/", label: "Services" },
-  { href: "/guides/", label: "Guides" },
-  { href: "/projects/", label: "Projects" },
+  { href: "/projects/", label: "Work" },
+  { href: "/services/shopify-developer/", label: "Shopify" },
+  { href: "/blog/", label: "Blog" },
   { href: "/pricing/", label: "Pricing" },
   { href: "/about/", label: "About" },
   { href: "/contact/", label: "Contact" },
@@ -28,6 +29,8 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [promotionInNav, setPromotionInNav] = useState(false);
   const promotionTriggerRef = useRef<HTMLButtonElement>(null);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
+  const mobileMenuRef = useRef<HTMLElement>(null);
   const focusPromotionTriggerRef = useRef(false);
   const pathname = usePathname() ?? "/";
 
@@ -69,8 +72,16 @@ export function Navbar() {
     if (!open) return;
 
     const previousOverflow = document.body.style.overflow;
+    const menuTrigger = menuTriggerRef.current;
+    menuTrigger?.focus();
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
+      if (event.key !== "Tab") return;
+      const controls = [menuTriggerRef.current, ...Array.from(mobileMenuRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') ?? [])].filter((element): element is HTMLElement => element !== null);
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     };
 
     document.body.style.overflow = "hidden";
@@ -79,12 +90,14 @@ export function Navbar() {
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", closeOnEscape);
+      menuTrigger?.focus();
     };
   }, [open]);
 
   const isActive = (href: string) => {
     if (href.startsWith("/#")) return pathname === "/";
     const trimmed = href.endsWith("/") ? href.slice(0, -1) : href;
+    if (href === "/services/" && pathname.startsWith("/services/shopify-developer")) return false;
     return pathname === href || pathname === trimmed || pathname.startsWith(href);
   };
 
@@ -137,6 +150,7 @@ export function Navbar() {
           </div>
 
           <button
+            ref={menuTriggerRef}
             type="button"
             onClick={() => setOpen((current) => !current)}
             className="portfolio-menu-button"
@@ -157,6 +171,7 @@ export function Navbar() {
       <div
         className={cn("portfolio-mobile-shell", open && "portfolio-mobile-shell--open")}
         aria-hidden={!open}
+        inert={!open}
       >
         <button
           type="button"
@@ -165,7 +180,7 @@ export function Navbar() {
           tabIndex={open ? 0 : -1}
           aria-label="Close navigation menu"
         />
-        <aside id="mobile-navigation" className="portfolio-mobile-menu">
+        <aside ref={mobileMenuRef} id="mobile-navigation" className="portfolio-mobile-menu" aria-label="Navigation menu">
           <div>
             <p>Display</p>
             <span className="portfolio-mobile-menu-actions">

@@ -29,7 +29,7 @@ function getHeroSlides(starterSetupPrice: string, starterMonthlyPrice: string): 
       description:
         "I’ll build a completely custom direction for your business so you can see the idea first. If you do not want to move forward, it costs nothing.",
       primary: { label: "Get a free demo", href: "/contact/?context=Free%20custom%20website%20demo" },
-      secondary: { label: "Explore project types", href: "#work" },
+      secondary: { label: "Explore live websites", href: "#work" },
       note: "Live websites, stores, and custom platforms.",
     },
     {
@@ -85,6 +85,9 @@ export function PortfolioHeroShowcase({
 }: PortfolioHeroShowcaseProps) {
   const slides = getHeroSlides(starterSetupPrice, starterMonthlyPrice);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const activeSlide = slides[activeIndex] ?? slides[0];
 
@@ -119,6 +122,11 @@ export function PortfolioHeroShowcase({
   return (
     <div
       className="portfolio-hero-rotator"
+      data-paused={paused || hovered || focused}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -176,15 +184,15 @@ export function PortfolioHeroShowcase({
       </div>
 
       <div className="portfolio-scanline">
-        <span key={activeSlide.id} aria-hidden="true" onAnimationIteration={showNext} />
+        <span key={activeSlide.id} aria-hidden="true" onAnimationIteration={() => { if (!paused && !hovered && !focused) showNext(); }} />
         <div className="portfolio-slide-controls">
-          <div className="portfolio-slide-tabs" role="tablist" aria-label="Homepage messages">
+          <div className="portfolio-slide-tabs" role="group" aria-label="Homepage messages">
             {slides.map((slide, index) => (
               <button
                 key={slide.id}
                 type="button"
-                role="tab"
-                aria-selected={index === activeIndex}
+                aria-pressed={index === activeIndex}
+                className={index === activeIndex ? "is-active" : undefined}
                 onClick={() => setActiveIndex(index)}
               >
                 {slide.tab}
@@ -192,6 +200,9 @@ export function PortfolioHeroShowcase({
             ))}
           </div>
           <div className="portfolio-slide-arrows" aria-label="Hero slide controls">
+            <button type="button" onClick={() => setPaused((current) => !current)} aria-pressed={paused} aria-label={paused ? "Resume homepage messages" : "Pause homepage messages"}>
+              <span aria-hidden="true">{paused ? "▶" : "Ⅱ"}</span>
+            </button>
             <button
               type="button"
               onClick={showPrevious}

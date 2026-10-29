@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { ProjectCollection } from "@/components/project-collection";
 import { Container } from "@/components/container";
 import { Reveal } from "@/components/reveal";
 import { ButtonLink } from "@/components/ui/button";
@@ -64,17 +64,17 @@ export default function ProjectsPage() {
       <section className="projects-hero" aria-labelledby="projects-heading">
         <Container className="portfolio-container projects-hero-grid">
           <Reveal>
-            <p className="projects-kicker">Live proof, not placeholder work</p>
+            <p className="projects-kicker">The live collection</p>
             <h1 id="projects-heading">Websites built for real businesses.</h1>
           </Reveal>
           <Reveal delay={90} className="projects-hero-copy">
             <p>
-              Open the live client sites and see the work running in production. Every project
-              shown here was made to solve a real business need.
+              Restaurants, storefronts, and service businesses. Browse by what you need,
+              then open the real website and explore it for yourself.
             </p>
             <div>
-              <ButtonLink href="/contact/?context=Free%20custom%20website%20demo">
-                Get a free custom demo <span aria-hidden="true">↗</span>
+              <ButtonLink href="#live-sites-heading">
+                Browse live websites <span aria-hidden="true">↓</span>
               </ButtonLink>
               <ButtonLink href="/pricing/" variant="secondary">Explore pricing</ButtonLink>
             </div>
@@ -86,43 +86,12 @@ export default function ProjectsPage() {
       <section className="projects-live" aria-labelledby="live-sites-heading">
         <Container className="portfolio-container py-20 lg:py-28">
           <Reveal className="projects-section-heading">
-            <p>Selected live websites</p>
-            <h2 id="live-sites-heading">Visit the work in production.</h2>
-            <p>Each project opens directly to the live website in a new tab.</p>
+            <p>Hosted projects only</p>
+            <h2 id="live-sites-heading">Find your kind of website.</h2>
+            <p>Filter the collection, search a name, or open a live site in a new tab.</p>
           </Reveal>
 
-          <div className="projects-live-grid">
-            {PORTFOLIO_SITES.map((site, index) => (
-              <Reveal key={site.href} delay={(index % 2) * 70}>
-                <a
-                  href={site.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="projects-live-card"
-                  aria-label={`Open ${site.name} live website in a new tab`}
-                >
-                  <span className={`projects-live-logo projects-live-logo--${site.surface}`}>
-                    <Image
-                      src={site.logo}
-                      alt={site.logoAlt}
-                      width={site.mark === "square" ? 150 : 280}
-                      height={site.mark === "square" ? 150 : 110}
-                      loading="eager"
-                      className={`portfolio-client-logo portfolio-client-logo--${site.mark}`}
-                    />
-                  </span>
-                  <span className="projects-live-copy">
-                    <span>{site.type}</span>
-                    <strong>{site.name}</strong>
-                    <span>{site.summary}</span>
-                  </span>
-                  <span className="projects-live-link">
-                    {site.displayUrl} <span aria-hidden="true">↗</span>
-                  </span>
-                </a>
-              </Reveal>
-            ))}
-          </div>
+          <ProjectCollection />
         </Container>
       </section>
 

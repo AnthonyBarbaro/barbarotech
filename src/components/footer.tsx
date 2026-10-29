@@ -3,8 +3,10 @@ import { Container } from "@/components/container";
 import { SITE } from "@/lib/site";
 
 const FOOTER_LINKS = [
-  { href: "/#work", label: "Work" },
-  { href: "/#services", label: "Services" },
+  { href: "/projects/", label: "Work" },
+  { href: "/services/", label: "Services" },
+  { href: "/services/shopify-developer/", label: "Shopify development" },
+  { href: "/blog/", label: "Blog" },
   { href: "/guides/", label: "Guides" },
   { href: "/pricing/", label: "Pricing" },
   { href: "/about/", label: "About" },

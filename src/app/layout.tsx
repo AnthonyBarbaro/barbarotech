@@ -115,6 +115,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeInitializationScript }} />
       </head>
       <body className={`${archivo.className} ${archivo.variable} ${fragmentMono.variable} min-h-screen`}>
+        <a className="site-skip-link" href="#main-content">Skip to content</a>
         <Script
           id="person-jsonld"
           type="application/ld+json"
@@ -129,7 +130,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="app-shell flex min-h-screen flex-col">
           <Navbar />
           <SaleHeroBanner />
-          <div className="flex-1">{children}</div>
+          <div id="main-content" tabIndex={-1} className="flex-1">{children}</div>
           <Footer />
         </div>
         <QuickCommandDock />

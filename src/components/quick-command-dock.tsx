@@ -113,7 +113,9 @@ export function QuickCommandDock() {
   const hasContextualActions =
     pathname.startsWith("/pricing") ||
     pathname.startsWith("/contact") ||
-    pathname.startsWith("/projects");
+    pathname.startsWith("/projects") ||
+    pathname.startsWith("/blog") ||
+    pathname.startsWith("/services/shopify-developer");
   const promo = PROMOS[promoIndex] ?? PROMOS[0];
   const canShowHere = !hasContextualActions || forceOpen;
   const showPanel = entered && canShowHere && !collapsed && !isRetiring;

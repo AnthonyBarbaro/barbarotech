@@ -1,17 +1,19 @@
 /*
 THESIS: Let a prospect see both shipped work and a custom direction for their own business before asking them to commit.
-OWN-WORLD: A restrained black interface with white type, cobalt signal light, quiet grid lines, and a continuous client-logo transmission.
+OWN-WORLD: A restrained black interface with white type, cobalt signal light, and real website previews.
 STORY: Understand the free custom-demo offer, inspect live work, see the available build systems, then request a direction without risk.
-FIRST VIEWPORT: A direct no-cost demo promise sits above a moving belt of clickable client identities.
-FORM: A simple scanline portfolio. The animated belt carries attention; calm project rows and direct conversion copy carry trust.
+FIRST VIEWPORT: A direct no-cost demo promise sits above clickable previews of all hosted portfolio sites.
+FORM: A simple scanline portfolio. The live work follows the offer directly, with native swipe browsing on phones.
 */
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { Container } from "@/components/container";
 import { PortfolioHeroShowcase } from "@/components/portfolio-hero-showcase";
-import { PortfolioLogoBelt } from "@/components/portfolio-logo-belt";
+import { PortfolioPreviewStrip } from "@/components/portfolio-preview-strip";
+import { BlogCard } from "@/components/blog-card";
+import { BLOG_POSTS } from "@/data/blog";
 import { ButtonLink } from "@/components/ui/button";
-import { PORTFOLIO_SITES } from "@/data/portfolio-sites";
 import {
   getPricingPackageBySlug,
   limitedStarterOfferEnabled,
@@ -48,70 +50,17 @@ const CAPABILITIES = [
   {
     title: "Static websites",
     copy: "Fast, secure business sites with clear positioning, local SEO foundations, and a focused inquiry path.",
+    href: "/services/small-business-web-design-san-diego/",
   },
   {
     title: "Premium websites",
     copy: "Custom, content-rich websites for established businesses that need stronger positioning and a more distinctive experience.",
+    href: "/services/website-redesign-san-diego/",
   },
   {
     title: "Shopify and ecommerce",
     copy: "Storefront redesigns, custom theme work, plugins, and product experiences built to browse and buy cleanly on mobile.",
-  },
-];
-
-const FEATURED_BUILD_PATHS = [
-  {
-    eyebrow: "Menus, hours, and ordering",
-    title: "Restaurant websites",
-    description:
-      "A mobile-first home for restaurants and cafes, built to move guests from the menu to directions, catering, or online ordering.",
-    sites: PORTFOLIO_SITES.filter((site) =>
-      ["Wagyu Shawarma Grill", "Golden Bagel Cafe"].includes(site.name)
-    ),
-  },
-  {
-    eyebrow: "Fast and focused",
-    title: "Static websites",
-    description:
-      "A lightweight, low-maintenance launch for local businesses and service brands that need a clear online presence.",
-    sites: PORTFOLIO_SITES.filter((site) =>
-      ["PartnerSwipe", "Capital Collective"].includes(site.name)
-    ),
-  },
-  {
-    eyebrow: "Custom brand systems",
-    title: "Premium websites",
-    description:
-      "A deeper custom build for established businesses that need stronger content, richer design, and more complex customer paths.",
-    sites: PORTFOLIO_SITES.filter((site) =>
-      ["Buzz Cannabis", "J. Barbaro Clothiers"].includes(site.name)
-    ),
-  },
-  {
-    eyebrow: "Improve the store",
-    title: "Shopify redesigns",
-    description:
-      "Focused improvements for an existing Shopify store, from mobile UX and theme code to custom plugin behavior.",
-    sites: PORTFOLIO_SITES.filter((site) => site.name === "Goso Gummies"),
-  },
-];
-
-const CONVERSION_OUTCOMES = [
-  {
-    title: "A clear buying path",
-    detail: "Visitors understand what you offer, what it costs, and what to do next without hunting for the answer.",
-  },
-  {
-    title: "Stronger request quality",
-    detail: "Focused calls to action and honest scope details help serious prospects start a useful conversation.",
-  },
-  {
-    title: "Launch plus retention",
-    detail: "Monthly care keeps the website supported and improving instead of slowly falling out of date.",
-  },
-  {
-    title: "Proof before the pitch",
-    detail: "Live work, clear process, and transparent terms reduce uncertainty before someone reaches out.",
+    href: "/services/shopify-developer/",
   },
 ];
 
@@ -196,68 +145,7 @@ export default function HomePage() {
             starterSetupPrice={starterOffer?.setupPrice ?? "$399"}
             starterMonthlyPrice={starterOffer?.monthlyPrice ?? "$80/mo"}
           />
-          <PortfolioLogoBelt />
-        </Container>
-      </section>
-
-      <section id="work" className="portfolio-work scroll-mt-20" aria-labelledby="work-heading">
-        <Container className="portfolio-container py-20 lg:py-28">
-          <header className="portfolio-section-heading">
-            <p>Choose a build path</p>
-            <h2 id="work-heading">Start with what your business needs.</h2>
-            <p>
-              The moving belt shows the range. These are the clearest starting points for
-              deciding what kind of website fits.
-            </p>
-          </header>
-
-          <div className="portfolio-path-grid">
-            {FEATURED_BUILD_PATHS.map((path) => (
-              <article
-                key={path.title}
-                className="portfolio-path-card"
-                data-example-count={path.sites.length}
-              >
-                <header>
-                  <p>{path.eyebrow}</p>
-                  <h3>{path.title}</h3>
-                  <p>{path.description}</p>
-                </header>
-                <div className="portfolio-path-examples">
-                  {path.sites.map((site) => (
-                    <a
-                      key={site.href}
-                      href={site.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label={`View the ${site.name} live website`}
-                    >
-                      <span className={`portfolio-path-logo portfolio-path-logo--${site.surface}`}>
-                        <Image
-                          src={site.logo}
-                          alt={site.logoAlt}
-                          width={site.mark === "square" ? 100 : 190}
-                          height={site.mark === "square" ? 100 : 72}
-                          className={`portfolio-client-logo portfolio-client-logo--${site.mark}`}
-                        />
-                      </span>
-                      <span>
-                        <strong>{site.name}</strong>
-                        <span>View live site ↗</span>
-                      </span>
-                    </a>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <div className="portfolio-work-footer">
-            <p>Want to browse every live site and read the deeper build notes?</p>
-            <ButtonLink href="/projects/" variant="secondary">
-              Explore the full portfolio <span aria-hidden="true">↗</span>
-            </ButtonLink>
-          </div>
+          <PortfolioPreviewStrip />
         </Container>
       </section>
 
@@ -271,33 +159,10 @@ export default function HomePage() {
           <div className="portfolio-capability-list">
             {CAPABILITIES.map((capability) => (
               <article key={capability.title}>
-                <h3>{capability.title}</h3>
+                <h3><Link href={capability.href}>{capability.title} <span aria-hidden="true">↗</span></Link></h3>
                 <p>{capability.copy}</p>
               </article>
             ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="portfolio-outcomes" aria-labelledby="outcomes-heading">
-        <Container className="portfolio-container py-20 lg:py-28">
-          <div className="portfolio-outcomes-grid">
-            <header>
-              <p>What the work should do</p>
-              <h2 id="outcomes-heading">Turn attention into a clear next step.</h2>
-              <p>
-                Good design earns attention. Good structure helps the right customer act on it.
-              </p>
-            </header>
-
-            <div className="portfolio-outcome-list">
-              {CONVERSION_OUTCOMES.map((outcome) => (
-                <article key={outcome.title}>
-                  <h3>{outcome.title}</h3>
-                  <p>{outcome.detail}</p>
-                </article>
-              ))}
-            </div>
           </div>
         </Container>
       </section>
@@ -376,6 +241,18 @@ export default function HomePage() {
         </Container>
       </section>
 
+      <section className="shopify-feature" aria-labelledby="home-shopify-heading">
+        <Container className="portfolio-container shopify-feature-grid py-20 lg:py-24">
+          <div><p className="section-label">Shopify, shaped around your brand</p><h2 id="home-shopify-heading">Your store should<br />feel like your store.</h2><p>Custom Liquid themes, thoughtful redesigns, and a buying experience that makes sense on a phone. Work directly with the developer who builds it.</p>
+            <ButtonLink href="/services/shopify-developer/">Explore Shopify services <span aria-hidden="true">↗</span></ButtonLink>
+          </div>
+          <Link href="/services/shopify-developer/#shopify-work" className="shopify-feature-art" aria-label="Explore custom Shopify theme work for Sour Chamoy Bites">
+            <span className="shopify-feature-caption"><span>Custom Shopify theme</span><span>Sour Chamoy Bites ↗</span></span>
+            <Image src="/projects/sour-chamoy-bites.jpg" alt="Sour Chamoy Bites custom Shopify storefront" width={1440} height={1000} sizes="(max-width: 800px) 100vw, 50vw" />
+          </Link>
+        </Container>
+      </section>
+
       <section id="about" className="portfolio-about scroll-mt-20" aria-labelledby="about-heading">
         <Container className="portfolio-container portfolio-about-grid py-20 lg:py-28">
           <div className="portfolio-portrait-wrap">
@@ -402,6 +279,13 @@ export default function HomePage() {
               More about how I work <span aria-hidden="true">↗</span>
             </a>
           </div>
+        </Container>
+      </section>
+
+      <section className="home-journal" aria-labelledby="home-journal-heading">
+        <Container className="portfolio-container py-20 lg:py-28">
+          <header className="work-introduction"><div><p className="section-label">From the blog</p><h2 id="home-journal-heading">A little insight<br />before your next build.</h2></div><div><p>Practical notes on better websites, Shopify stores, and the decisions behind the work.</p><Link className="portfolio-text-link" href="/blog/">Read all articles <span aria-hidden="true">↗</span></Link></div></header>
+          <div className="blog-grid">{BLOG_POSTS.slice(0, 3).map((post) => <BlogCard key={post.slug} post={post} />)}</div>
         </Container>
       </section>
 

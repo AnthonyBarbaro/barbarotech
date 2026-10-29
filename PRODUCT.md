@@ -51,8 +51,10 @@ Visitors primarily evaluate BarbaroTech through marketing pages, package pricing
 - The portfolio includes BarbaroTech, a QR badge and scan-tracking system, a multi-location retail platform, a local market website, a law-firm website, a headless Shopify storefront, and a custom Shopify theme project.
 - Anthony's real headshot is available at `public/headshot.png` and `public/headshot.jpeg`.
 - The repository contains real package pricing, monthly care plans, add-ons, terms, and FAQ content in `src/data/pricing.ts`.
+- The hosted-project collection in `src/data/portfolio-sites.ts` includes verified final domains for PartnerSwipe, Wagyu Shawarma Grill, Sour Chamoy Bites, and Rancho Bernardo Towing. Recheck public hosting before adding local projects.
+- Source-managed blog content lives in `src/data/blog.ts`; dedicated Shopify services and a clearly planned theme-release section live at `/services/shopify-developer/`. No public theme product or download is currently offered.
 - Direct contact details are defined in `src/lib/site.ts`.
-- No client testimonials, client logos, revenue claims, conversion statistics, awards, certifications, or business-incorporation claims are currently evidenced. Future work must not invent them.
+- Real project logos are available in `public/portfolio-logos/` and may identify the corresponding portfolio projects. No client testimonials, revenue claims, conversion statistics, awards, certifications, or business-incorporation claims are currently evidenced. Future work must not invent them.
 - Existing project metrics may be used only as written and should not be generalized into broader performance claims.
 
 ## Product Principles

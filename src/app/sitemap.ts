@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { GUIDES } from "@/data/guides";
+import { BLOG_POSTS } from "@/data/blog";
 import { PROJECTS } from "@/data/projects";
 import { SERVICE_LANDINGS } from "@/data/services";
 import { canonicalUrl } from "@/lib/seo";
@@ -14,6 +15,8 @@ const CORE_ROUTES = [
   "/contact/",
   "/services/",
   "/guides/",
+  "/blog/",
+  "/services/shopify-developer/",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -30,5 +33,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: canonicalUrl(`/projects/${project.slug}/`),
   }));
 
-  return [...corePages, ...servicePages, ...guidePages, ...projectPages];
+  const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
+    url: canonicalUrl(`/blog/${post.slug}/`),
+    lastModified: post.publishedAt,
+  }));
+
+  return [...corePages, ...servicePages, ...guidePages, ...projectPages, ...blogPages];
 }

@@ -1,18 +1,51 @@
+import { TUTORIAL_POSTS } from "@/data/tutorials";
+import { WSL_GUIDE } from "@/data/wsl-guide";
+
+export type BlogLink = { label: string; href: string };
+
+export type BlogSection = {
+  id: string;
+  title: string;
+  paragraphs: string[];
+  table?: {
+    caption: string;
+    headers: [string, string];
+    rows: { label: string; detail: string }[];
+  };
+  points?: string[];
+  codeBlocks?: { label: string; language: string; code: string }[];
+  image?: { src: string; alt: string; caption: string; width: number; height: number; source?: BlogLink };
+  checkpoint?: string;
+  resources?: BlogLink[];
+};
+
 export type BlogPost = {
   slug: string;
   title: string;
-  category: "Shopify" | "Website strategy" | "Behind the build";
+  category: "Shopify" | "Website strategy" | "Behind the build" | "Learn to code" | "Deployment";
   excerpt: string;
   publishedAt: string;
   image: string;
   imageAlt: string;
   intro: string;
-  sections: { id: string; title: string; paragraphs: string[]; points?: string[] }[];
-  links: { label: string; href: string }[];
+  sections: BlogSection[];
+  links: BlogLink[];
+  sources?: BlogLink[];
+  relatedSlugs?: string[];
+  tutorial?: {
+    lesson?: number;
+    label?: string;
+    level: string;
+    outcomes: string[];
+    prerequisites: string[];
+    checkedAt: string;
+  };
 };
 
 // Add new articles at the top. Dates use YYYY-MM-DD; each slug becomes /blog/<slug>/.
 export const BLOG_POSTS: BlogPost[] = [
+  WSL_GUIDE,
+  ...TUTORIAL_POSTS,
   {
     slug: "what-a-custom-shopify-theme-should-do",
     title: "What a custom Shopify theme should make easier.",
@@ -121,7 +154,7 @@ export function getBlogPost(slug: string): BlogPost | undefined {
 }
 
 export function blogReadingMinutes(post: BlogPost): number {
-  const words = [post.intro, ...post.sections.flatMap((section) => [section.title, ...section.paragraphs, ...(section.points ?? [])])].join(" ").trim().split(/\s+/).length;
+  const words = [post.intro, ...(post.tutorial?.outcomes ?? []), ...(post.tutorial?.prerequisites ?? []), ...post.sections.flatMap((section) => [section.title, ...section.paragraphs, ...(section.points ?? []), ...(section.table?.rows.flatMap((row) => [row.label, row.detail]) ?? []), section.checkpoint ?? "", section.image?.caption ?? "", ...(section.codeBlocks ?? []).map((block) => block.code)])].join(" ").trim().split(/\s+/).length;
   return Math.max(1, Math.ceil(words / 200));
 }
 

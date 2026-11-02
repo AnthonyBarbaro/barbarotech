@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="800" viewBox="0 0 1600 800" role="img" aria-labelledby="title desc">
+  <title id="title">Keep Windows. Code in Linux with WSL and VS Code.</title>
+  <desc id="desc">Install WSL 2 from Windows, keep your project inside Ubuntu, and connect the Windows VS Code editor to Linux tools.</desc>
+  <rect width="1600" height="800" fill="#071a2d"/>
+  <rect width="20" height="800" fill="#9bdfff"/>
+  <g font-family="Arial, sans-serif">
+    <text x="90" y="110" fill="#9bdfff" font-size="25" font-weight="700">BARBAROTECH / WINDOWS SETUP GUIDE</text>
+    <text x="90" y="215" fill="#f7fbff" font-size="76" font-weight="700" letter-spacing="-2">Keep Windows. Code in Linux.</text>
+    <text x="90" y="275" fill="#b7ccdf" font-size="29">WSL 2 + Ubuntu + the editor you already know.</text>
+    <g transform="translate(90 355)">
+      <rect width="430" height="280" rx="14" fill="#102a44"/>
+      <text x="32" y="60" fill="#9bdfff" font-size="26">WINDOWS 11</text>
+      <text x="32" y="118" fill="#ffffff" font-size="39" font-weight="700">Install WSL 2</text>
+      <g fill="#c6d8e8" font-size="25"><text x="32" y="175">PowerShell as administrator</text><text x="32" y="216">wsl --install -d Ubuntu</text></g>
+    </g>
+    <path d="M542 495h58m-15-15 15 15-15 15" fill="none" stroke="#9bdfff" stroke-width="4"/>
+    <g transform="translate(620 355)">
+      <rect width="410" height="280" rx="14" fill="#1747ff"/>
+      <text x="32" y="60" fill="#e0edff" font-size="26">UBUNTU</text>
+      <text x="32" y="118" fill="#ffffff" font-size="39" font-weight="700">Your workspace</text>
+      <g fill="#e0edff" font-size="25"><text x="32" y="175">Linux terminal and tools</text><text x="32" y="216">~/projects/wsl-demo</text></g>
+    </g>
+    <path d="M1052 495h58m-15-15 15 15-15 15" fill="none" stroke="#9bdfff" stroke-width="4"/>
+    <g transform="translate(1130 355)">
+      <rect width="380" height="280" rx="14" fill="#102a44"/>
+      <text x="32" y="60" fill="#9bdfff" font-size="26">VS CODE + WSL</text>
+      <text x="32" y="118" fill="#ffffff" font-size="39" font-weight="700">Connect and code</text>
+      <g fill="#c6d8e8" font-size="24"><text x="32" y="175">Windows editor, Linux tools</text><text x="32" y="216">Open your folder: code .</text></g>
+    </g>
+    <text x="90" y="720" fill="#b7ccdf" font-size="24">WINDOWS DESKTOP · LINUX PROJECT FILES · LOCAL BROWSER PREVIEW</text>
+  </g>
+</svg>

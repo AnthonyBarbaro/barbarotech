@@ -8,13 +8,13 @@ import { BLOG_POSTS } from "@/data/blog";
 import { SITE } from "@/lib/site";
 import { canonicalUrl, withBaseKeywords } from "@/lib/seo";
 
-const description = "Practical articles by Anthony Barbaro on Shopify theme development, business websites, and planning a better website.";
+const description = "Set up WSL and VS Code, start coding with Codex and GitHub, then deploy your first website with Railway. Illustrated guides by Anthony Barbaro.";
 
 export const metadata: Metadata = {
-  title: "Blog: Websites, Shopify & Behind the Build",
+  title: "Learn to Code: VS Code, Codex, GitHub & Railway Guides",
   description,
   alternates: { canonical: canonicalUrl("/blog/") },
-  keywords: withBaseKeywords(["Shopify development blog", "website redesign advice", "small business website tips"]),
+  keywords: withBaseKeywords(["WSL VS Code setup guide", "VS Code Codex setup guide", "GitHub tutorial for beginners", "deploy website Railway", "learn to code", "Shopify development blog"]),
   openGraph: { title: `The BarbaroTech Blog`, description, url: canonicalUrl("/blog/"), siteName: SITE.brand, type: "website", images: [{ url: SITE.assets.socialImage }] },
   twitter: { card: "summary_large_image", title: "The BarbaroTech Blog", description, images: [SITE.assets.socialImage] },
 };
@@ -31,8 +31,16 @@ export default function BlogPage() {
       <section className="journal-hero">
         <Container className="portfolio-container">
           <p className="section-label">The BarbaroTech blog</p>
-          <div className="journal-hero-grid"><h1>Thoughtful websites.<br />Practical notes.</h1><div><p>A look at the decisions behind better websites and Shopify stores. Written by the person doing the work.</p><Link className="portfolio-text-link" href="/about/">Meet Anthony <span aria-hidden="true">↗</span></Link></div></div>
-          <nav className="journal-topic-links" aria-label="Explore blog topics"><a href="#articles">All articles ↓</a><Link href="/services/shopify-developer/">Shopify development ↗</Link><Link href="/guides/">Website planning guides ↗</Link></nav>
+          <div className="journal-hero-grid"><h1>Learn to build.<br />Then put it online.</h1><div><p>Start with your first file. Learn the tools, understand the code, and publish something real with illustrated guides from Anthony Barbaro.</p><Link className="portfolio-text-link" href="/blog/set-up-vscode-codex-github/">Start the beginner series <span aria-hidden="true">↗</span></Link></div></div>
+          <nav className="journal-topic-links" aria-label="Explore blog topics"><a href="#start-learning">Beginner learning path ↓</a><a href="#articles">All articles ↓</a><Link href="/guides/">Website planning guides ↗</Link></nav>
+        </Container>
+      </section>
+      <section id="start-learning" className="learning-path scroll-mt-24" aria-labelledby="learning-path-heading">
+        <Container className="portfolio-container py-16 lg:py-20">
+          <h2 id="learning-path-heading">From your first file to a live website.</h2>
+          <p>Two connected lessons. One small project you can understand, change, and publish.</p>
+          <p className="learning-environment-link">On Windows? <Link href="/blog/install-wsl-vscode-linux/">Set up WSL and VS Code first <span aria-hidden="true">↗</span></Link></p>
+          <ol>{BLOG_POSTS.filter((post) => post.tutorial?.lesson !== undefined).map((post) => <li key={post.slug}><Link href={`/blog/${post.slug}/`}><span>Lesson {post.tutorial?.lesson}</span><strong>{post.title}</strong><span>{blogLessonAction(post.tutorial?.lesson)} <span aria-hidden="true">↗</span></span></Link></li>)}</ol>
         </Container>
       </section>
       <section id="articles" className="journal-articles scroll-mt-24" aria-labelledby="articles-heading">
@@ -43,4 +51,8 @@ export default function BlogPage() {
       </section>
     </main>
   );
+}
+
+function blogLessonAction(lesson: number | undefined): string {
+  return lesson === 1 ? "Set up and start coding" : "Take your website online";
 }

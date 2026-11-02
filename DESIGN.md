@@ -45,6 +45,8 @@ The complete live portfolio has category filters, text search, result counts, an
 
 Shopify services have a dedicated page linked from the navigation, homepage, services index, and footer. Cobalt sections distinguish Shopify services and planned theme releases without presenting unreleased themes as available products. The journal carries the same identity into a quieter reading surface with restrained metadata, real project images, a table of contents, and related articles.
 
+The journal also teaches through a connected beginner series. Tutorials show prerequisites, learning outcomes, complete copyable files, attributed illustrations, and a checkpoint after each major step. Long code blocks scroll within the reading column. The desktop step index has bounded scrolling; on phones it becomes a closed, keyboard-operable disclosure so the guide starts promptly. Code panels and checkpoints use theme-aware surfaces; tutorial covers and workflow diagrams use the established navy, ice, and cobalt palette. Clearly distinguish original diagrams, local example screenshots, and official documentation illustrations.
+
 ## Surfaces
 
 Dark panels use blue-black fills with thin icy-blue borders. Light mode remaps the canvas and panels to layered ice blues with navy text, rather than placing dark panels inside a pale page. Client-logo surfaces preserve the contrast required by each original mark. Primary calls to action remain cobalt in both modes.

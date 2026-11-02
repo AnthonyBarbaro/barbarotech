@@ -5,7 +5,7 @@ import { blogReadingMinutes, formatBlogDate, type BlogPost } from "@/data/blog";
 export function BlogCard({ post }: { post: BlogPost }) {
   return (
     <article className="blog-card">
-      <Link href={`/blog/${post.slug}/`} className="blog-card-image" tabIndex={-1} aria-hidden="true">
+      <Link href={`/blog/${post.slug}/`} className={`blog-card-image${post.tutorial ? " blog-card-image--tutorial" : ""}`} tabIndex={-1} aria-hidden="true">
         <Image src={post.image} alt="" width={1440} height={1000} sizes="(max-width: 720px) 100vw, 33vw" />
         <span>{post.category}</span>
       </Link>

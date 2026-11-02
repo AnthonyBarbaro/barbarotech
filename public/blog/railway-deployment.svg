@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="800" viewBox="0 0 1600 800" role="img" aria-labelledby="title desc">
+  <title id="title">Deploy a website from GitHub with Railway</title>
+  <desc id="desc">The repository contains a website and Node server. Railway runs npm start, and a generated public domain connects visitors to that running server.</desc>
+  <rect width="1600" height="800" fill="#1747ff"/>
+  <g font-family="Arial, sans-serif">
+    <text x="90" y="112" fill="#d7e9ff" font-size="25" font-weight="700">BARBAROTECH / FROM FIRST FILE TO LIVE WEBSITE</text>
+    <text x="90" y="215" fill="#ffffff" font-size="76" font-weight="700" letter-spacing="-2">Take your first website online.</text>
+    <text x="90" y="275" fill="#e0edff" font-size="29">One repository. One running service. A real public URL.</text>
+    <g transform="translate(90 355)">
+      <rect width="430" height="280" rx="14" fill="#071a2d"/>
+      <text x="32" y="60" fill="#9bdfff" font-size="26">GITHUB</text>
+      <text x="32" y="118" fill="#ffffff" font-size="39" font-weight="700">Push your code</text>
+      <g fill="#c6d8e8" font-size="26"><text x="32" y="175">Website files + server</text><text x="32" y="216">The intended branch</text></g>
+    </g>
+    <path d="M542 495h58m-15-15 15 15-15 15" fill="none" stroke="#ffffff" stroke-width="4"/>
+    <g transform="translate(620 355)">
+      <rect width="410" height="280" rx="14" fill="#071a2d"/>
+      <text x="32" y="60" fill="#9bdfff" font-size="26">RAILWAY</text>
+      <text x="32" y="118" fill="#ffffff" font-size="39" font-weight="700">Run the service</text>
+      <g fill="#c6d8e8" font-size="26"><text x="32" y="175">npm start</text><text x="32" y="216">0.0.0.0 + PORT</text></g>
+    </g>
+    <path d="M1052 495h58m-15-15 15 15-15 15" fill="none" stroke="#ffffff" stroke-width="4"/>
+    <g transform="translate(1130 355)">
+      <rect width="380" height="280" rx="14" fill="#ffffff"/>
+      <text x="32" y="60" fill="#1747ff" font-size="26">PUBLIC WEBSITE</text>
+      <text x="32" y="118" fill="#071a2d" font-size="39" font-weight="700">Share the URL</text>
+      <g fill="#385970" font-size="26"><text x="32" y="175">Generate a domain</text><text x="32" y="216">Test the live page</text></g>
+    </g>
+    <text x="90" y="720" fill="#e0edff" font-size="24">LESSON 2 · BEGINNER GUIDE · GITHUB TO RAILWAY</text>
+  </g>
+</svg>

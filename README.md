@@ -96,6 +96,8 @@ Third-party platform, app, hosting, SMS, email, and payment-processing costs are
 - Project cards and case study fields: `src/data/projects.ts`
 - Hosted portfolio, final domains, categories, logos, and preview images: `src/data/portfolio-sites.ts`
 - Blog articles, dates, categories, and section content: `src/data/blog.ts`
+- Illustrated beginner lessons: `src/data/tutorials.ts`; the complete shared example files: `src/data/tutorial-example.ts`
+- Windows/WSL setup guide, benefits table, and HTML example: `src/data/wsl-guide.ts`
 - Service landing page content: `src/data/services.ts`
 - Website planning guide content: `src/data/guides.ts`
 - Industry-focused content: `src/data/industries.ts`
@@ -118,6 +120,12 @@ Third-party platform, app, hosting, SMS, email, and payment-processing costs are
 ## Publishing Blog Articles
 
 Add an article at the top of `BLOG_POSTS` in `src/data/blog.ts`. Give it a unique URL-safe slug, a real publication date in `YYYY-MM-DD` format, a category, excerpt, image, introduction, sections, and relevant next-step links. Section IDs must be unique within the article. The homepage, blog index, article routes, reading times, related articles, metadata, structured data, and sitemap use this source automatically. Articles are source-managed; no CMS or browser editor is configured.
+
+Teaching guides in `src/data/tutorials.ts` use the same article model with optional lesson metadata, prerequisites, learning outcomes, code blocks, progress checkpoints, figures, per-step resources, and official references. Code-copy controls live in `src/components/tutorial-code-block.tsx`. Add `relatedSlugs` to put the next lesson first in the related-reading area. The blog index surfaces lessons as a connected learning path.
+
+Standalone setup guides can use `tutorial.label` without `tutorial.lesson`; only numbered lessons enter the two-part learning path. The WSL guide uses this to appear as an optional Windows setup step before lesson one. Article sections can include an accessible two-column comparison table through `table`. The WSL article targets Windows 11, WSL 2, and Ubuntu. Its installation and Windows integration steps are documentation-verified; a Linux-side HTML/Python check does not establish that those Windows workflows were tested end to end.
+
+The first two lessons share the six files in `src/data/tutorial-example.ts`, so the code displayed in both guides stays consistent. Those strings are the complete runnable example, separate from this Next.js site's own server and hosting configuration. Tutorial diagrams, the locally tested example screenshot, and attributed official documentation illustrations are in `public/blog/`; image origins are recorded in `public/blog/README.md`. Documentation was checked on October 30, 2026. Railway account authorization, billing, DNS changes, and a real Railway deployment must be verified in the reader's account; local example checks do not establish that a hosted deployment succeeded.
 
 Run `npm run typecheck`, `npm run lint`, and `npm run build:static` before releasing. Deploy the generated `out/` directory through the existing S3/CloudFront workflow. Editing the source locally does not change the public site.
 
